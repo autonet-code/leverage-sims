@@ -58,4 +58,4 @@ MIT. See `LICENSE`.
 
 ## Citation
 
-Taranu, A. (Eight Rice) (2026). *Losing Leverage: A Game-Theoretic Simulation of Power After Full Automation* Zenodo. https://doi.org/10.5281/zenodo.23111345
+Taranu, A. (Eight Rice) (2026). *Losing Leverage: A Game-Theoretic Simulation of Power After Full Automation*. Zenodo. https://doi.org/10.5281/zenodo.23111345
