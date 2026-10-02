@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Losing Leverage: A Game-Theoretic Simulation of Power After Full Automation"
+authors:
+  - family-names: Rice
+    given-names: Eight
+    email: contact@autonet.computer
+version: "1.0"
+date-released: 2026-10-03
+license: MIT
+repository-code: "https://github.com/autonet-code/leverage-sims"
+type: software
