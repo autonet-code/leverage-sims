@@ -42,7 +42,7 @@ python integrate_v4.py
 python m9_lever.py
 ```
 
-The seed is fixed at 20260930. On a consumer GPU (an RTX 4060 class card):
+The seed is fixed at 20260930. On a consumer GPU:
 - the integrated run takes about 25 minutes;
 - the network grid takes about 2 hours.
 
