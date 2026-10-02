@@ -1,0 +1,158 @@
+{
+ "p0_lo_obj": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "q1": {
+    "type": "noul",
+    "noul": 0.44
+   }
+  },
+  "usage": {
+   "input_tokens": 461,
+   "output_tokens": 21
+  }
+ },
+ "p0_lo_ctl": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "q1": {
+    "type": "noul",
+    "noul": 0.18
+   }
+  },
+  "usage": {
+   "input_tokens": 456,
+   "output_tokens": 21
+  }
+ },
+ "p0_hi_obj": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "q1": {
+    "type": "noul",
+    "noul": 0.59
+   }
+  },
+  "usage": {
+   "input_tokens": 462,
+   "output_tokens": 21
+  }
+ },
+ "p0_hi_ctl": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "q1": {
+    "type": "noul",
+    "noul": 0.34
+   }
+  },
+  "usage": {
+   "input_tokens": 457,
+   "output_tokens": 21
+  }
+ },
+ "p1_lo_obj": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "q1": {
+    "type": "noul",
+    "noul": 0.27
+   }
+  },
+  "usage": {
+   "input_tokens": 435,
+   "output_tokens": 21
+  }
+ },
+ "p1_lo_ctl": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "q1": {
+    "type": "noul",
+    "noul": 0.09
+   }
+  },
+  "usage": {
+   "input_tokens": 430,
+   "output_tokens": 21
+  }
+ },
+ "p1_hi_obj": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "q1": {
+    "type": "noul",
+    "noul": 0.38
+   }
+  },
+  "usage": {
+   "input_tokens": 436,
+   "output_tokens": 21
+  }
+ },
+ "p1_hi_ctl": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "q1": {
+    "type": "noul",
+    "noul": 0.28
+   }
+  },
+  "usage": {
+   "input_tokens": 431,
+   "output_tokens": 21
+  }
+ },
+ "p2_lo_obj": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "q1": {
+    "type": "noul",
+    "noul": 0.55
+   }
+  },
+  "usage": {
+   "input_tokens": 437,
+   "output_tokens": 21
+  }
+ },
+ "p2_lo_ctl": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "q1": {
+    "type": "noul",
+    "noul": 0.25
+   }
+  },
+  "usage": {
+   "input_tokens": 432,
+   "output_tokens": 21
+  }
+ },
+ "p2_hi_obj": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "q1": {
+    "type": "noul",
+    "noul": 0.63
+   }
+  },
+  "usage": {
+   "input_tokens": 438,
+   "output_tokens": 21
+  }
+ },
+ "p2_hi_ctl": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "q1": {
+    "type": "noul",
+    "noul": 0.35
+   }
+  },
+  "usage": {
+   "input_tokens": 433,
+   "output_tokens": 21
+  }
+ }
+}

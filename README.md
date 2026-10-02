@@ -1,6 +1,6 @@
 # leverage-sims
 
-Code, data and results for the paper *[title to be decided]* (Eight Rice, 2026).
+Code, data and results for the paper *Losing Leverage: A Game-Theoretic Simulation of Power After Full Automation* (Eight Rice, 2026).
 
 The paper models what happens to a population's standing, and to its survival, once AI and robots make it economically and militarily unnecessary to the people who rule it. It combines three things:
 - historical base rates;
@@ -11,7 +11,7 @@ All results are conditional on the assumptions stated in the paper.
 
 ## Layout
 
-- `paper/`: the paper, the full parameter list, the brake-search protocol and its results, and the citation checks.
+- `paper/`: the paper (`paper.md`), the full parameter list, the brake-search protocol and its results (with the Jev elicitation scripts in `paper/jev_brakes/`), and the citation checks.
 - `models/`: simulation code.
   - `m8_v4.py`: the six-bloc model (GPU via PyTorch, CPU fallback).
   - `integrate_v4.py`: the integrated scenario tree, the main results and the structural variants.

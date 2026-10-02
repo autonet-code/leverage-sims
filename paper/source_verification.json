@@ -1,0 +1,434 @@
+[
+ {
+  "claim": "Global Peace Index 2026 / Global Terrorism Index 2026 headline findings; 61 state-based conflicts",
+  "verdict": "corrected",
+  "correct_statement": "The 61 state-based conflicts figure does not come from the GPI. It comes from UCDP data via PRIO: 61 active state-based conflicts in 36 countries in 2024, the highest since 1946. GPI 2026 says global peacefulness is at its lowest since the Index began. 99 countries deteriorated, the most in the Index's 20 years. Countries involved in external conflict rose from 59 (2008) to 103 (2026). The economic impact of violence was US$21.81 trillion in 2025 (10.5% of global GDP). There were over 181,000 conflict deaths in 2025. GTI 2026 says terrorism deaths fell 28% to 5,582 in 2025 and incidents fell 22% to 2,944. Pakistan is the most impacted country for the first time. Deaths in the West rose 280% to 57.",
+  "citation": "Institute for Economics & Peace (2026), Global Peace Index 2026 and Global Terrorism Index 2026, Sydney: IEP (visionofhumanity.org). Rustad, S.A. (2025), Conflict Trends: A Global Overview, 1946-2024, PRIO Paper, Oslo: PRIO.",
+  "source_url": "https://www.prio.org/publications/14453",
+  "note": "Cite PRIO/UCDP for the 61 figure, not GPI. GPI and GTI figures come from IEP summary pages: https://www.visionofhumanity.org/maps/ and https://www.visionofhumanity.org/maps/global-terrorism-index/ . The full PDFs were not retrieved."
+ },
+ {
+  "claim": "PRRI: share agreeing political violence may be justified rose from 15% to 23%",
+  "verdict": "corrected",
+  "correct_statement": "In PRRI's surveys, agreement that 'true American patriots may have to resort to violence to save our country' rose from 15% in 2021 to 23% in 2023. This was the first time it exceeded 20% across eight PRRI surveys since March 2021.",
+  "citation": "PRRI (2023), Threats to American Democracy Ahead of an Unprecedented Presidential Election: Findings from the 2023 American Values Survey, Washington DC: PRRI, October 2023.",
+  "source_url": "https://www.prri.org/research/threats-to-american-democracy-ahead-of-an-unprecedented-presidential-election/",
+  "note": "The paper should quote the exact item wording ('may have to resort to violence to save our country'), not the generic 'political violence may be justified'. Party breakdown in 2023: Republicans 33%, Independents 22%, Democrats 13%."
+ },
+ {
+  "claim": "US withdrawal from 66 international organizations (White House memorandum, 7 January 2026)",
+  "verdict": "confirmed",
+  "correct_statement": "A presidential memorandum dated 7 January 2026 directed US withdrawal from 66 international organizations: 31 UN entities and 35 non-UN organizations.",
+  "citation": "The White House (2026), 'Withdrawing the United States from International Organizations, Conventions, and Treaties that Are Contrary to the Interests of the United States', Presidential Memorandum, 7 January 2026.",
+  "source_url": "https://www.whitehouse.gov/presidential-actions/2026/01/withdrawing-the-united-states-from-international-organizations-conventions-and-treaties-that-are-contrary-to-the-interests-of-the-united-states/",
+  "note": ""
+ },
+ {
+  "claim": "AfD Saxony-Anhalt 43.8% (6 Sep 2026), Mecklenburg-Vorpommern 38.2% (20 Sep 2026), CDU out of MV parliament with 4.9%",
+  "verdict": "confirmed",
+  "correct_statement": "Saxony-Anhalt, 6 September 2026: AfD 43.8% (20.8% in 2021), CDU 17.2%. Mecklenburg-Vorpommern, 20 September 2026: AfD 38.2%, SPD 35.5%, CDU 4.9%. The CDU fell below the 5% threshold and lost all 12 of its seats.",
+  "citation": "Wikipedia, '2026 Saxony-Anhalt state election' and '2026 Mecklenburg-Vorpommern state election' (accessed 2 Oct 2026). Primary sources: the state returning officers (Landeswahlleiter Sachsen-Anhalt; Landeswahlleiterin Mecklenburg-Vorpommern).",
+  "source_url": "https://en.wikipedia.org/wiki/2026_Mecklenburg-Vorpommern_state_election",
+  "note": "Checked against Wikipedia only. Tagesschau could not be fetched. For the paper, cite the official Landeswahlleiter final results."
+ },
+ {
+  "claim": "NOAA CPC ENSO diagnostic discussion 10 Sep 2026: Nino-3.4 anomaly and odds of very strong El Nino",
+  "verdict": "confirmed",
+  "correct_statement": "The CPC ENSO Diagnostic Discussion of 10 September 2026 (El Nino Advisory) puts the August 2026 Nino-3.4 anomaly at +1.8 C. It gives a greater than 90% chance of a very strong El Nino through Northern Hemisphere fall and winter 2026-27. It also gives about a 75% chance of a historic event (above +2.5 C) in October-December 2026, which would be the strongest on record since 1950.",
+  "citation": "NOAA Climate Prediction Center (2026), ENSO Diagnostic Discussion, issued 10 September 2026, College Park MD: NOAA/NWS/CPC.",
+  "source_url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml",
+  "note": "This is the live 'current' page, which the October 2026 discussion (due about 8 Oct) will overwrite. Archive a copy. A small model summarized the page, so check the exact figures before quoting."
+ },
+ {
+  "claim": "UNGA-81: walkout of about 77 delegations during the Israeli PM's address; US visa denial to the Palestinian delegation",
+  "verdict": "confirmed",
+  "correct_statement": "On 24 September 2026, at UNGA-81, 77 delegations (mostly African and Muslim-majority states) walked out during Prime Minister Netanyahu's address. For the second year running the US denied visas to the Palestinian delegation, so President Abbas spoke by pre-recorded video.",
+  "citation": "Wikipedia, 'General debate of the eighty-first session of the United Nations General Assembly' (accessed 2 Oct 2026).",
+  "source_url": "https://en.wikipedia.org/wiki/General_debate_of_the_eighty-first_session_of_the_United_Nations_General_Assembly",
+  "note": "Checked against Wikipedia only. Cite UN press coverage (press.un.org) or a wire service for the walkout count."
+ },
+ {
+  "claim": "Beraja, Kao, Yang, Yuchtman (2023) 'AI-tocracy' QJE 138(3):1349-1402",
+  "verdict": "confirmed",
+  "correct_statement": "Beraja, M., Kao, A., Yang, D.Y. and Yuchtman, N. (2023). 'AI-tocracy'. Quarterly Journal of Economics 138(3): 1349-1402. doi:10.1093/qje/qjad012.",
+  "citation": "Beraja, M., Kao, A., Yang, D.Y., Yuchtman, N. (2023). AI-tocracy. The Quarterly Journal of Economics, 138(3), 1349-1402. https://doi.org/10.1093/qje/qjad012",
+  "source_url": "https://doi.org/10.1093/qje/qjad012",
+  "note": "The DOI resolves to academic.oup.com/qje/article/138/3/1349, which confirms volume, issue and first page. The end page 1402 matches the known record but the article page body could not be fetched."
+ },
+ {
+  "claim": "Wannsee Conference 1942: 15 participants, no recorded moral objection.",
+  "verdict": "confirmed",
+  "correct_statement": "The Wannsee Conference (20 January 1942) had 15 senior officials present. The minutes record no moral objection, only practical points (e.g. Stuckart and Hofmann on mixed marriages and Mischlinge, Neumann on war-essential Jewish workers).",
+  "citation": "Wannsee Conference minutes (Besprechungsprotokoll), 20 Jan 1942; summarized in Wikipedia, 'Wannsee Conference' (accessed 2026-10-02). See also Roseman, M. (2002). The Wannsee Conference and the Final Solution. Metropolitan Books.",
+  "source_url": "https://en.wikipedia.org/wiki/Wannsee_Conference",
+  "note": "Two invited officials (Gutterer, Greifelt) did not attend. Best stated as 'no recorded moral objection', since the minutes were edited by Eichmann/Heydrich."
+ },
+ {
+  "claim": "A Rwandan prefect who refused to participate in the 1994 genocide was dismissed within about 12 days (Jean-Baptiste Habyalimana, Butare).",
+  "verdict": "corrected",
+  "correct_statement": "Jean-Baptiste Habyalimana, the only Tutsi prefect, kept Butare largely free of massacres until Radio Rwanda announced his dismissal on 17 April 1994, 11 days after President Habyarimana's plane was shot down (6 April). He was later killed. Mass killing in Butare began within days of his removal.",
+  "citation": "Human Rights Watch / Des Forges, A. (1999). Leave None to Tell the Story: Genocide in Rwanda. HRW. Summarized in Wikipedia, 'Jean-Baptiste Habyalimana'.",
+  "source_url": "https://en.wikipedia.org/wiki/Jean-Baptiste_Habyalimana",
+  "note": "'About 12 days' is close but should read 11 days (6 to 17 April), or 10 days if you count from 7 April, when the killing started."
+ },
+ {
+  "claim": "Sagan and Valentino (2017) 'Revisiting Hiroshima in Iran' International Security 42(1): exact share of Americans approving a nuclear strike killing 2 million Iranian civilians.",
+  "verdict": "not_found",
+  "correct_statement": "Sagan, S. D., & Valentino, B. A. (2017). International Security 42(1): 41-79. In the abstract's words, 'a majority of Americans' would approve using nuclear weapons that kill millions of foreign civilians to protect U.S. troops. The figure usually cited for the 2-million-death nuclear scenario is about 59%, but I could not confirm it here because the full text is paywalled. Write 'a majority (about 60%)' only after checking the paper itself.",
+  "citation": "Sagan, S. D., & Valentino, B. A. (2017). Revisiting Hiroshima in Iran: What Americans Really Think about Using Nuclear Weapons and Killing Noncombatants. International Security, 42(1), 41-79. doi:10.1162/ISEC_a_00284",
+  "source_url": "https://direct.mit.edu/isec/article/42/1/41/12164/Revisiting-Hiroshima-in-Iran-What-Americans-Really",
+  "note": "Bibliographic details confirmed (vol 42, pp. 41-79). The exact share was not confirmed because the MIT Press and Belfer pages returned 403 and the web search budget ran out. The 59% comes from memory and the project's own research notes ('~60%'), not from a fetched source."
+ },
+ {
+  "claim": "Lilienfeld et al. (2012) 'Fearless dominance and the U.S. presidency' JPSP 103(3): main findings.",
+  "verdict": "confirmed",
+  "correct_statement": "Lilienfeld et al. (2012) rated 42 U.S. presidents (through G. W. Bush) using expert personality ratings. Fearless Dominance (psychopathic boldness) was associated with better rated presidential performance, leadership, persuasiveness, crisis management and Congressional relations, and with objective indicators such as initiating new projects. Impulsive Antisociality was largely unrelated to rated performance but was linked to negative indicators such as impeachment resolutions and tolerating unethical behavior by subordinates.",
+  "citation": "Lilienfeld, S. O., Waldman, I. D., Landfield, K., Watts, A. L., Rubenzer, S., & Faschingbauer, T. R. (2012). Fearless dominance and the U.S. presidency: Implications of psychopathic personality traits for successful and unsuccessful political leadership. Journal of Personality and Social Psychology, 103(3), 489-505. doi:10.1037/a0029392",
+  "source_url": "https://europepmc.org/article/MED/22905850",
+  "note": "Abstract taken from the Europe PMC record (PMID 22905850)."
+ },
+ {
+  "claim": "Babiak, Neumann and Hare (2010) 'Corporate psychopathy: talking the walk': the ~4% prevalence figure (sample of 203).",
+  "verdict": "not_found",
+  "correct_statement": "Babiak, Neumann & Hare (2010) assessed 203 corporate professionals selected for management development programs. The abstract says only that psychopathic traits were more prevalent than in community samples, and that psychopathy was associated positively with in-house ratings of charisma/presentation and negatively with responsibility/performance. The commonly cited figure is about 4% (roughly 8 of 203) at PCL-R 30 or above, but it is in the paper body, which I could not access. Present it as 'about 4% (paper body; unverified)', or cite 'higher than community base rates'.",
+  "citation": "Babiak, P., Neumann, C. S., & Hare, R. D. (2010). Corporate psychopathy: Talking the walk. Behavioral Sciences & the Law, 28(2), 174-193. doi:10.1002/bsl.925",
+  "source_url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/bsl.925",
+  "note": "Citation and N=203 confirmed via Europe PMC (PMID 20422644). The 4% figure was not confirmed: Wiley and ResearchGate returned 403. The sample is a convenience sample of high-potential managers, not a representative one."
+ },
+ {
+  "claim": "Browning (1992) Ordinary Men: at Jozefow about 12 of ~500 men of Reserve Police Battalion 101 stepped out when offered.",
+  "verdict": "confirmed",
+  "correct_statement": "At Jozefow (13 July 1942), Major Wilhelm Trapp offered the men of Reserve Police Battalion 101 (about 500 men) the chance to opt out of the shooting. About 12 stepped forward at first. More later avoided or quit the shooting during the day; Browning estimates 10-20% of the men in total.",
+  "citation": "Browning, C. R. (1992). Ordinary Men: Reserve Police Battalion 101 and the Final Solution in Poland. New York: HarperCollins.",
+  "source_url": "https://en.wikipedia.org/wiki/Reserve_Police_Battalion_101",
+  "note": "Worth adding that more men evaded later, so the 12 understates total non-participation. The book's figure is roughly 12 of nearly 500."
+ },
+ {
+  "claim": "Great Leap Forward famine continued about three years after the Lushan Conference (1959); death toll ranges.",
+  "verdict": "corrected",
+  "correct_statement": "The Lushan Conference (July-August 1959) purged Peng Dehuai for criticizing the Great Leap Forward. The famine continued about two more years, through 1961 (some scholars extend it into 1962). Estimates of excess deaths range from about 15 to 55 million, and most recent scholarly estimates fall around 30-45 million (Ashton et al. 1984: ~30M; Cao Shuji 2005: 32.5M; Yang Jisheng 2012: 36M; Dikotter 2010: at least 45M).",
+  "citation": "Yang, J. (2012). Tombstone: The Great Chinese Famine, 1958-1962. FSG; Dikotter, F. (2010). Mao's Great Famine. Walker; Ashton, B. et al. (1984). Famine in China, 1958-61. Population and Development Review 10(4): 613-645. Summarized in Wikipedia, 'Great Chinese Famine'.",
+  "source_url": "https://en.wikipedia.org/wiki/Great_Chinese_Famine",
+  "note": "'About three years' fits only if the famine runs to 1962. 'Two to three years' is safer."
+ },
+ {
+  "claim": "Great Purge: 681,692 official executions in 1937-38; 3 of 5 marshals removed.",
+  "verdict": "confirmed",
+  "correct_statement": "According to declassified NKVD figures, 681,692 people were executed in 1937-38. Three of the five Soviet marshals (Tukhachevsky, Yegorov, Blyukher) died in the purge. Only Voroshilov and Budyonny survived.",
+  "citation": "NKVD statistics as reported in Getty, J. A., Rittersporn, G., & Zemskov, V. (1993). Victims of the Soviet penal system in the pre-war years. American Historical Review 98(4): 1017-1049; summarized in Wikipedia, 'Great Purge'.",
+  "source_url": "https://en.wikipedia.org/wiki/Great_Purge",
+  "note": "'Removed' undersells it: Tukhachevsky and Yegorov were shot and Blyukher died under interrogation. Scholars estimate total purge deaths at about 0.7-1.2 million."
+ },
+ {
+  "claim": "Svolik (2012): about two thirds of 303 dictators removed by non-constitutional means were removed by regime insiders.",
+  "verdict": "corrected",
+  "correct_statement": "Svolik studies the 316 authoritarian leaders who held office for at least one day between 1946 and 2008 and lost power by non-constitutional means. Of these, 205 were removed by regime insiders: 'individuals from the dictator's inner circle, the government, or the repressive apparatus'. Svolik calls this 'more than two-thirds'. Popular uprisings removed only 32 (about 10%). Popular uprisings plus public pressure to democratize make up only about one fifth of non-constitutional exits.",
+  "citation": "Svolik, M. W. (2012). The Politics of Authoritarian Rule. Cambridge University Press. doi:10.1017/CBO9781139176040 (Introduction).",
+  "source_url": "https://www.cambridge.org/core/books/politics-of-authoritarian-rule/7F78A8828A5714F0BE74E44A90A44868",
+  "note": "I could not open the book directly. I checked the quoted phrase 'the remaining 205 dictators – more than two-thirds – were removed by regime insiders' in Google Books snippets of the book and in several works that cite it. Sources disagree on the base: Kendall-Taylor et al. (2019) say '205 of the 316', while Sika (2017) says 303 of the 316 were ousted unconstitutionally. 205/316 is 65% and 205/303 is 68%. The safest wording is '205 of 316 (about two thirds)', which matches research/m5 and r10a. Avoid '303' unless you can check the page."
+ },
+ {
+  "claim": "Egorov and Sonin (2011), 'Dictators and their viziers', JEEA: dictators trade competence for loyalty.",
+  "verdict": "confirmed",
+  "correct_statement": "Egorov and Sonin model a dictator who chooses a less competent but more loyal vizier, because a more competent one is better able to betray him. The loyalty-competence trade-off arises inside the model.",
+  "citation": "Egorov, G., and Sonin, K. (2011). Dictators and Their Viziers: Endogenizing the Loyalty-Competence Trade-Off. Journal of the European Economic Association, 9(5), 903-930. doi:10.1111/j.1542-4774.2011.01033.x",
+  "source_url": "https://api.crossref.org/works/10.1111/j.1542-4774.2011.01033.x",
+  "note": "Bibliographic details come from Crossref. The subtitle is part of the full title and should be added to the reference."
+ },
+ {
+  "claim": "Weeks (2012) APSR and Weeks (2014) Dictators at War and Peace: personalist regimes start more wars.",
+  "verdict": "confirmed",
+  "correct_statement": "Weeks finds that personalist regimes ('bosses') and military regimes ('strongmen') start international conflicts more often than democracies. Civilian regimes with powerful elite audiences ('machines') are 'no more belligerent overall than democracies'. In personalist regimes, 'no predictable mechanism exists for restraining or removing overly belligerent leaders'.",
+  "citation": "Weeks, J. L. P. (2012). Strongmen and Straw Men: Authoritarian Regimes and the Initiation of International Conflict. American Political Science Review, 106(2), 326-347. doi:10.1017/S0003055412000111. Weeks, J. L. P. (2014). Dictators at War and Peace. Cornell University Press.",
+  "source_url": "https://doi.org/10.1017/S0003055412000111",
+  "note": "The 2012 article's details come from Crossref. The 2014 publisher (Cornell University Press, Cornell Studies in Security Affairs) is from memory, not fetched. Military 'strongmen' regimes are also belligerent, so 'personalist and military regimes' is more precise than 'personalist' alone."
+ },
+ {
+  "claim": "Harff (2003) APSR: predictors of genocide/politicide (exclusionary ideology, autocracy, prior upheaval).",
+  "verdict": "corrected",
+  "correct_statement": "Harff studies 126 internal wars and regime collapses that began between 1955 and 1997. Genocides or politicides began in 35 of them. Her best model uses six risk factors measured one year before onset: prior genocide or politicide, political upheaval, an ethnic minority ruling elite, exclusionary ideology, autocracy, and low trade openness. Together they separate the cases with 74% accuracy.",
+  "citation": "Harff, B. (2003). No Lessons Learned from the Holocaust? Assessing Risks of Genocide and Political Mass Murder since 1955. American Political Science Review, 97(1), 57-73. doi:10.1017/S0003055403000522",
+  "source_url": "https://www.cambridge.org/core/journals/american-political-science-review/article/abs/no-lessons-learned-from-the-holocaust-assessing-risks-of-genocide-and-political-mass-murder-since-1955/FBA37FA563AC35E1CB6F7B57F8140F2C",
+  "note": "The abstract confirms 126 cases, 35 onsets, six factors and 74% accuracy, but it does not name the factors. The list comes from the project's research notes and the standard summary of the paper. 'Prior upheaval' is not quite right: the factors are 'political upheaval' and, separately, 'prior genocide/politicide'. Use the full title in the reference."
+ },
+ {
+  "claim": "Valentino, Huth and Balch-Lindsay (2004) 'Draining the sea', International Organization: mass killing in guerrilla wars.",
+  "verdict": "confirmed",
+  "correct_statement": "Across 147 wars from 1945 to 2000, governments fighting major guerrilla insurgencies resort to mass killing far more often. They often use it as a 'calculated military strategy' against the civilians who support the guerrillas, especially when the insurgents have strong local support or seriously threaten the regime.",
+  "citation": "Valentino, B., Huth, P., and Balch-Lindsay, D. (2004). 'Draining the Sea': Mass Killing and Guerrilla Warfare. International Organization, 58(2), 375-407. doi:10.1017/S0020818304582061",
+  "source_url": "https://doi.org/10.1017/S0020818304582061",
+  "note": "Details and abstract come from Crossref. The paper backs mass killing as a deliberate strategy against civilian support for rebels. It does not directly back 'fear of retribution grows with the scale of what has been done' (REPORT.md B4). Cite it there only for the strategic, threat-driven logic."
+ },
+ {
+  "claim": "Bandura (1999), 'Moral disengagement in the perpetration of inhumanities', Personality and Social Psychology Review: exact citation.",
+  "verdict": "confirmed",
+  "correct_statement": "Bandura, A. (1999). Moral disengagement in the perpetration of inhumanities. Personality and Social Psychology Review, 3(3), 193-209.",
+  "citation": "Bandura, A. (1999). Moral Disengagement in the Perpetration of Inhumanities. Personality and Social Psychology Review, 3(3), 193-209. doi:10.1207/s15327957pspr0303_3",
+  "source_url": "https://doi.org/10.1207/s15327957pspr0303_3",
+  "note": "Details come from Crossref. Add the volume, issue, pages and DOI to the reference list."
+ },
+ {
+  "claim": "Straus (2006) The Order of Genocide: number of Rwandan genocide perpetrators; fear and insecurity as drivers.",
+  "verdict": "corrected",
+  "correct_statement": "Straus estimates that 175,000 to 210,000 people took part in the Rwandan genocide, his base calculation being about 128,744. That is 14 to 17 percent of the active adult male Hutu population. He argues that wartime fear and insecurity, intense pressure from fellow Hutu and local authority drove participation, more than deep ethnic hatred.",
+  "citation": "Straus, S. (2006). The Order of Genocide: Race, Power, and War in Rwanda. Cornell University Press. The estimate first appeared in Straus, S. (2004). How many perpetrators were there in the Rwandan genocide? An estimate. Journal of Genocide Research, 6(1), 85-98. doi:10.1080/1462352042000194728",
+  "source_url": "https://doi.org/10.1080/1462352042000194728",
+  "note": "The range and the 14-17% figure come from Google Books snippets of the book and from Herr (2018) and Spears (2019), which cite it. The 2004 article's details come from Crossref. The fear, insecurity and pressure argument is the book's central thesis, from memory and the book's description; I did not get a quote. Write '14-17% of active adult Hutu men', not 'adult Hutu men'. The book is about what drove the perpetrators, not about silencing witnesses."
+ },
+ {
+  "claim": "UK Defence Intelligence estimate ~1.1 million Russian killed and wounded by ~October 2025",
+  "verdict": "confirmed",
+  "correct_statement": "UK Defence Intelligence (14 Oct 2025) estimated about 1.118 million total Russian casualties (killed and wounded) since February 2022, including 332,000 since 1 January 2025.",
+  "citation": "UK Ministry of Defence, Defence Intelligence update, 14 October 2025, as reported in Wikipedia, 'Casualties of the Russo-Ukrainian war' (accessed 2 Oct 2026)",
+  "source_url": "https://en.wikipedia.org/wiki/Casualties_of_the_Russo-Ukrainian_war",
+  "note": "The gov.uk primary page could not be fetched; figure is via Wikipedia's citation of the DI update. I found no later UK DI total."
+ },
+ {
+  "claim": "BBC Russian and Mediazona count of named Russian dead as of late May 2026 approx 223,539; intelligence estimates of deaths near 500,000",
+  "verdict": "corrected",
+  "correct_statement": "BBC Russian reported 223,539 named Russian dead as of 27 May 2026, and in the same report cited GCHQ's estimate of nearly 500,000 Russian soldiers killed since 2022. The latest BBC Russian/Mediazona count is 248,844 named dead as of 7 September 2026, which they say covers roughly 45 to 65% of actual deaths.",
+  "citation": "BBC News Russian and Mediazona, running count of named Russian military deaths (27 May 2026 and 7 Sep 2026 updates); GCHQ estimate as reported by BBC, 27 May 2026; via Wikipedia, 'Casualties of the Russo-Ukrainian war'",
+  "source_url": "https://en.wikipedia.org/wiki/Casualties_of_the_Russo-Ukrainian_war",
+  "note": "The figures are right for May 2026, but a newer count exists (248,844, 7 Sep 2026). The ~500k figure is GCHQ's, as cited by BBC. Mediazona's own page returned 404."
+ },
+ {
+  "claim": "Drones account for about 60 to 80% of front-line casualties in Ukraine (2025-2026)",
+  "verdict": "not_found",
+  "correct_statement": "Unverified in this pass. Keep it labeled as an estimate attributed to RUSI and Ukrainian officials, or drop the figure until a primary source is checked.",
+  "citation": "Candidate: Watling, J. and Reynolds, N. (Feb 2025), Tactical Developments During the Third Year of the Russo-Ukrainian War, RUSI (not read: PDF returned 403)",
+  "source_url": "https://www.rusi.org/explore-our-research/publications/special-resources/tactical-developments-during-third-year-russo-ukrainian-war",
+  "note": "The search budget was used up and the RUSI PDF and Wikipedia drone pages could not be fetched. The project note (r9a) marks this figure [K], from memory. Note that RUSI's figure may be about the share of destroyed or damaged equipment, not casualties. Verify before citing."
+ },
+ {
+  "claim": "~97% of 2025 humanoid robot shipments were from Chinese makers",
+  "verdict": "not_found",
+  "correct_statement": "Unverified. The project's own source (r9a, citing SAG/Pandaily) gives 97% Chinese for 1H 2026 shipments (19.1k units), not full-year 2025. Cite it as 1H 2026 with that source, or verify a 2025 figure (e.g., Omdia: about 13,000 general-purpose embodied robots shipped in 2025).",
+  "citation": "Project note research/r9a_current_state_2026.md citing SAG and Pandaily (not independently verified); Omdia press release Jan 2026 (returned 403)",
+  "source_url": "https://omdia.tech.informa.com/pr/2026/jan/omdia-general-purpose-embodied-intelligent-robot-shipments-surge-past-13000-units-in-2025",
+  "note": "The claim's year (2025) does not match the internal note (1H 2026). The Omdia URL is my guess at the slug and is unverified (it returned 403)."
+ },
+ {
+  "claim": "China accounted for 54% of 2024 industrial robot installations (IFR)",
+  "verdict": "confirmed",
+  "correct_statement": "Per IFR World Robotics 2025, 542,000 industrial robots were installed worldwide in 2024. China installed 295,000 (54%), a record, and domestic makers held 57% of China's market.",
+  "citation": "International Federation of Robotics (2025), press release 'Global robot demand in factories doubles over 10 years', World Robotics 2025",
+  "source_url": "https://ifr.org/ifr-press-releases/news/global-robot-demand-in-factories-doubles-over-10-years",
+  "note": ""
+ },
+ {
+  "claim": "METR task-horizon doubling time ~7 months long-run, ~4 months in 2024-2026; latest horizon figures",
+  "verdict": "corrected",
+  "correct_statement": "METR's original paper found a ~7-month doubling time (2019-2025). Under Time Horizon 1.1, METR's fitted doubling time is about 188 days (~6.2 months) for the full stitched series and about 129 days (~4.2 months; 95% CI 104-158 days) for 2023 onward. Latest 50% horizons: Claude Mythos Preview (early, 2026-04-07) ~17.4 h (CI ~8.5-55 h), Claude Opus 4.6 ~12.0 h, Gemini 3.1 Pro ~6.4 h. METR says measurements above 16 h are unreliable with the current task suite.",
+  "citation": "Kwa, T., West, B., et al. (2025), Measuring AI Ability to Complete Long Tasks, METR, arXiv:2503.14499; METR Time Horizons page and benchmark_results_1_1.yaml (updated 8 May 2026)",
+  "source_url": "https://metr.org/time-horizons/",
+  "note": "The recent doubling is '2023 onward', not '2024-2026'. Say ~4 months (2023+) and ~6-7 months long-run depending on version."
+ },
+ {
+  "claim": "CBO: 2025 reconciliation act (OBBBA) raises uninsured by 10.9 million by 2034 and cuts Medicaid/SNAP by > $1.2 trillion",
+  "verdict": "corrected",
+  "correct_statement": "CBO estimates the enacted law (P.L. 119-21) increases the uninsured by 10 million in 2034 (7.5M from Medicaid, 2.1M from Marketplace changes, 0.4M other). Counting the expiry of enhanced ACA premium tax credits, the total is 14.2M. The 10.9M figure was CBO's estimate for the House-passed bill (June 2025). CBO estimates federal Medicaid cuts of $911 billion over 2025-2034 ($990B before interactions) and SNAP cuts of about $186 billion, roughly $1.1 trillion combined.",
+  "citation": "Congressional Budget Office (Aug 2025), estimated effects of P.L. 119-21 on the number of uninsured, publication 61367; KFF (2025), 'Allocating CBO's Estimates of Federal Medicaid Spending Reductions Across the States: Enacted Reconciliation Package'",
+  "source_url": "https://www.kff.org/medicaid/allocating-cbos-estimates-of-federal-medicaid-spending-reductions-across-the-states-enacted-reconciliation-package/",
+  "note": "cbo.gov returned 403, so figures are via KFF's citations of CBO. The SNAP $186B figure comes from the project note r10a, which matches CBO's score; I did not re-fetch it."
+ },
+ {
+  "claim": "V-Dem Democracy Report 2026 headline findings on autocratization and US status",
+  "verdict": "confirmed",
+  "correct_statement": "The V-Dem Democracy Report 2026 ('Unraveling the Democratic Era?') finds that for the average global citizen, democracy is back to 1978 levels. It counts 44 autocratizing countries (nearly a quarter of nations; 10 new in 2025, including the UK and Italy) and 92 autocracies vs 87 democracies at end-2025. 74% of the world's population (6 billion) live in autocracies and 41% in autocratizing countries. The USA 'loses its long-term status as a liberal democracy, for the first time in over 50 years', in what the report calls the most dramatic decline in American history.",
+  "citation": "Nord, M., et al. (2026), Democracy Report 2026: Unraveling the Democratic Era?, V-Dem Institute, University of Gothenburg",
+  "source_url": "https://www.v-dem.net/documents/75/V-Dem_Institute_Democracy_Report_2026_lowres.pdf",
+  "note": "Read from the PDF's executive summary. The lead author name is from memory and should be checked against the PDF cover."
+ },
+ {
+  "claim": "Stephan and Chenoweth (2008): security-force defections raise odds of success (~4.44 / 46x)",
+  "verdict": "corrected",
+  "correct_statement": "In Stephan and Chenoweth (2008), these are relative risk ratios from multinomial logit models, not odds ratios. Table 1 (campaigns facing a violent regime crackdown, N=234): security-force defections give an RRR of 4.44 (p<0.001) for full success. Table 3 (nonviolent campaigns only): the RRR is 46.51 (p<0.001) for success; for violent campaigns it is 2.10 and not significant. Defections occurred in about 52% of successful nonviolent campaigns and 32% of successful violent ones.",
+  "citation": "Stephan, M. J., and Chenoweth, E. (2008). Why Civil Resistance Works: The Strategic Logic of Nonviolent Conflict. International Security 33(1): 7-44.",
+  "source_url": "https://www.belfercenter.org/sites/default/files/legacy/files/IS3301_pp007-044_Stephan_Chenoweth.pdf",
+  "note": "Read directly from the PDF tables. The 46.51 estimate comes from a small subsample and should be described as imprecise."
+ },
+ {
+  "claim": "Worgl local currency experiment banned 1933, with about 200 copycat schemes (Austria).",
+  "verdict": "corrected",
+  "correct_statement": "Worgl's stamp-scrip (Freigeld) experiment ran from 31 July 1932 until the Austrian National Bank (Oesterreichische Nationalbank) ended it on 1 September 1933. By then at least 200 Austrian municipalities had drawn up plans to copy it. Only a few, such as neighbouring Kirchbichl, actually issued scrip, so these were planned imitations, not 200 operating schemes.",
+  "citation": "Wikipedia, 'Stamp scrip' and 'Worgl' (accessed 2026-10-02). Primary historical source: Unterguggenberger Institut, Worgl.",
+  "source_url": "https://en.wikipedia.org/wiki/Stamp_scrip",
+  "note": "Say '~200 towns planned copies', not '200 copycat schemes'. The figure traces back to the Unterguggenberger/Lietaer literature; I could not reach a primary archival source."
+ },
+ {
+  "claim": "Liberty Dollar: Bernard von NotHaus convicted 2011.",
+  "verdict": "confirmed",
+  "correct_statement": "A federal jury (W.D. North Carolina) convicted Bernard von NotHaus on 18 March 2011 of making, possessing and selling his own coins (18 U.S.C. 485, 486) and of conspiracy (18 U.S.C. 371). On 2 December 2014 he was sentenced to 6 months' house arrest and 3 years' probation, far below the prosecutors' request.",
+  "citation": "Wikipedia, 'Liberty dollar (private currency)'; US v. von NotHaus, No. 5:09-cr-27 (W.D.N.C.).",
+  "source_url": "https://en.wikipedia.org/wiki/Liberty_dollar_(private_currency)",
+  "note": "The lenient sentence is worth mentioning if the paper uses this case as an example of repression."
+ },
+ {
+  "claim": "Tornado Cash: Roman Storm verdict (2025) and Samourai Wallet developers' sentences (5 years?).",
+  "verdict": "corrected",
+  "correct_statement": "On 6 August 2025 a Manhattan federal jury (S.D.N.Y.) convicted Roman Storm of conspiracy to operate an unlicensed money transmitting business (maximum 5 years). It deadlocked on the money-laundering and sanctions-evasion conspiracy counts. The Samourai Wallet founders pleaded guilty in July 2025 to unlicensed money transmitting conspiracy. Keonne Rodriguez was sentenced on 6 November 2025 to 5 years in prison plus 3 years of supervised release and a $250,000 fine. William Lonergan Hill was sentenced in November 2025, reportedly to 4 years.",
+  "citation": "Wikipedia, 'Tornado Cash' and 'Samourai Wallet' (accessed 2026-10-02); US v. Storm, 23-cr-430 (S.D.N.Y.); US v. Rodriguez and Hill, 24-cr-82 (S.D.N.Y.).",
+  "source_url": "https://en.wikipedia.org/wiki/Samourai_Wallet",
+  "note": "Rodriguez's 5 years is verified. Hill's 4 years comes from memory: the DOJ and news pages would not load. The Aug 6 date and the deadlocked counts are from memory too, as Wikipedia only confirms the 1-of-3 conviction. Check the S.D.N.Y. press releases, and check whether Storm was sentenced or retried after Aug 2025."
+ },
+ {
+  "claim": "China's 2021 crypto mining ban: China's share of Bitcoin hashrate fell from ~34% (or higher) to 0, then recovered to ~14-20% underground (Cambridge CBECI).",
+  "verdict": "corrected",
+  "correct_statement": "Cambridge CBECI mining-map data put China's share of Bitcoin hashrate at about 75% in September 2019 and about 46% in April 2021. After the June 2021 crackdown it fell to effectively 0% in July-August 2021. Covert mining then brought it back to about 22% in September 2021 and about 21% in January 2022, the last month of data, making China the second-largest mining country again.",
+  "citation": "Cambridge Centre for Alternative Finance, Cambridge Bitcoin Electricity Consumption Index, Bitcoin Mining Map (data to Jan 2022).",
+  "source_url": "https://ccaf.io/cbnsi/cbeci/mining_map",
+  "note": "'~34%' is wrong: use ~46% (April 2021). Wikipedia ('Environmental effects of bitcoin') confirms the ~21% recovery in 2022. The interactive map page would not show the exact monthly numbers, so 75/46/22/21 come from memory of CCAF releases; re-read them off the map before publishing."
+ },
+ {
+  "claim": "Christiania (Copenhagen) and the Swiss WIR Bank as long-tolerated parallel economic communities; Falun Gong suppression 1999.",
+  "verdict": "corrected",
+  "correct_statement": "Freetown Christiania began as a squat on a former military base on 26 September 1971. The Danish parliament legalized it in 1989, and in 2012 residents' foundation started buying the land. It has its own local currency (the Lon), and its Pusher Street cannabis market was tolerated for decades until the street was dug up in 2024. The WIR Bank was founded in 1934 as a mutual-credit cooperative and got a banking licence in 1936; it is a regulated, legal complementary currency, not a merely tolerated one. China's ban on Falun Gong began with mass arrests on 20 July 1999, followed by a Ministry of Public Security ban on 22 July 1999. The coordinating 610 Office had been created on 10 June 1999.",
+  "citation": "Wikipedia, 'Freetown Christiania', 'WIR Bank', 'Persecution of Falun Gong' (accessed 2026-10-02).",
+  "source_url": "https://en.wikipedia.org/wiki/Persecution_of_Falun_Gong",
+  "note": "Call WIR 'state-licensed/integrated', not 'tolerated'. That makes it a case of a parallel system being absorbed into the regulated economy."
+ },
+ {
+  "claim": "Means-tested benefit clawback/taper rates: SNAP benefit reduction rate 30% of net income; UK Universal Credit taper 55%; SSI reduces benefit dollar for dollar for unearned income.",
+  "verdict": "confirmed",
+  "correct_statement": "SNAP benefits equal the maximum allotment minus 30% of the household's net monthly income. Because of the 20% earned-income deduction, the effective rate on gross earnings is about 24%. Universal Credit is reduced by 55p for every GBP 1 earned above any work allowance; the rate fell from 63% to 55% in the October 2021 Budget, effective 24 November 2021. SSI is reduced dollar for dollar by countable unearned income after a $20 general exclusion. Earned income is reduced by $1 for every $2 after the first $65 (plus the $20), a 50% rate.",
+  "citation": "Wikipedia, 'Supplemental Nutrition Assistance Program'; GOV.UK, 'Universal Credit: how your wages affect your payments'; Wikipedia, 'Universal Credit'; SSA, 'Understanding SSI: Income' (20 CFR 416.1124).",
+  "source_url": "https://www.gov.uk/universal-credit/how-your-wages-affect-your-payments",
+  "note": "The SSA and USDA pages returned 403. The SSI $20 and $65-plus-half rules are standard (20 CFR 416.1112, 416.1124) but I confirmed them from memory, not a fetched page."
+ },
+ {
+  "claim": "Chenoweth (2020) 'The future of nonviolent resistance' (Journal of Democracy) on declining success rates; Tufekci (2017) Twitter and Tear Gas on fast organizing but fragile movements.",
+  "verdict": "confirmed",
+  "correct_statement": "Chenoweth, E. (2020), 'The Future of Nonviolent Resistance', Journal of Democracy 31(3): 69-84, says success rates for nonviolent revolutionary campaigns stayed above 40% from the 1960s to about 2010, peaking at 65% in the 1990s. Since 2010 fewer than 34% have succeeded (8% for violent campaigns), and median peak participation has fallen from 2.7% to 1.3% of the population. Tufekci, Z. (2017), Twitter and Tear Gas: The Power and Fragility of Networked Protest (New Haven: Yale University Press), argues that digital tools let movements scale fast without building the organizational capacity that makes them durable.",
+  "citation": "Chenoweth, E. (2020). The Future of Nonviolent Resistance. Journal of Democracy 31(3), 69-84. doi:10.1353/jod.2020.0046; Tufekci, Z. (2017). Twitter and Tear Gas. Yale University Press.",
+  "source_url": "https://www.journalofdemocracy.org/articles/the-future-of-nonviolent-resistance-2/",
+  "note": "Quote Chenoweth's '<34% since 2010' figure exactly. I confirmed the Tufekci citation from memory; I did not fetch the publisher page."
+ },
+ {
+  "claim": "Hallyu (Korean Wave) and Cold War cultural diplomacy as soft-power cases; Hong Kong 2020 national security law.",
+  "verdict": "confirmed",
+  "correct_statement": "Hallyu and US/Soviet Cold War cultural diplomacy are standard examples of soft power, a term coined by Joseph Nye (Bound to Lead, 1990; Soft Power, 2004). China's NPC Standing Committee enacted the Hong Kong National Security Law, which took effect on 30 June 2020.",
+  "citation": "Nye, J. S. (2004). Soft Power: The Means to Success in World Politics. PublicAffairs; Law of the PRC on Safeguarding National Security in the HKSAR (promulgated 30 June 2020).",
+  "source_url": "https://en.wikipedia.org/wiki/Hong_Kong_national_security_law",
+  "note": "Confirmed from memory, no page fetched. These are general, well-documented examples. If a specific Hallyu figure is cited, it needs its own source."
+ },
+ {
+  "claim": "US Consumer Expenditure Survey: share of household spending that is substitutable/discretionary (claim 20 to 45%).",
+  "verdict": "corrected",
+  "correct_statement": "The BLS Consumer Expenditure Survey has no 'substitutable' or 'discretionary' category, so the 20-45% range is our own estimate built from its category shares. The 2024 average was $78,535 per household: housing 33.4%, transportation 17.0%, food 12.9%, personal insurance and pensions 12.5%, healthcare 7.9%, entertainment 4.6%, cash contributions 2.9%, apparel 2.5%, education 2.0%, miscellaneous 1.6%, personal care 1.2%, and alcohol, tobacco and reading 1.4%. Counting food, entertainment, apparel, personal care, contributions, miscellaneous and alcohol/tobacco/reading gives about 27%. Adding transportation gives about 44%.",
+  "citation": "US Bureau of Labor Statistics (2025). Consumer Expenditures in 2024 (news release / annual summary).",
+  "source_url": "https://www.bls.gov/news.release/cesan.nr0.htm",
+  "note": "Present 20-45% as derived from CE category shares, and state which categories it includes. Do not attribute the range to BLS."
+ },
+ {
+  "claim": "Metaculus community forecast for AGI date: ~2033 (REPORT.md line 591, from a July 2026 reading)",
+  "verdict": "corrected",
+  "correct_statement": "As of 2 Oct 2026 the Metaculus community forecast for 'When Will the First General AI Be Announced?' (q5121) has a median of 21 Jan 2031, with a displayed range of 16 Apr 2028 to Jul 2037. The ~Jan 2033 median recorded in July 2026 is out of date.",
+  "citation": "Metaculus (2026). When Will the First General AI Be Announced? Question 5121. https://www.metaculus.com/questions/5121/date-of-artificial-general-intelligence/ (accessed 2026-10-02)",
+  "source_url": "https://www.metaculus.com/questions/5121/date-of-artificial-general-intelligence/",
+  "note": "Read through r.jina.ai because direct fetch returned 403. The forecast moves over time, so cite the access date. One commenter notes the question now turns mainly on integrated robotics capability."
+ },
+ {
+  "claim": "AI Futures Project: AI 2027 automated coder timing, plus its 2025/2026 updates (automated coder 2027 to 2030)",
+  "verdict": "corrected",
+  "correct_statement": "AI 2027 (Kokotajlo, Alexander, Larsen, Lifland, Dean; 3 Apr 2025) puts a superhuman coder in March 2027. 2027 was the modal year, and the authors' medians were somewhat later (note added Nov 2025). In July 2025 they pushed their median back about 1.5 years. The AI Futures Model (Dec 2025) put full coding automation about 3 to 5 years later than the AI 2027 model; with median parameters it gives a superhuman coder in Dec 2031. Q1 2026 update (2 Apr 2026): Kokotajlo's automated-coder (AC) median moved from late 2029 to mid 2028, and Lifland's from early 2032 to mid 2030. Q2.5 2026 update (16 Aug 2026), all-things-considered AC forecasts: Kokotajlo p50 Nov 2027 (p10 Jan 2027, p90 Apr 2030); Brendan p50 Jan 2029 (p90 Jan 2050); Lifland p50 Jan 2030 (p90 Oct 2070). The authors estimate reality is running about 70 to 90% as fast as AI 2027 predicted. 'Automated coder 2027 to 2030' is accurate as the range of the three authors' current medians.",
+  "citation": "Kokotajlo, D., Alexander, S., Larsen, T., Lifland, E., Dean, R. (2025). AI 2027. https://ai-2027.com/ ; AI Futures Project (2025-12-31). AI Futures Model: Dec 2025 Update. https://blog.aifutures.org/p/ai-futures-model-dec-2025-update ; AI Futures Project (2026-04-02). Q1 2026 Timelines Update. https://blog.aifutures.org/p/q1-2026-timelines-update ; AI Futures Project (2026-08-16). Q2.5 2026 Timelines Update: Uplift and Revenue. https://blog.aifutures.org/p/q25-2026-timelines-update-uplift",
+  "source_url": "https://blog.aifutures.org/p/q25-2026-timelines-update-uplift",
+  "note": "Brendan's surname is not given in the post excerpt. Name the forecasters and the update date, because these medians move with each update."
+ },
+ {
+  "claim": "Davidson (2023) compute-centric takeoff framework: takeoff ~3 years",
+  "verdict": "confirmed",
+  "correct_statement": "Davidson (2023) estimates that training AI able to readily perform 100% of cognitive tasks takes about 4 orders of magnitude more effective compute than AI able to perform 20% (plausible range ~1 to 8 OOM). His model's median time to cross that gap is 'just 3 years'. Takeoff is defined as the time from AI that could readily automate 20% of cognitive tasks (weighted by 2020 economic value) to 100%.",
+  "citation": "Davidson, T. (2023). What a compute-centric framework says about takeoff speeds. Open Philanthropy (now Coefficient Giving), June 2023.",
+  "source_url": "https://coefficientgiving.org/research/what-a-compute-centric-framework-says-about-takeoff-speeds/",
+  "note": "The URL redirects from openphilanthropy.org. The report's median AGI year is 2043. Change the REPORT tag from [not verified] to [V]."
+ },
+ {
+  "claim": "XPT (Karger et al. 2023): superforecasters vs AI domain experts, AI-caused catastrophe (>=10% deaths) 2.13% vs 12% and AI extinction 0.38% vs 3% by 2100",
+  "verdict": "confirmed",
+  "correct_statement": "Median forecasts for 2100. AI-caused catastrophe (AI causes the deaths of more than 10% of humans alive within a 5-year period): superforecasters 2.13%, domain experts 12%. AI-caused human extinction: superforecasters 0.38%, domain experts 3%. Medians come from N=88 superforecasters and N=59 domain experts pooled across AI, nuclear and bio expertise, per Table 2.",
+  "citation": "Karger, E., Rosenberg, J., Jacobs, Z., Hickman, M., Hadshar, R., Gamin, K., Smith, T., Williams, B., McCaslin, T., Thomas, S., Tetlock, P. E. (2023). Forecasting Existential Risk: Evidence from a Long-Run Forecasting Tournament. Forecasting Research Institute Working Paper #1 (July 10, 2023; rev. Aug 8, 2023).",
+  "source_url": "https://forecastingresearch.org/xpt",
+  "note": "Wording fix: the threshold is 'more than 10%' within a 5-year window, not '>=10%'. Table 2's 'domain experts' column covers domain experts in general; the AI questions are usually reported against AI experts. Also in the report: general x-risk experts gave 10% (catastrophe) and 4.75% (extinction), and the public survey gave 5% and 2%."
+ },
+ {
+  "claim": "ESPAI (Grace et al. 2024, arXiv:2401.02843): median 5% extinction/severe disempowerment; HLMI 50% by 2047; FAOL 50% by 2116; 73% concerned about authoritarian population control",
+  "verdict": "confirmed",
+  "correct_statement": "Survey of 2,778 AI researchers (fielded late 2023). Aggregate forecasts: 50% chance of HLMI (unaided machines outperforming humans in every possible task) by 2047, and 50% chance of full automation of all occupations by 2116. Median probability of human extinction or similarly permanent and severe disempowerment from AI: 5% across question variants (medians of 5% or 10% depending on variant). 73% rated 'authoritarian rulers using AI to control their populations' as worthy of substantial or extreme concern; 'AI letting dangerous groups make powerful tools' also scored 73%.",
+  "citation": "Grace, K., Stewart, H., Sandkühler, J. F., Thomas, S., Weinstein-Raun, B., Brauner, J., Korzekwa, R. C. (2024). Thousands of AI Authors on the Future of AI. arXiv:2401.02843 (v3 revised Oct 8, 2025).",
+  "source_url": "https://arxiv.org/abs/2401.02843",
+  "note": "Between 38% and 51% of respondents gave at least a 10% chance of outcomes as bad as extinction."
+ },
+ {
+  "claim": "Acemoglu (2024) 'The simple macroeconomics of AI': ~4.6% of tasks; TFP/GDP effect over 10 years",
+  "verdict": "confirmed",
+  "correct_statement": "About 20% of US labor tasks are exposed to AI, and about 23% of those can be profitably automated within 10 years, so 0.23 x 0.20 = 4.6% of all tasks are impacted. The predicted TFP gain over 10 years is no more than 0.66% (about 0.064 pp per year), or under 0.53% once hard-to-learn tasks are accounted for. The GDP gain over 10 years is 0.93% to 1.16%, or 1.4% to 1.56% with a large investment boom.",
+  "citation": "Acemoglu, D. (2025). The simple macroeconomics of AI. Economic Policy 40(121): 13-58. doi:10.1093/epolic/eiae042. Earlier: NBER Working Paper 32487 (May 2024).",
+  "source_url": "https://www.nber.org/papers/w32487",
+  "note": "Cite the journal version (2025, published online Aug 2024) or the NBER WP (2024). Both are fine if labeled."
+ },
+ {
+  "claim": "Carlsmith (2021/2022): ~5% existential catastrophe from power-seeking AI, later >10%",
+  "verdict": "confirmed",
+  "correct_statement": "Carlsmith's April 2021 estimate was ~5% that misaligned power-seeking AI causes existential catastrophe by 2070. In May 2022 he updated it to >10%.",
+  "citation": "Carlsmith, J. (2022). Is Power-Seeking AI an Existential Risk? arXiv:2206.13353 (v1 June 16, 2022; v2 Aug 13, 2024). Original report Open Philanthropy, April 2021.",
+  "source_url": "https://arxiv.org/abs/2206.13353",
+  "note": ""
+ },
+ {
+  "claim": "Ord (2020): 1 in 10 for unaligned AI, 1 in 6 total existential risk",
+  "verdict": "confirmed",
+  "correct_statement": "Ord estimates about 1 in 10 for existential catastrophe from unaligned AI over the next 100 years, and about 1 in 6 for total existential risk over the same period (Table 6.1).",
+  "citation": "Ord, T. (2020). The Precipice: Existential Risk and the Future of Humanity. London: Bloomsbury; New York: Hachette.",
+  "source_url": "https://theprecipice.com/",
+  "note": "Web search was not available in this session, so this was not re-fetched. The figures are the widely cited Table 6.1 values."
+ },
+ {
+  "claim": "Drago and Laine (2025) The Intelligence Curse; Kulveit et al. (2025) Gradual Disempowerment; Davidson, Finnveden and Hadshar (2025) AI-Enabled Coups (Forethought): full references with URLs",
+  "verdict": "confirmed",
+  "correct_statement": "Drago, L., Laine, R. (2025). The Intelligence Curse (essay series, 7 chapters). https://intelligence-curse.ai/ | Kulveit, J., Douglas, R., Ammann, N., Turan, D., Krueger, D., Duvenaud, D. (2025). Gradual Disempowerment: Systemic Existential Risks from Incremental AI Development. arXiv:2501.16946 (submitted 28 Jan 2025). | Davidson, T., Finnveden, L., Hadshar, R. (2025). AI-Enabled Coups: How a Small Group Could Use AI to Seize Power. Forethought, 15 April 2025. https://www.forethought.org/research/ai-enabled-coups-how-a-small-group-could-use-ai-to-seize-power",
+  "citation": "As in correct_statement.",
+  "source_url": "https://arxiv.org/abs/2501.16946",
+  "note": "The Intelligence Curse site shows no publication date. The 2025 year is from common citation (believed April 2025) but was not confirmed on the page."
+ },
+ {
+  "claim": "Sanz-Garcia et al. (2021): psychopathy prevalence 1.2% on PCL-R, 4.5% pooled (16 samples, N=11,497)",
+  "verdict": "confirmed",
+  "correct_statement": "Pooled prevalence of psychopathy in the general adult population is 4.5%. It is 1.2% (95% CI 0 to 3.7%) with the PCL-R or PCL:SV, and 5.4% with other instruments. By sex: males 7.9%, females 2.9%. By sample type: community samples 1.9%, university students 8.1%, organizations 12.9%. Based on 16 samples from 15 studies, N=11,497.",
+  "citation": "Sanz-García, A., Gesteira, C., Sanz, J., García-Vera, M. P. (2021). Prevalence of Psychopathy in the General Adult Population: A Systematic Review and Meta-Analysis. Frontiers in Psychology 12: 661044. doi:10.3389/fpsyg.2021.661044",
+  "source_url": "https://www.frontiersin.org/articles/10.3389/fpsyg.2021.661044/full",
+  "note": "Wording fix: the 1.2% is for PCL-R and PCL:SV combined, not PCL-R alone."
+ },
+ {
+  "claim": "Landay, Harms and Crede (2019): psychopathy and leadership meta-analysis, weak link to leader emergence (92 samples)",
+  "verdict": "confirmed",
+  "correct_statement": "Based on 92 independent samples, the meta-analysis found that psychopathic tendencies have a weak positive correlation with leadership emergence, a weak negative correlation with leadership effectiveness, and a moderate negative correlation with transformational leadership. The emergence link held for men but not women, and small curvilinear effects appeared.",
+  "citation": "Landay, K., Harms, P. D., Credé, M. (2019). Shall we serve the dark lords? A meta-analytic review of psychopathy and leadership. Journal of Applied Psychology 104(1): 183-196. doi:10.1037/apl0000357",
+  "source_url": "https://doi.org/10.1037/apl0000357",
+  "note": "Add volume, issue and pages to the reference list."
+ },
+ {
+  "claim": "Glad (2002) 'Why tyrants go too far'",
+  "verdict": "confirmed",
+  "correct_statement": "Glad's abstract describes the profile that best fits the tyrants studied as a narcissist with severe superego deficiencies. Once such a ruler consolidates power, reality testing diminishes, behavior becomes more erratic, and paranoid defenses become more exaggerated.",
+  "citation": "Glad, B. (2002). Why Tyrants Go Too Far: Malignant Narcissism and Absolute Power. Political Psychology 23(1): 1-37. doi:10.1111/0162-895X.00268",
+  "source_url": "https://doi.org/10.1111/0162-895X.00268",
+  "note": "Crossref and OpenAlex list the pages as 1-2, which looks like a metadata error. 1-37 is the commonly cited range, so check it against the journal PDF."
+ },
+ {
+  "claim": "Haslam, Loughnan and Perry (2014) Meta-Milgram: 43.6% obedience, N=740 (REPORT reference lists 'Haslam, S. A.')",
+  "verdict": "corrected",
+  "correct_statement": "Across 21 of Milgram's 23 conditions (N=740), the overall rate of obedience to maximum voltage was 43.6%. The first author is Nick Haslam (N.), not S. A. Haslam.",
+  "citation": "Haslam, N., Loughnan, S., Perry, G. (2014). Meta-Milgram: An Empirical Synthesis of the Obedience Experiments. PLoS ONE 9(4): e93927. doi:10.1371/journal.pone.0093927",
+  "source_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0093927",
+  "note": "The figures are correct. Fix the author initial in REPORT.md line 680 (S. Alexander Haslam is a different obedience researcher)."
+ },
+ {
+  "claim": "Burger (2009): obedience only slightly lower than Milgram's, in a partial replication stopped at 150 V",
+  "verdict": "confirmed",
+  "correct_statement": "Burger's partial replication of Milgram's Experiment 5 ran 70 adults up to 150 V, the point of the learner's first verbal protest. 79% of Milgram's participants who went past that point continued to the end. Obedience rates in the 2006 replication were only slightly lower than Milgram's 45 years earlier.",
+  "citation": "Burger, J. M. (2009). Replicating Milgram: Would people still obey today? American Psychologist 64(1): 1-11. doi:10.1037/a0010932",
+  "source_url": "https://doi.org/10.1037/a0010932",
+  "note": "Commonly reported figures: 70% continued past 150 V in Burger's study vs 82.5% in Milgram's comparable condition. Those are from the paper body and were not checked here."
+ }
+]
