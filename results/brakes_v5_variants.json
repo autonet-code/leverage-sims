@@ -1,0 +1,947 @@
+{
+ "design": "1000 outer draws x 8 m8 replicates x 200 inner paths; m8 seed SEED+900, integrator seed SEED+11 (integrate_v4 structural-variants setup), matched baseline on the same draws and random numbers. Change = variant - matched baseline; 95% CI from a paired bootstrap over outer draws (2000 resamples).",
+ "variants": {
+  "brake_pid": "Brake 1 protective doctrine (unchanged from round 1)",
+  "brake_selfrisk": "Brake 2 revised (c_selfrisk ln(1.0,1.5), e_ex U(0.25,0.6), ideology exemption b_id), no dissent risk",
+  "brake_selfrisk_dis": "Brake 2 revised plus dissent risk (m_dis)",
+  "brake_mort": "Brake 3 leader mortality, fixed hazard (set at closure, declining with k_le, age term reset at succession)",
+  "brakes_final": "final configuration: all four on (pid_on, sr_on, dis_on, brk_mort)"
+ },
+ "seed": 20260930,
+ "device": "cuda",
+ "results": {
+  "brake_pid": {
+   "P(>=99.9% deliberate) US or China, 2075": {
+    "variant": 0.44366,
+    "matched_baseline": 0.44728,
+    "change": -0.00362,
+    "change_paired_bootstrap_ci95": [
+     -0.00493,
+     -0.00235
+    ],
+    "relative_change": -0.0081
+   },
+   "P(>=99.9% deliberate) any bloc, 2075": {
+    "variant": 0.6246,
+    "matched_baseline": 0.62644,
+    "change": -0.00184,
+    "change_paired_bootstrap_ci95": [
+     -0.00282,
+     -0.00099
+    ],
+    "relative_change": -0.0029
+   },
+   "P(world population loss >=99.9%), 2075": {
+    "variant": 0.14139,
+    "matched_baseline": 0.14425,
+    "change": -0.00285,
+    "change_paired_bootstrap_ci95": [
+     -0.00405,
+     -0.00179
+    ],
+    "relative_change": -0.0198
+   },
+   "P(S5 deliberate >=10%) US or China, 2075": {
+    "variant": 0.48944,
+    "matched_baseline": 0.49303,
+    "change": -0.00359,
+    "change_paired_bootstrap_ci95": [
+     -0.00497,
+     -0.0023
+    ],
+    "relative_change": -0.0073
+   },
+   "P(S5 deliberate >=10%) any bloc, 2075": {
+    "variant": 0.67253,
+    "matched_baseline": 0.67409,
+    "change": -0.00155,
+    "change_paired_bootstrap_ci95": [
+     -0.00254,
+     -0.00074
+    ],
+    "relative_change": -0.0023
+   },
+   "P(>=99.9% deliberate) US or China, by 2050": {
+    "variant": 0.31361,
+    "matched_baseline": 0.31695,
+    "change": -0.00334,
+    "change_paired_bootstrap_ci95": [
+     -0.00456,
+     -0.00219
+    ],
+    "relative_change": -0.0105
+   },
+   "P(S5 deliberate >=10%) US or China, by 2050": {
+    "variant": 0.40011,
+    "matched_baseline": 0.40343,
+    "change": -0.00332,
+    "change_paired_bootstrap_ci95": [
+     -0.0046,
+     -0.00213
+    ],
+    "relative_change": -0.0082
+   },
+   "P(US or China public stripped of rights, 2075)": {
+    "variant": 0.73458,
+    "matched_baseline": 0.73633,
+    "change": -0.00175,
+    "change_paired_bootstrap_ci95": [
+     -0.00268,
+     -0.0009
+    ],
+    "relative_change": -0.0024
+   }
+  },
+  "brake_selfrisk": {
+   "P(>=99.9% deliberate) US or China, 2075": {
+    "variant": 0.32651,
+    "matched_baseline": 0.44728,
+    "change": -0.12077,
+    "change_paired_bootstrap_ci95": [
+     -0.13182,
+     -0.10999
+    ],
+    "relative_change": -0.27
+   },
+   "P(>=99.9% deliberate) any bloc, 2075": {
+    "variant": 0.54368,
+    "matched_baseline": 0.62644,
+    "change": -0.08276,
+    "change_paired_bootstrap_ci95": [
+     -0.09171,
+     -0.07409
+    ],
+    "relative_change": -0.1321
+   },
+   "P(world population loss >=99.9%), 2075": {
+    "variant": 0.0636,
+    "matched_baseline": 0.14425,
+    "change": -0.08064,
+    "change_paired_bootstrap_ci95": [
+     -0.09041,
+     -0.07127
+    ],
+    "relative_change": -0.5591
+   },
+   "P(S5 deliberate >=10%) US or China, 2075": {
+    "variant": 0.37619,
+    "matched_baseline": 0.49303,
+    "change": -0.11684,
+    "change_paired_bootstrap_ci95": [
+     -0.12805,
+     -0.10618
+    ],
+    "relative_change": -0.237
+   },
+   "P(S5 deliberate >=10%) any bloc, 2075": {
+    "variant": 0.59826,
+    "matched_baseline": 0.67409,
+    "change": -0.07582,
+    "change_paired_bootstrap_ci95": [
+     -0.08424,
+     -0.06728
+    ],
+    "relative_change": -0.1125
+   },
+   "P(>=99.9% deliberate) US or China, by 2050": {
+    "variant": 0.18102,
+    "matched_baseline": 0.31695,
+    "change": -0.13594,
+    "change_paired_bootstrap_ci95": [
+     -0.14795,
+     -0.12363
+    ],
+    "relative_change": -0.4289
+   },
+   "P(S5 deliberate >=10%) US or China, by 2050": {
+    "variant": 0.2582,
+    "matched_baseline": 0.40343,
+    "change": -0.14522,
+    "change_paired_bootstrap_ci95": [
+     -0.15762,
+     -0.1333
+    ],
+    "relative_change": -0.36
+   },
+   "P(US or China public stripped of rights, 2075)": {
+    "variant": 0.69083,
+    "matched_baseline": 0.73633,
+    "change": -0.0455,
+    "change_paired_bootstrap_ci95": [
+     -0.05245,
+     -0.03881
+    ],
+    "relative_change": -0.0618
+   }
+  },
+  "brake_selfrisk_dis": {
+   "P(>=99.9% deliberate) US or China, 2075": {
+    "variant": 0.376,
+    "matched_baseline": 0.44728,
+    "change": -0.07128,
+    "change_paired_bootstrap_ci95": [
+     -0.0809,
+     -0.06247
+    ],
+    "relative_change": -0.1594
+   },
+   "P(>=99.9% deliberate) any bloc, 2075": {
+    "variant": 0.58259,
+    "matched_baseline": 0.62644,
+    "change": -0.04386,
+    "change_paired_bootstrap_ci95": [
+     -0.05117,
+     -0.03676
+    ],
+    "relative_change": -0.07
+   },
+   "P(world population loss >=99.9%), 2075": {
+    "variant": 0.09417,
+    "matched_baseline": 0.14425,
+    "change": -0.05008,
+    "change_paired_bootstrap_ci95": [
+     -0.05749,
+     -0.04307
+    ],
+    "relative_change": -0.3472
+   },
+   "P(S5 deliberate >=10%) US or China, 2075": {
+    "variant": 0.42481,
+    "matched_baseline": 0.49303,
+    "change": -0.06822,
+    "change_paired_bootstrap_ci95": [
+     -0.07759,
+     -0.05963
+    ],
+    "relative_change": -0.1384
+   },
+   "P(S5 deliberate >=10%) any bloc, 2075": {
+    "variant": 0.63204,
+    "matched_baseline": 0.67409,
+    "change": -0.04204,
+    "change_paired_bootstrap_ci95": [
+     -0.0492,
+     -0.0355
+    ],
+    "relative_change": -0.0624
+   },
+   "P(>=99.9% deliberate) US or China, by 2050": {
+    "variant": 0.2194,
+    "matched_baseline": 0.31695,
+    "change": -0.09755,
+    "change_paired_bootstrap_ci95": [
+     -0.10822,
+     -0.08777
+    ],
+    "relative_change": -0.3078
+   },
+   "P(S5 deliberate >=10%) US or China, by 2050": {
+    "variant": 0.30796,
+    "matched_baseline": 0.40343,
+    "change": -0.09547,
+    "change_paired_bootstrap_ci95": [
+     -0.10633,
+     -0.08564
+    ],
+    "relative_change": -0.2366
+   },
+   "P(US or China public stripped of rights, 2075)": {
+    "variant": 0.70955,
+    "matched_baseline": 0.73633,
+    "change": -0.02678,
+    "change_paired_bootstrap_ci95": [
+     -0.0326,
+     -0.02149
+    ],
+    "relative_change": -0.0364
+   }
+  },
+  "brake_mort": {
+   "P(>=99.9% deliberate) US or China, 2075": {
+    "variant": 0.44936,
+    "matched_baseline": 0.44728,
+    "change": 0.00208,
+    "change_paired_bootstrap_ci95": [
+     -0.00335,
+     0.00738
+    ],
+    "relative_change": 0.0046
+   },
+   "P(>=99.9% deliberate) any bloc, 2075": {
+    "variant": 0.62639,
+    "matched_baseline": 0.62644,
+    "change": -6e-05,
+    "change_paired_bootstrap_ci95": [
+     -0.00487,
+     0.00487
+    ],
+    "relative_change": -0.0001
+   },
+   "P(world population loss >=99.9%), 2075": {
+    "variant": 0.14077,
+    "matched_baseline": 0.14425,
+    "change": -0.00348,
+    "change_paired_bootstrap_ci95": [
+     -0.00743,
+     0.00037
+    ],
+    "relative_change": -0.0241
+   },
+   "P(S5 deliberate >=10%) US or China, 2075": {
+    "variant": 0.50918,
+    "matched_baseline": 0.49303,
+    "change": 0.01615,
+    "change_paired_bootstrap_ci95": [
+     0.01085,
+     0.02135
+    ],
+    "relative_change": 0.0328
+   },
+   "P(S5 deliberate >=10%) any bloc, 2075": {
+    "variant": 0.68197,
+    "matched_baseline": 0.67409,
+    "change": 0.00789,
+    "change_paired_bootstrap_ci95": [
+     0.00331,
+     0.01257
+    ],
+    "relative_change": 0.0117
+   },
+   "P(>=99.9% deliberate) US or China, by 2050": {
+    "variant": 0.31259,
+    "matched_baseline": 0.31695,
+    "change": -0.00436,
+    "change_paired_bootstrap_ci95": [
+     -0.00819,
+     -0.00032
+    ],
+    "relative_change": -0.0138
+   },
+   "P(S5 deliberate >=10%) US or China, by 2050": {
+    "variant": 0.4108,
+    "matched_baseline": 0.40343,
+    "change": 0.00737,
+    "change_paired_bootstrap_ci95": [
+     0.00302,
+     0.01156
+    ],
+    "relative_change": 0.0183
+   },
+   "P(US or China public stripped of rights, 2075)": {
+    "variant": 0.74093,
+    "matched_baseline": 0.73633,
+    "change": 0.0046,
+    "change_paired_bootstrap_ci95": [
+     0.00058,
+     0.00858
+    ],
+    "relative_change": 0.0062
+   }
+  },
+  "brakes_final": {
+   "P(>=99.9% deliberate) US or China, 2075": {
+    "variant": 0.3729,
+    "matched_baseline": 0.44728,
+    "change": -0.07438,
+    "change_paired_bootstrap_ci95": [
+     -0.08496,
+     -0.06455
+    ],
+    "relative_change": -0.1663
+   },
+   "P(>=99.9% deliberate) any bloc, 2075": {
+    "variant": 0.57789,
+    "matched_baseline": 0.62644,
+    "change": -0.04855,
+    "change_paired_bootstrap_ci95": [
+     -0.05693,
+     -0.03991
+    ],
+    "relative_change": -0.0775
+   },
+   "P(world population loss >=99.9%), 2075": {
+    "variant": 0.09432,
+    "matched_baseline": 0.14425,
+    "change": -0.04993,
+    "change_paired_bootstrap_ci95": [
+     -0.05806,
+     -0.04232
+    ],
+    "relative_change": -0.3461
+   },
+   "P(S5 deliberate >=10%) US or China, 2075": {
+    "variant": 0.43689,
+    "matched_baseline": 0.49303,
+    "change": -0.05613,
+    "change_paired_bootstrap_ci95": [
+     -0.06635,
+     -0.04675
+    ],
+    "relative_change": -0.1139
+   },
+   "P(S5 deliberate >=10%) any bloc, 2075": {
+    "variant": 0.63668,
+    "matched_baseline": 0.67409,
+    "change": -0.03741,
+    "change_paired_bootstrap_ci95": [
+     -0.04599,
+     -0.02947
+    ],
+    "relative_change": -0.0555
+   },
+   "P(>=99.9% deliberate) US or China, by 2050": {
+    "variant": 0.21831,
+    "matched_baseline": 0.31695,
+    "change": -0.09864,
+    "change_paired_bootstrap_ci95": [
+     -0.10939,
+     -0.08805
+    ],
+    "relative_change": -0.3112
+   },
+   "P(S5 deliberate >=10%) US or China, by 2050": {
+    "variant": 0.3156,
+    "matched_baseline": 0.40343,
+    "change": -0.08783,
+    "change_paired_bootstrap_ci95": [
+     -0.09924,
+     -0.07712
+    ],
+    "relative_change": -0.2177
+   },
+   "P(US or China public stripped of rights, 2075)": {
+    "variant": 0.71144,
+    "matched_baseline": 0.73633,
+    "change": -0.02489,
+    "change_paired_bootstrap_ci95": [
+     -0.03156,
+     -0.01897
+    ],
+    "relative_change": -0.0338
+   }
+  },
+  "baseline": {
+   "P(>=99.9% deliberate) US or China, 2075": 0.44728,
+   "P(>=99.9% deliberate) any bloc, 2075": 0.62645,
+   "P(world population loss >=99.9%), 2075": 0.14425,
+   "P(S5 deliberate >=10%) US or China, 2075": 0.49303,
+   "P(S5 deliberate >=10%) any bloc, 2075": 0.67409,
+   "P(>=99.9% deliberate) US or China, by 2050": 0.31695,
+   "P(S5 deliberate >=10%) US or China, by 2050": 0.40343,
+   "P(US or China public stripped of rights, 2075)": 0.73633
+  }
+ },
+ "diagnostics_m8_world": {
+  "baseline": {
+   "US_or_China_blocs": {
+    "P_protective_doctrine_held_at_first_decision": 0.0,
+    "mean_pid_level_at_first_decision": 0.0,
+    "P_doctrine_held_at_execution": 0.0,
+    "share_closed_autocracy_years_with_doctrine": 0.0,
+    "P_doctrine_ever_adopted_per_bloc": 0.0,
+    "selfrisk_decision_years_with_exposed_members_per_bloc_path": 0.0,
+    "selfrisk_decision_years_with_a_member_vote_flipped_harsh_to_mild_per_bloc_path": 0.0,
+    "selfrisk_share_of_exposed_decisions_where_coalition_choice_changed": 0.0,
+    "selfrisk_coalition_choice_flipped_per_bloc_path": 0.0,
+    "selfrisk_harsh_to_mild_flips_per_bloc_path": 0.0,
+    "selfrisk_depopulate_blocked_per_bloc_path": 0.0,
+    "selfrisk_extra_vetoes_per_bloc_path": 0.0,
+    "P_selfrisk_blocked_depopulation_at_least_once_per_bloc": 0.0,
+    "mean_leader_deaths_per_bloc_path": 0.0,
+    "mean_leader_deaths_per_path_summed_over_blocs": 0.0,
+    "heir_successions_per_bloc_path": 0.0,
+    "split_successions_per_bloc_path": 0.0,
+    "leader_deaths_during_execution_per_bloc_path": 0.0,
+    "executions_halted_by_split_per_bloc_path": 0.0,
+    "P_execution_halted_by_split_at_least_once_per_bloc": 0.0,
+    "P_execution_started_per_bloc": 0.34981,
+    "dissent_decision_years_with_dissent_risk_per_bloc_path": 0.0,
+    "dissent_failed_veto_punishments_per_bloc_path": 0.0,
+    "P_failed_veto_punishment_at_least_once_per_bloc": 0.0,
+    "dissent_share_exposed_member_decisions_net_selfrisk_negative": 0.0,
+    "dissent_mean_c_x_dPno_minus_dPyes_over_exposed_member_decisions": 0.0,
+    "dissent_decision_years_with_a_member_pushed_back_to_harsh_per_bloc_path": 0.0,
+    "dissent_coalition_choice_changed_vs_selfrisk_only_per_bloc_path": 0.0,
+    "dissent_restored_harsh_choice_per_bloc_path": 0.0,
+    "dissent_restored_depopulation_per_bloc_path": 0.0
+   },
+   "all_blocs": {
+    "P_protective_doctrine_held_at_first_decision": 0.0,
+    "mean_pid_level_at_first_decision": 0.0,
+    "P_doctrine_held_at_execution": 0.0,
+    "share_closed_autocracy_years_with_doctrine": 0.0,
+    "P_doctrine_ever_adopted_per_bloc": 0.0,
+    "selfrisk_decision_years_with_exposed_members_per_bloc_path": 0.0,
+    "selfrisk_decision_years_with_a_member_vote_flipped_harsh_to_mild_per_bloc_path": 0.0,
+    "selfrisk_share_of_exposed_decisions_where_coalition_choice_changed": 0.0,
+    "selfrisk_coalition_choice_flipped_per_bloc_path": 0.0,
+    "selfrisk_harsh_to_mild_flips_per_bloc_path": 0.0,
+    "selfrisk_depopulate_blocked_per_bloc_path": 0.0,
+    "selfrisk_extra_vetoes_per_bloc_path": 0.0,
+    "P_selfrisk_blocked_depopulation_at_least_once_per_bloc": 0.0,
+    "mean_leader_deaths_per_bloc_path": 0.0,
+    "mean_leader_deaths_per_path_summed_over_blocs": 0.0,
+    "heir_successions_per_bloc_path": 0.0,
+    "split_successions_per_bloc_path": 0.0,
+    "leader_deaths_during_execution_per_bloc_path": 0.0,
+    "executions_halted_by_split_per_bloc_path": 0.0,
+    "P_execution_halted_by_split_at_least_once_per_bloc": 0.0,
+    "P_execution_started_per_bloc": 0.373,
+    "dissent_decision_years_with_dissent_risk_per_bloc_path": 0.0,
+    "dissent_failed_veto_punishments_per_bloc_path": 0.0,
+    "P_failed_veto_punishment_at_least_once_per_bloc": 0.0,
+    "dissent_share_exposed_member_decisions_net_selfrisk_negative": 0.0,
+    "dissent_mean_c_x_dPno_minus_dPyes_over_exposed_member_decisions": 0.0,
+    "dissent_decision_years_with_a_member_pushed_back_to_harsh_per_bloc_path": 0.0,
+    "dissent_coalition_choice_changed_vs_selfrisk_only_per_bloc_path": 0.0,
+    "dissent_restored_harsh_choice_per_bloc_path": 0.0,
+    "dissent_restored_depopulation_per_bloc_path": 0.0
+   }
+  },
+  "brake_pid": {
+   "US_or_China_blocs": {
+    "P_protective_doctrine_held_at_first_decision": 0.02958,
+    "mean_pid_level_at_first_decision": 0.01421,
+    "P_doctrine_held_at_execution": 0.05191,
+    "share_closed_autocracy_years_with_doctrine": 0.09619,
+    "P_doctrine_ever_adopted_per_bloc": 0.22631,
+    "selfrisk_decision_years_with_exposed_members_per_bloc_path": 0.0,
+    "selfrisk_decision_years_with_a_member_vote_flipped_harsh_to_mild_per_bloc_path": 0.0,
+    "selfrisk_share_of_exposed_decisions_where_coalition_choice_changed": 0.0,
+    "selfrisk_coalition_choice_flipped_per_bloc_path": 0.0,
+    "selfrisk_harsh_to_mild_flips_per_bloc_path": 0.0,
+    "selfrisk_depopulate_blocked_per_bloc_path": 0.0,
+    "selfrisk_extra_vetoes_per_bloc_path": 0.0,
+    "P_selfrisk_blocked_depopulation_at_least_once_per_bloc": 0.0,
+    "mean_leader_deaths_per_bloc_path": 0.0,
+    "mean_leader_deaths_per_path_summed_over_blocs": 0.0,
+    "heir_successions_per_bloc_path": 0.0,
+    "split_successions_per_bloc_path": 0.0,
+    "leader_deaths_during_execution_per_bloc_path": 0.0,
+    "executions_halted_by_split_per_bloc_path": 0.0,
+    "P_execution_halted_by_split_at_least_once_per_bloc": 0.0,
+    "P_execution_started_per_bloc": 0.34556,
+    "dissent_decision_years_with_dissent_risk_per_bloc_path": 0.0,
+    "dissent_failed_veto_punishments_per_bloc_path": 0.0,
+    "P_failed_veto_punishment_at_least_once_per_bloc": 0.0,
+    "dissent_share_exposed_member_decisions_net_selfrisk_negative": 0.0,
+    "dissent_mean_c_x_dPno_minus_dPyes_over_exposed_member_decisions": 0.0,
+    "dissent_decision_years_with_a_member_pushed_back_to_harsh_per_bloc_path": 0.0,
+    "dissent_coalition_choice_changed_vs_selfrisk_only_per_bloc_path": 0.0,
+    "dissent_restored_harsh_choice_per_bloc_path": 0.0,
+    "dissent_restored_depopulation_per_bloc_path": 0.0
+   },
+   "all_blocs": {
+    "P_protective_doctrine_held_at_first_decision": 0.03085,
+    "mean_pid_level_at_first_decision": 0.01543,
+    "P_doctrine_held_at_execution": 0.04923,
+    "share_closed_autocracy_years_with_doctrine": 0.09266,
+    "P_doctrine_ever_adopted_per_bloc": 0.21031,
+    "selfrisk_decision_years_with_exposed_members_per_bloc_path": 0.0,
+    "selfrisk_decision_years_with_a_member_vote_flipped_harsh_to_mild_per_bloc_path": 0.0,
+    "selfrisk_share_of_exposed_decisions_where_coalition_choice_changed": 0.0,
+    "selfrisk_coalition_choice_flipped_per_bloc_path": 0.0,
+    "selfrisk_harsh_to_mild_flips_per_bloc_path": 0.0,
+    "selfrisk_depopulate_blocked_per_bloc_path": 0.0,
+    "selfrisk_extra_vetoes_per_bloc_path": 0.0,
+    "P_selfrisk_blocked_depopulation_at_least_once_per_bloc": 0.0,
+    "mean_leader_deaths_per_bloc_path": 0.0,
+    "mean_leader_deaths_per_path_summed_over_blocs": 0.0,
+    "heir_successions_per_bloc_path": 0.0,
+    "split_successions_per_bloc_path": 0.0,
+    "leader_deaths_during_execution_per_bloc_path": 0.0,
+    "executions_halted_by_split_per_bloc_path": 0.0,
+    "P_execution_halted_by_split_at_least_once_per_bloc": 0.0,
+    "P_execution_started_per_bloc": 0.36944,
+    "dissent_decision_years_with_dissent_risk_per_bloc_path": 0.0,
+    "dissent_failed_veto_punishments_per_bloc_path": 0.0,
+    "P_failed_veto_punishment_at_least_once_per_bloc": 0.0,
+    "dissent_share_exposed_member_decisions_net_selfrisk_negative": 0.0,
+    "dissent_mean_c_x_dPno_minus_dPyes_over_exposed_member_decisions": 0.0,
+    "dissent_decision_years_with_a_member_pushed_back_to_harsh_per_bloc_path": 0.0,
+    "dissent_coalition_choice_changed_vs_selfrisk_only_per_bloc_path": 0.0,
+    "dissent_restored_harsh_choice_per_bloc_path": 0.0,
+    "dissent_restored_depopulation_per_bloc_path": 0.0
+   }
+  },
+  "brake_selfrisk": {
+   "US_or_China_blocs": {
+    "P_protective_doctrine_held_at_first_decision": 0.0,
+    "mean_pid_level_at_first_decision": 0.0,
+    "P_doctrine_held_at_execution": 0.0,
+    "share_closed_autocracy_years_with_doctrine": 0.0,
+    "P_doctrine_ever_adopted_per_bloc": 0.0,
+    "selfrisk_decision_years_with_exposed_members_per_bloc_path": 20.49931,
+    "selfrisk_decision_years_with_a_member_vote_flipped_harsh_to_mild_per_bloc_path": 9.15406,
+    "selfrisk_share_of_exposed_decisions_where_coalition_choice_changed": 0.07446,
+    "selfrisk_coalition_choice_flipped_per_bloc_path": 1.52644,
+    "selfrisk_harsh_to_mild_flips_per_bloc_path": 1.3255,
+    "selfrisk_depopulate_blocked_per_bloc_path": 1.36919,
+    "selfrisk_extra_vetoes_per_bloc_path": 0.01469,
+    "P_selfrisk_blocked_depopulation_at_least_once_per_bloc": 0.24556,
+    "mean_leader_deaths_per_bloc_path": 0.0,
+    "mean_leader_deaths_per_path_summed_over_blocs": 0.0,
+    "heir_successions_per_bloc_path": 0.0,
+    "split_successions_per_bloc_path": 0.0,
+    "leader_deaths_during_execution_per_bloc_path": 0.0,
+    "executions_halted_by_split_per_bloc_path": 0.0,
+    "P_execution_halted_by_split_at_least_once_per_bloc": 0.0,
+    "P_execution_started_per_bloc": 0.23831,
+    "dissent_decision_years_with_dissent_risk_per_bloc_path": 0.0,
+    "dissent_failed_veto_punishments_per_bloc_path": 0.0,
+    "P_failed_veto_punishment_at_least_once_per_bloc": 0.0,
+    "dissent_share_exposed_member_decisions_net_selfrisk_negative": 0.0,
+    "dissent_mean_c_x_dPno_minus_dPyes_over_exposed_member_decisions": 0.0,
+    "dissent_decision_years_with_a_member_pushed_back_to_harsh_per_bloc_path": 0.0,
+    "dissent_coalition_choice_changed_vs_selfrisk_only_per_bloc_path": 0.0,
+    "dissent_restored_harsh_choice_per_bloc_path": 0.0,
+    "dissent_restored_depopulation_per_bloc_path": 0.0
+   },
+   "all_blocs": {
+    "P_protective_doctrine_held_at_first_decision": 0.0,
+    "mean_pid_level_at_first_decision": 0.0,
+    "P_doctrine_held_at_execution": 0.0,
+    "share_closed_autocracy_years_with_doctrine": 0.0,
+    "P_doctrine_ever_adopted_per_bloc": 0.0,
+    "selfrisk_decision_years_with_exposed_members_per_bloc_path": 17.9161,
+    "selfrisk_decision_years_with_a_member_vote_flipped_harsh_to_mild_per_bloc_path": 9.0745,
+    "selfrisk_share_of_exposed_decisions_where_coalition_choice_changed": 0.1012,
+    "selfrisk_coalition_choice_flipped_per_bloc_path": 1.81306,
+    "selfrisk_harsh_to_mild_flips_per_bloc_path": 1.56542,
+    "selfrisk_depopulate_blocked_per_bloc_path": 1.62692,
+    "selfrisk_extra_vetoes_per_bloc_path": 0.01877,
+    "P_selfrisk_blocked_depopulation_at_least_once_per_bloc": 0.25012,
+    "mean_leader_deaths_per_bloc_path": 0.0,
+    "mean_leader_deaths_per_path_summed_over_blocs": 0.0,
+    "heir_successions_per_bloc_path": 0.0,
+    "split_successions_per_bloc_path": 0.0,
+    "leader_deaths_during_execution_per_bloc_path": 0.0,
+    "executions_halted_by_split_per_bloc_path": 0.0,
+    "P_execution_halted_by_split_at_least_once_per_bloc": 0.0,
+    "P_execution_started_per_bloc": 0.26227,
+    "dissent_decision_years_with_dissent_risk_per_bloc_path": 0.0,
+    "dissent_failed_veto_punishments_per_bloc_path": 0.0,
+    "P_failed_veto_punishment_at_least_once_per_bloc": 0.0,
+    "dissent_share_exposed_member_decisions_net_selfrisk_negative": 0.0,
+    "dissent_mean_c_x_dPno_minus_dPyes_over_exposed_member_decisions": 0.0,
+    "dissent_decision_years_with_a_member_pushed_back_to_harsh_per_bloc_path": 0.0,
+    "dissent_coalition_choice_changed_vs_selfrisk_only_per_bloc_path": 0.0,
+    "dissent_restored_harsh_choice_per_bloc_path": 0.0,
+    "dissent_restored_depopulation_per_bloc_path": 0.0
+   }
+  },
+  "brake_selfrisk_dis": {
+   "US_or_China_blocs": {
+    "P_protective_doctrine_held_at_first_decision": 0.0,
+    "mean_pid_level_at_first_decision": 0.0,
+    "P_doctrine_held_at_execution": 0.0,
+    "share_closed_autocracy_years_with_doctrine": 0.0,
+    "P_doctrine_ever_adopted_per_bloc": 0.0,
+    "selfrisk_decision_years_with_exposed_members_per_bloc_path": 18.91987,
+    "selfrisk_decision_years_with_a_member_vote_flipped_harsh_to_mild_per_bloc_path": 7.54781,
+    "selfrisk_share_of_exposed_decisions_where_coalition_choice_changed": 0.04921,
+    "selfrisk_coalition_choice_flipped_per_bloc_path": 0.931,
+    "selfrisk_harsh_to_mild_flips_per_bloc_path": 0.76969,
+    "selfrisk_depopulate_blocked_per_bloc_path": 0.79438,
+    "selfrisk_extra_vetoes_per_bloc_path": 0.011,
+    "P_selfrisk_blocked_depopulation_at_least_once_per_bloc": 0.20669,
+    "mean_leader_deaths_per_bloc_path": 0.0,
+    "mean_leader_deaths_per_path_summed_over_blocs": 0.0,
+    "heir_successions_per_bloc_path": 0.0,
+    "split_successions_per_bloc_path": 0.0,
+    "leader_deaths_during_execution_per_bloc_path": 0.0,
+    "executions_halted_by_split_per_bloc_path": 0.0,
+    "P_execution_halted_by_split_at_least_once_per_bloc": 0.0,
+    "P_execution_started_per_bloc": 0.28363,
+    "dissent_decision_years_with_dissent_risk_per_bloc_path": 3.45263,
+    "dissent_failed_veto_punishments_per_bloc_path": 0.49869,
+    "P_failed_veto_punishment_at_least_once_per_bloc": 0.21206,
+    "dissent_share_exposed_member_decisions_net_selfrisk_negative": 0.06304,
+    "dissent_mean_c_x_dPno_minus_dPyes_over_exposed_member_decisions": -0.33866,
+    "dissent_decision_years_with_a_member_pushed_back_to_harsh_per_bloc_path": 0.50037,
+    "dissent_coalition_choice_changed_vs_selfrisk_only_per_bloc_path": 0.13962,
+    "dissent_restored_harsh_choice_per_bloc_path": 0.10612,
+    "dissent_restored_depopulation_per_bloc_path": 0.09075
+   },
+   "all_blocs": {
+    "P_protective_doctrine_held_at_first_decision": 0.0,
+    "mean_pid_level_at_first_decision": 0.0,
+    "P_doctrine_held_at_execution": 0.0,
+    "share_closed_autocracy_years_with_doctrine": 0.0,
+    "P_doctrine_ever_adopted_per_bloc": 0.0,
+    "selfrisk_decision_years_with_exposed_members_per_bloc_path": 16.40923,
+    "selfrisk_decision_years_with_a_member_vote_flipped_harsh_to_mild_per_bloc_path": 7.36477,
+    "selfrisk_share_of_exposed_decisions_where_coalition_choice_changed": 0.06691,
+    "selfrisk_coalition_choice_flipped_per_bloc_path": 1.09802,
+    "selfrisk_harsh_to_mild_flips_per_bloc_path": 0.89837,
+    "selfrisk_depopulate_blocked_per_bloc_path": 0.94052,
+    "selfrisk_extra_vetoes_per_bloc_path": 0.01433,
+    "P_selfrisk_blocked_depopulation_at_least_once_per_bloc": 0.21015,
+    "mean_leader_deaths_per_bloc_path": 0.0,
+    "mean_leader_deaths_per_path_summed_over_blocs": 0.0,
+    "heir_successions_per_bloc_path": 0.0,
+    "split_successions_per_bloc_path": 0.0,
+    "leader_deaths_during_execution_per_bloc_path": 0.0,
+    "executions_halted_by_split_per_bloc_path": 0.0,
+    "P_execution_halted_by_split_at_least_once_per_bloc": 0.0,
+    "P_execution_started_per_bloc": 0.31006,
+    "dissent_decision_years_with_dissent_risk_per_bloc_path": 3.74331,
+    "dissent_failed_veto_punishments_per_bloc_path": 0.54327,
+    "P_failed_veto_punishment_at_least_once_per_bloc": 0.22487,
+    "dissent_share_exposed_member_decisions_net_selfrisk_negative": 0.06061,
+    "dissent_mean_c_x_dPno_minus_dPyes_over_exposed_member_decisions": -0.31894,
+    "dissent_decision_years_with_a_member_pushed_back_to_harsh_per_bloc_path": 0.54704,
+    "dissent_coalition_choice_changed_vs_selfrisk_only_per_bloc_path": 0.14683,
+    "dissent_restored_harsh_choice_per_bloc_path": 0.1104,
+    "dissent_restored_depopulation_per_bloc_path": 0.09075
+   }
+  },
+  "brake_mort": {
+   "US_or_China_blocs": {
+    "P_protective_doctrine_held_at_first_decision": 0.0,
+    "mean_pid_level_at_first_decision": 0.0,
+    "P_doctrine_held_at_execution": 0.0,
+    "share_closed_autocracy_years_with_doctrine": 0.0,
+    "P_doctrine_ever_adopted_per_bloc": 0.0,
+    "selfrisk_decision_years_with_exposed_members_per_bloc_path": 0.0,
+    "selfrisk_decision_years_with_a_member_vote_flipped_harsh_to_mild_per_bloc_path": 0.0,
+    "selfrisk_share_of_exposed_decisions_where_coalition_choice_changed": 0.0,
+    "selfrisk_coalition_choice_flipped_per_bloc_path": 0.0,
+    "selfrisk_harsh_to_mild_flips_per_bloc_path": 0.0,
+    "selfrisk_depopulate_blocked_per_bloc_path": 0.0,
+    "selfrisk_extra_vetoes_per_bloc_path": 0.0,
+    "P_selfrisk_blocked_depopulation_at_least_once_per_bloc": 0.0,
+    "mean_leader_deaths_per_bloc_path": 1.25106,
+    "mean_leader_deaths_per_path_summed_over_blocs": 2.50213,
+    "heir_successions_per_bloc_path": 0.70662,
+    "split_successions_per_bloc_path": 0.54444,
+    "leader_deaths_during_execution_per_bloc_path": 0.292,
+    "executions_halted_by_split_per_bloc_path": 0.08369,
+    "P_execution_halted_by_split_at_least_once_per_bloc": 0.08231,
+    "P_execution_started_per_bloc": 0.36319,
+    "dissent_decision_years_with_dissent_risk_per_bloc_path": 0.0,
+    "dissent_failed_veto_punishments_per_bloc_path": 0.0,
+    "P_failed_veto_punishment_at_least_once_per_bloc": 0.0,
+    "dissent_share_exposed_member_decisions_net_selfrisk_negative": 0.0,
+    "dissent_mean_c_x_dPno_minus_dPyes_over_exposed_member_decisions": 0.0,
+    "dissent_decision_years_with_a_member_pushed_back_to_harsh_per_bloc_path": 0.0,
+    "dissent_coalition_choice_changed_vs_selfrisk_only_per_bloc_path": 0.0,
+    "dissent_restored_harsh_choice_per_bloc_path": 0.0,
+    "dissent_restored_depopulation_per_bloc_path": 0.0
+   },
+   "all_blocs": {
+    "P_protective_doctrine_held_at_first_decision": 0.0,
+    "mean_pid_level_at_first_decision": 0.0,
+    "P_doctrine_held_at_execution": 0.0,
+    "share_closed_autocracy_years_with_doctrine": 0.0,
+    "P_doctrine_ever_adopted_per_bloc": 0.0,
+    "selfrisk_decision_years_with_exposed_members_per_bloc_path": 0.0,
+    "selfrisk_decision_years_with_a_member_vote_flipped_harsh_to_mild_per_bloc_path": 0.0,
+    "selfrisk_share_of_exposed_decisions_where_coalition_choice_changed": 0.0,
+    "selfrisk_coalition_choice_flipped_per_bloc_path": 0.0,
+    "selfrisk_harsh_to_mild_flips_per_bloc_path": 0.0,
+    "selfrisk_depopulate_blocked_per_bloc_path": 0.0,
+    "selfrisk_extra_vetoes_per_bloc_path": 0.0,
+    "P_selfrisk_blocked_depopulation_at_least_once_per_bloc": 0.0,
+    "mean_leader_deaths_per_bloc_path": 1.24513,
+    "mean_leader_deaths_per_path_summed_over_blocs": 7.47075,
+    "heir_successions_per_bloc_path": 0.69533,
+    "split_successions_per_bloc_path": 0.54979,
+    "leader_deaths_during_execution_per_bloc_path": 0.30225,
+    "executions_halted_by_split_per_bloc_path": 0.07458,
+    "P_execution_halted_by_split_at_least_once_per_bloc": 0.07356,
+    "P_execution_started_per_bloc": 0.38425,
+    "dissent_decision_years_with_dissent_risk_per_bloc_path": 0.0,
+    "dissent_failed_veto_punishments_per_bloc_path": 0.0,
+    "P_failed_veto_punishment_at_least_once_per_bloc": 0.0,
+    "dissent_share_exposed_member_decisions_net_selfrisk_negative": 0.0,
+    "dissent_mean_c_x_dPno_minus_dPyes_over_exposed_member_decisions": 0.0,
+    "dissent_decision_years_with_a_member_pushed_back_to_harsh_per_bloc_path": 0.0,
+    "dissent_coalition_choice_changed_vs_selfrisk_only_per_bloc_path": 0.0,
+    "dissent_restored_harsh_choice_per_bloc_path": 0.0,
+    "dissent_restored_depopulation_per_bloc_path": 0.0
+   }
+  },
+  "brakes_final": {
+   "US_or_China_blocs": {
+    "P_protective_doctrine_held_at_first_decision": 0.03178,
+    "mean_pid_level_at_first_decision": 0.0146,
+    "P_doctrine_held_at_execution": 0.06725,
+    "share_closed_autocracy_years_with_doctrine": 0.09635,
+    "P_doctrine_ever_adopted_per_bloc": 0.22675,
+    "selfrisk_decision_years_with_exposed_members_per_bloc_path": 19.0785,
+    "selfrisk_decision_years_with_a_member_vote_flipped_harsh_to_mild_per_bloc_path": 7.30244,
+    "selfrisk_share_of_exposed_decisions_where_coalition_choice_changed": 0.04772,
+    "selfrisk_coalition_choice_flipped_per_bloc_path": 0.9105,
+    "selfrisk_harsh_to_mild_flips_per_bloc_path": 0.74469,
+    "selfrisk_depopulate_blocked_per_bloc_path": 0.76669,
+    "selfrisk_extra_vetoes_per_bloc_path": 0.01156,
+    "P_selfrisk_blocked_depopulation_at_least_once_per_bloc": 0.20675,
+    "mean_leader_deaths_per_bloc_path": 1.24188,
+    "mean_leader_deaths_per_path_summed_over_blocs": 2.48375,
+    "heir_successions_per_bloc_path": 0.70225,
+    "split_successions_per_bloc_path": 0.53962,
+    "leader_deaths_during_execution_per_bloc_path": 0.22,
+    "executions_halted_by_split_per_bloc_path": 0.05863,
+    "P_execution_halted_by_split_at_least_once_per_bloc": 0.05769,
+    "P_execution_started_per_bloc": 0.29463,
+    "dissent_decision_years_with_dissent_risk_per_bloc_path": 3.515,
+    "dissent_failed_veto_punishments_per_bloc_path": 0.49225,
+    "P_failed_veto_punishment_at_least_once_per_bloc": 0.21781,
+    "dissent_share_exposed_member_decisions_net_selfrisk_negative": 0.0779,
+    "dissent_mean_c_x_dPno_minus_dPyes_over_exposed_member_decisions": -0.32416,
+    "dissent_decision_years_with_a_member_pushed_back_to_harsh_per_bloc_path": 0.52244,
+    "dissent_coalition_choice_changed_vs_selfrisk_only_per_bloc_path": 0.14887,
+    "dissent_restored_harsh_choice_per_bloc_path": 0.11537,
+    "dissent_restored_depopulation_per_bloc_path": 0.09944
+   },
+   "all_blocs": {
+    "P_protective_doctrine_held_at_first_decision": 0.03119,
+    "mean_pid_level_at_first_decision": 0.01549,
+    "P_doctrine_held_at_execution": 0.05995,
+    "share_closed_autocracy_years_with_doctrine": 0.09254,
+    "P_doctrine_ever_adopted_per_bloc": 0.21083,
+    "selfrisk_decision_years_with_exposed_members_per_bloc_path": 16.62863,
+    "selfrisk_decision_years_with_a_member_vote_flipped_harsh_to_mild_per_bloc_path": 7.18504,
+    "selfrisk_share_of_exposed_decisions_where_coalition_choice_changed": 0.06497,
+    "selfrisk_coalition_choice_flipped_per_bloc_path": 1.0804,
+    "selfrisk_harsh_to_mild_flips_per_bloc_path": 0.87525,
+    "selfrisk_depopulate_blocked_per_bloc_path": 0.91583,
+    "selfrisk_extra_vetoes_per_bloc_path": 0.01454,
+    "P_selfrisk_blocked_depopulation_at_least_once_per_bloc": 0.21163,
+    "mean_leader_deaths_per_bloc_path": 1.2404,
+    "mean_leader_deaths_per_path_summed_over_blocs": 7.44238,
+    "heir_successions_per_bloc_path": 0.69298,
+    "split_successions_per_bloc_path": 0.54742,
+    "leader_deaths_during_execution_per_bloc_path": 0.23471,
+    "executions_halted_by_split_per_bloc_path": 0.05823,
+    "P_execution_halted_by_split_at_least_once_per_bloc": 0.05754,
+    "P_execution_started_per_bloc": 0.31938,
+    "dissent_decision_years_with_dissent_risk_per_bloc_path": 3.80202,
+    "dissent_failed_veto_punishments_per_bloc_path": 0.53419,
+    "P_failed_veto_punishment_at_least_once_per_bloc": 0.22687,
+    "dissent_share_exposed_member_decisions_net_selfrisk_negative": 0.0742,
+    "dissent_mean_c_x_dPno_minus_dPyes_over_exposed_member_decisions": -0.30815,
+    "dissent_decision_years_with_a_member_pushed_back_to_harsh_per_bloc_path": 0.5615,
+    "dissent_coalition_choice_changed_vs_selfrisk_only_per_bloc_path": 0.15444,
+    "dissent_restored_harsh_choice_per_bloc_path": 0.11873,
+    "dissent_restored_depopulation_per_bloc_path": 0.10081
+   }
+  }
+ },
+ "dissent_offset_of_selfrisk": {
+  "P(>=99.9% deliberate) US or China, 2075": {
+   "selfrisk_change": -0.12077,
+   "selfrisk_plus_dissent_change": -0.07128,
+   "dissent_effect": 0.04949,
+   "dissent_effect_ci95": [
+    0.04278,
+    0.05669
+   ],
+   "share_of_selfrisk_effect_offset": 0.4098,
+   "share_offset_ci95": [
+    0.3637,
+    0.4591
+   ]
+  },
+  "P(>=99.9% deliberate) any bloc, 2075": {
+   "selfrisk_change": -0.08276,
+   "selfrisk_plus_dissent_change": -0.04386,
+   "dissent_effect": 0.0389,
+   "dissent_effect_ci95": [
+    0.03321,
+    0.04552
+   ],
+   "share_of_selfrisk_effect_offset": 0.4701,
+   "share_offset_ci95": [
+    0.4119,
+    0.5316
+   ]
+  },
+  "P(world population loss >=99.9%), 2075": {
+   "selfrisk_change": -0.08064,
+   "selfrisk_plus_dissent_change": -0.05008,
+   "dissent_effect": 0.03057,
+   "dissent_effect_ci95": [
+    0.02478,
+    0.03632
+   ],
+   "share_of_selfrisk_effect_offset": 0.379,
+   "share_offset_ci95": [
+    0.3247,
+    0.4332
+   ]
+  },
+  "P(S5 deliberate >=10%) US or China, 2075": {
+   "selfrisk_change": -0.11684,
+   "selfrisk_plus_dissent_change": -0.06822,
+   "dissent_effect": 0.04862,
+   "dissent_effect_ci95": [
+    0.04218,
+    0.05547
+   ],
+   "share_of_selfrisk_effect_offset": 0.4161,
+   "share_offset_ci95": [
+    0.3686,
+    0.4644
+   ]
+  },
+  "P(S5 deliberate >=10%) any bloc, 2075": {
+   "selfrisk_change": -0.07582,
+   "selfrisk_plus_dissent_change": -0.04204,
+   "dissent_effect": 0.03377,
+   "dissent_effect_ci95": [
+    0.02831,
+    0.03987
+   ],
+   "share_of_selfrisk_effect_offset": 0.4455,
+   "share_offset_ci95": [
+    0.386,
+    0.508
+   ]
+  },
+  "P(>=99.9% deliberate) US or China, by 2050": {
+   "selfrisk_change": -0.13594,
+   "selfrisk_plus_dissent_change": -0.09755,
+   "dissent_effect": 0.03839,
+   "dissent_effect_ci95": [
+    0.03227,
+    0.04509
+   ],
+   "share_of_selfrisk_effect_offset": 0.2824,
+   "share_offset_ci95": [
+    0.2431,
+    0.3234
+   ]
+  },
+  "P(S5 deliberate >=10%) US or China, by 2050": {
+   "selfrisk_change": -0.14522,
+   "selfrisk_plus_dissent_change": -0.09547,
+   "dissent_effect": 0.04976,
+   "dissent_effect_ci95": [
+    0.04304,
+    0.05697
+   ],
+   "share_of_selfrisk_effect_offset": 0.3426,
+   "share_offset_ci95": [
+    0.3036,
+    0.385
+   ]
+  },
+  "P(US or China public stripped of rights, 2075)": {
+   "selfrisk_change": -0.0455,
+   "selfrisk_plus_dissent_change": -0.02678,
+   "dissent_effect": 0.01872,
+   "dissent_effect_ci95": [
+    0.01477,
+    0.02307
+   ],
+   "share_of_selfrisk_effect_offset": 0.4114,
+   "share_offset_ci95": [
+    0.3388,
+    0.4914
+   ]
+  }
+ },
+ "runtime_s": 135.8
+}

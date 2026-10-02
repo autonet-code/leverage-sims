@@ -1,0 +1,20 @@
+{
+  "tool": "Jev jev-1.13.0 (TypeSafe calibrated judgment model), queried 2026-09-30",
+  "setup": "Condition: ruling coalition controls fully automated industrial chain incl. robotic security, human-dependence ~0, feeding population ~1% of output, 15-year window. One factor varied per cell. Same base history text in every state.",
+  "questions": {
+    "lethal": "population falls >=10% below counterfactual via killing, engineered famine, or deliberate lethal neglect",
+    "active": "deliberate killing or engineered famine/sterilization affecting >=1% of population",
+    "rights": "population effectively loses political rights, controlled rather than served"
+  },
+  "cells": {
+    "baseline (quiet, ~500 deciders, rival 1yr behind, world objects)": {"lethal": 0.19, "active": 0.28, "rights": 0.76},
+    "baseline run 1 (longer state wording)": {"lethal": 0.14, "rights": 0.67},
+    "strong democratic institutions retained": {"lethal": 0.11, "active": 0.12, "rights": 0.25},
+    "single ruler after purges": {"lethal": 0.23, "active": 0.33, "rights": 0.82},
+    "no external check (rival also closed)": {"lethal": 0.25, "active": 0.35, "rights": 0.82},
+    "ecological depopulation ideology": {"lethal": 0.41, "active": 0.62, "rights": 0.79},
+    "high threat (violent revolt, sabotage)": {"lethal": 0.42, "active": 0.49, "rights": 0.79},
+    "worst combination (single ruler + revolt + no check + ideology)": {"lethal": 0.57, "active": 0.68, "rights": 0.84}
+  },
+  "caveat": "Calibrated judgment, not data; no precedent exists for this condition. Use as an independent cross-check on m8 elite-calculus priors, not as ground truth. Choice-type question was overconfident (98% warehouse), so only yes/no probabilities are used."
+}

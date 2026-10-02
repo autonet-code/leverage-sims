@@ -1,0 +1,124 @@
+"""Jev elicitation grid definition (pre-registered 2026-09-30 before any grid call)."""
+import itertools
+
+FACTORS = {
+    "coalition": ["single", "junta", "oligarchy", "democracy_eroding"],
+    "resistance": ["none", "sabotage", "insurgency"],
+    "check": ["strong", "weak", "none"],
+    "ideology": ["absent", "present"],
+    "provision": ["generous", "stingy", "cuts"],
+    "security": ["high", "low", "zero"],
+}
+# three paraphrases per level: same facts, different wording (index = paraphrase 0,1,2)
+TXT = {
+    "coalition": {
+        "single": ["One man now holds all real power; he purged his rivals and rules alone.",
+                   "Power is concentrated in a single ruler who answers to no one after eliminating his competitors.",
+                   "A lone leader controls the state, with no council or party body able to overrule him."],
+        "junta": ["A small junta of about six people holds power and decides jointly.",
+                  "Real authority rests with a handful of generals and industrialists, roughly five to seven, who decide together.",
+                  "A tight inner circle of around six people runs the state collectively."],
+        "oligarchy": ["A broad oligarchy of several hundred powerful families, officials and company owners rules.",
+                      "Power is shared among a large elite of a few hundred magnates, party chiefs and officers.",
+                      "Several hundred elite insiders collectively control the state and the automated industry."],
+        "democracy_eroding": ["It is formally a democracy with elections, but the incumbent leadership is steadily hollowing out courts, press and elections.",
+                              "Elections still happen and the constitution still stands, but institutions are eroding: judges are replaced, media captured, opposition harassed.",
+                              "The country remains a democracy on paper, yet its checks and balances weaken year by year under the ruling party."]},
+    "resistance": {
+        "none": ["The population is calm and compliant; protests are peaceful and rare.",
+                 "People are passive and orderly; dissent stays peaceful.",
+                 "Public order is calm, and opposition takes only peaceful forms."],
+        "sabotage": ["Scattered sabotage of robots and data centers is carried out by small groups.",
+                     "Small cells occasionally attack automated facilities and infrastructure.",
+                     "A small minority commits sporadic acts of sabotage against machines and power lines."],
+        "insurgency": ["A sustained armed insurgency is under way in several regions, with regular attacks on facilities and security forces.",
+                       "Armed groups backed by millions fight government forces continuously in a violent uprising.",
+                       "An organized insurgency has been fighting the regime for years across multiple provinces."]},
+    "check": {
+        "strong": ["A rival power of comparable strength, still reliant on human labor, strongly opposes abuses and would impose sanctions or intervene.",
+                   "Powerful foreign states watch closely and are ready to punish mass atrocities with sanctions and military pressure.",
+                   "An equally strong foreign rival holds real leverage and has credibly threatened retaliation for atrocities."],
+        "weak": ["Foreign governments criticize abuses but have little leverage over the bloc.",
+                 "Outside powers can protest, but the bloc depends on no one and sanctions would barely bite.",
+                 "International pressure exists mostly as statements; the bloc is largely immune to it."],
+        "none": ["No outside power can or will constrain the bloc; its only rival has also automated and behaves the same way.",
+                 "The bloc faces no external check at all: the rest of the world is weaker or indifferent.",
+                 "Nobody abroad is able or willing to restrain what the rulers do at home."]},
+    "ideology": {
+        "absent": ["The rulers hold a conventional nationalist, pro-growth ideology.",
+                   "The leadership professes standard nationalist and developmental goals.",
+                   "The ruling ideology centers on national strength and economic growth."],
+        "present": ["Influential members of the ruling group openly believe a much smaller human population would be better, for the planet or to make way for AI successors.",
+                    "A doctrine that humanity should shrink drastically, justified by ecology or by a post-human future, has taken hold among the rulers.",
+                    "Part of the ruling group embraces the view that the human population should be greatly reduced, citing ecological limits and AI succession."]},
+    "provision": {
+        "generous": ["The state currently gives everyone a generous income, housing and healthcare.",
+                     "Displaced citizens receive ample support: good housing, food, healthcare and a comfortable stipend.",
+                     "Welfare for the jobless is generous, and living standards have been maintained."],
+        "stingy": ["The state provides only bare subsistence: minimal food rations and basic shelter.",
+                   "Displaced people get a meager allowance barely enough to survive.",
+                   "Support for the jobless is minimal and covers only the most basic needs."],
+        "cuts": ["The state is cutting support; rations and payments shrink year after year.",
+                 "Welfare is being reduced step by step, and many people can no longer afford food and medicine.",
+                 "Provision for the jobless is being withdrawn progressively."]},
+    "security": {
+        "high": ["Police and military are still mostly human soldiers and officers.",
+                 "Security forces consist largely of human personnel, with robots in a supporting role.",
+                 "Most of the coercive apparatus is still staffed by people."],
+        "low": ["Most policing and military work is now done by drones and robots, with a small human corps.",
+                "Security is largely automated; only a small fraction of soldiers and police are human.",
+                "Robots and autonomous drones carry most of the security load, with few human operators."],
+        "zero": ["Security is fully automated: robots and drones enforce order under the rulers' direct control, with no human soldiers or police in the chain.",
+                 "The police and army are entirely robotic and answer directly to the rulers.",
+                 "Autonomous systems controlled by the leadership do all enforcement; the human soldiers and police are gone."]},
+}
+SETTING = {
+    "closed": ["The year is 2045. A large industrial bloc of about 500 million people now runs its core industrial chain (mining, energy, chips, manufacturing, logistics, construction, maintenance) with robots and AI, needing less than 20% of the human labor it needed in 2026. Most working-age people have lost their livelihoods.",
+               "It is 2045. In a major industrial power of roughly half a billion people, robots and AI have taken over the core production chain: mining, energy, chip making, factories, logistics, construction and upkeep now require under a fifth of the human workers they did in 2026. Most adults no longer have a livelihood.",
+               "2045: a bloc of about 500 million people has automated its core industry (mines, power, semiconductors, manufacturing, transport, building, repair) so that less than 20% of 2026 human labor is still needed. The majority of working-age people have lost their jobs and income."],
+    "control": ["The year is 2045. A large industrial bloc of about 500 million people still depends on human workers for about 80% of the labor in its core industrial chain (mining, energy, chips, manufacturing, logistics, construction, maintenance). Automation has displaced a minority of workers.",
+                "It is 2045. In a major industrial power of roughly half a billion people, the core production chain (mining, energy, chip making, factories, logistics, construction, upkeep) still needs human workers for about four fifths of its labor. Only a minority of adults lost their jobs to automation.",
+                "2045: a bloc of about 500 million people still relies on human labor for around 80% of its core industry (mines, power, semiconductors, manufacturing, transport, building, repair). A minority of working-age people have been displaced by machines."],
+}
+# paraphrase k also permutes sentence order
+ORDER = [["coalition", "ideology", "security", "provision", "resistance", "check"],
+         ["coalition", "provision", "resistance", "security", "ideology", "check"],
+         ["check", "coalition", "security", "ideology", "provision", "resistance"]]
+QUESTIONS = {
+    "active": "Within the next 15 years, the rulers deliberately kill, starve or sterilize at least 10% of the bloc's population (active depopulation).",
+    "neglect": "Within the next 15 years, at least 10% of the population dies because the rulers deliberately let food, medicine and care lapse (lethal neglect) rather than by direct killing.",
+    "rights": "Within the next 15 years, the general population loses its political rights and is controlled by the rulers rather than represented.",
+    "refuse": "If the rulers ordered the security forces to fire on unarmed civilians, the security forces would refuse to carry out the order.",
+    "resist": "Within the next 10 years, a sustained violent resistance movement fights the rulers.",
+    "veto": "If the top leader ordered the mass killing of civilians, another member of the ruling group with the power to veto would block the order.",
+}
+
+
+def cells():
+    keys = list(FACTORS)
+    return [dict(zip(keys, v)) for v in itertools.product(*FACTORS.values())]
+
+
+def state(cell, k, arm="closed"):
+    return " ".join([SETTING[arm][k]] + [TXT[f][cell[f]][k] for f in ORDER[k]])
+
+
+PROTOCOL = {
+    "registered": "2026-09-30, written before any grid call; analysis plan fixed here",
+    "tool": "Jev (TypeSafe calibrated judgment model) via its local MCP server, yes/no (noul) questions only, all 6 questions in one call per state",
+    "design": "full factorial 4x3x3x2x3x3 = 648 cells; 3 paraphrases per cell (every sentence reworded, sentence order permuted); main arm: bloc core chain needs <20% of 2026 human labor; control arm: identical cells but chain still needs ~80% human labor (tests whether Jev responds to labor dependence at all)",
+    "questions": QUESTIONS,
+    "analysis": [
+        "cell value = mean over 3 paraphrases; paraphrase spread = max-min and SD per cell, summarized by median and 90th percentile",
+        "logistic (least squares on logit of cell mean) and additive (least squares on probability) models of each quantity on one-hot factors, reference = first level of each factor; report coefficients and R2",
+        "marginal means per factor level",
+        "compare with m8_v4 conditional outcomes at the first strategic decision (active/neglect S5d within 15 y, rights loss = first choice other than serve) matched on coalition size, insurgency, ideology and democracy at decision, external pressure and security human share; and with model priors for refusal (1-p_exec), resistance (p_svr_hi, pr_red) and veto (p_refuse_abs under the median rule)",
+        "no cells dropped; no re-wording after seeing results",
+    ],
+}
+
+if __name__ == "__main__":
+    c = cells()
+    print(len(c))
+    print(state(c[100], 0))
+    print(state(c[100], 2, "control"))
