@@ -1,6 +1,6 @@
 # leverage-sims
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23111346.svg)](https://doi.org/10.5281/zenodo.23111346)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23111345.svg)](https://doi.org/10.5281/zenodo.23111345)
 
 Code, data and results for the paper *Losing Leverage: A Game-Theoretic Simulation of Power After Full Automation* (Andrei Taranu, writing as Eight Rice, 2026).
 
@@ -58,4 +58,4 @@ MIT. See `LICENSE`.
 
 ## Citation
 
-Taranu, A. (Eight Rice) (2026). *Losing Leverage: A Game-Theoretic Simulation of Power After Full Automation* (v1.0). Zenodo. https://doi.org/10.5281/zenodo.23111346
+Taranu, A. (Eight Rice) (2026). *Losing Leverage: A Game-Theoretic Simulation of Power After Full Automation* Zenodo. https://doi.org/10.5281/zenodo.23111345
