@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23111346.svg)](https://doi.org/10.5281/zenodo.23111346)
 
-Code, data and results for the paper *Losing Leverage: A Game-Theoretic Simulation of Power After Full Automation* (Eight Rice, 2026).
+Code, data and results for the paper *Losing Leverage: A Game-Theoretic Simulation of Power After Full Automation* (Andrei Taranu, writing as Eight Rice, 2026).
 
 The paper models what happens to a population's standing, and to its survival, once AI and robots make it economically and militarily unnecessary to the people who rule it. It combines three things:
 - historical base rates;
@@ -58,4 +58,4 @@ MIT. See `LICENSE`.
 
 ## Citation
 
-Rice, E. (2026). *Losing Leverage: A Game-Theoretic Simulation of Power After Full Automation* (v1.0). Zenodo. https://doi.org/10.5281/zenodo.23111346
+Taranu, A. (Eight Rice) (2026). *Losing Leverage: A Game-Theoretic Simulation of Power After Full Automation* (v1.0). Zenodo. https://doi.org/10.5281/zenodo.23111346
