@@ -1,0 +1,327 @@
+{
+ "device": "NVIDIA GeForce RTX 4060",
+ "N": 2000,
+ "m8_vs_pre_greenfield": {
+  "M8_BRAKES=unset|baseline": {
+   "param_diffs": [],
+   "output_diffs": [],
+   "new_param_keys": [
+    "Td_fab_auto_w",
+    "cf_on",
+    "eta_cf",
+    "gf_on",
+    "s_sp",
+    "wfl_on"
+   ]
+  },
+  "M8_BRAKES=unset|rev_B2_fixed_consolidation": {
+   "param_diffs": [],
+   "output_diffs": [],
+   "new_param_keys": [
+    "Td_fab_auto_w",
+    "cf_on",
+    "eta_cf",
+    "gf_on",
+    "s_sp",
+    "wfl_on"
+   ]
+  },
+  "M8_BRAKES=unset|v3_like": {
+   "param_diffs": [],
+   "output_diffs": [],
+   "new_param_keys": [
+    "Td_fab_auto_w",
+    "cf_on",
+    "eta_cf",
+    "gf_on",
+    "s_sp",
+    "wfl_on"
+   ]
+  },
+  "M8_BRAKES=unset|brakes_final": {
+   "param_diffs": [],
+   "output_diffs": [],
+   "new_param_keys": [
+    "Td_fab_auto_w",
+    "cf_on",
+    "eta_cf",
+    "gf_on",
+    "s_sp",
+    "wfl_on"
+   ]
+  },
+  "M8_BRAKES=unset|f6_caps_forced_x100_qcore4": {
+   "param_diffs": [],
+   "output_diffs": [],
+   "new_param_keys": [
+    "Td_fab_auto_w",
+    "cf_on",
+    "eta_cf",
+    "gf_on",
+    "s_sp",
+    "wfl_on"
+   ]
+  },
+  "M8_BRAKES=final|baseline": {
+   "param_diffs": [],
+   "output_diffs": [],
+   "new_param_keys": [
+    "Td_fab_auto_w",
+    "cf_on",
+    "eta_cf",
+    "gf_on",
+    "s_sp",
+    "wfl_on"
+   ]
+  },
+  "M8_BRAKES=final|rev_B2_fixed_consolidation": {
+   "param_diffs": [],
+   "output_diffs": [],
+   "new_param_keys": [
+    "Td_fab_auto_w",
+    "cf_on",
+    "eta_cf",
+    "gf_on",
+    "s_sp",
+    "wfl_on"
+   ]
+  },
+  "M8_BRAKES=final|v3_like": {
+   "param_diffs": [],
+   "output_diffs": [],
+   "new_param_keys": [
+    "Td_fab_auto_w",
+    "cf_on",
+    "eta_cf",
+    "gf_on",
+    "s_sp",
+    "wfl_on"
+   ]
+  },
+  "M8_BRAKES=final|brakes_final": {
+   "param_diffs": [],
+   "output_diffs": [],
+   "new_param_keys": [
+    "Td_fab_auto_w",
+    "cf_on",
+    "eta_cf",
+    "gf_on",
+    "s_sp",
+    "wfl_on"
+   ]
+  },
+  "M8_BRAKES=final|f6_caps_forced_x100_qcore4": {
+   "param_diffs": [],
+   "output_diffs": [],
+   "new_param_keys": [
+    "Td_fab_auto_w",
+    "cf_on",
+    "eta_cf",
+    "gf_on",
+    "s_sp",
+    "wfl_on"
+   ]
+  }
+ },
+ "switches_params_differing_from_baseline": {
+  "variant greenfield": [
+   "gf_on"
+  ],
+  "M8_GF=1": [
+   "gf_on"
+  ],
+  "variant computefb": [
+   "cf_on"
+  ],
+  "variant greenfield_cf": [
+   "gf_on",
+   "cf_on"
+  ],
+  "M8_CF=1": [
+   "cf_on"
+  ],
+  "variant widefloors": [
+   "Td_mine_auto",
+   "fact_build_a",
+   "Td_en_auto",
+   "Td_auto",
+   "wfl_on"
+  ],
+  "variant greenfield_cf_wfl": [
+   "Td_mine_auto",
+   "fact_build_a",
+   "Td_en_auto",
+   "Td_auto",
+   "gf_on",
+   "cf_on",
+   "wfl_on"
+  ],
+  "M8_WFL=1": [
+   "Td_mine_auto",
+   "fact_build_a",
+   "Td_en_auto",
+   "Td_auto",
+   "wfl_on"
+  ],
+  "M8_FINAL=1": [
+   "Td_mine_auto",
+   "fact_build_a",
+   "Td_en_auto",
+   "Td_auto",
+   "pid_on",
+   "sr_on",
+   "brk_mort",
+   "dis_on",
+   "gf_on",
+   "cf_on",
+   "wfl_on"
+  ],
+  "M8_BRAKES=final": [
+   "pid_on",
+   "sr_on",
+   "brk_mort",
+   "dis_on"
+  ]
+ },
+ "gf_on_cf_off_vs_greenfield_code": {
+  "M8_BRAKES=unset": {
+   "param_diffs": [],
+   "output_diffs": []
+  },
+  "M8_BRAKES=final": {
+   "param_diffs": [],
+   "output_diffs": []
+  }
+ },
+ "gf_cf_on_wfl_off_vs_previous_code": {
+  "M8_BRAKES=unset": {
+   "param_diffs": [],
+   "output_diffs": []
+  },
+  "M8_BRAKES=final": {
+   "param_diffs": [],
+   "output_diffs": []
+  }
+ },
+ "wide_floors_table": {
+  "Td_mine_auto": {
+   "old": {
+    "median": 1.5,
+    "p5": 0.716,
+    "p90": 2.67,
+    "p95": 3.144,
+    "sigma": 0.45
+   },
+   "new": {
+    "median": 0.946,
+    "p5": 0.25,
+    "p90": 2.67,
+    "p95": 3.583,
+    "sigma": 0.809
+   },
+   "units": "years",
+   "evidence": "J (A10)"
+  },
+  "Td_en_auto": {
+   "old": {
+    "median": 1.5,
+    "p5": 0.716,
+    "p90": 2.67,
+    "p95": 3.144,
+    "sigma": 0.45
+   },
+   "new": {
+    "median": 0.946,
+    "p5": 0.25,
+    "p90": 2.67,
+    "p95": 3.583,
+    "sigma": 0.809
+   },
+   "units": "years",
+   "evidence": "J (A10)"
+  },
+  "Td_auto": {
+   "old": {
+    "median": 1.0,
+    "p5": 0.373,
+    "p90": 2.157,
+    "p95": 2.683,
+    "sigma": 0.6
+   },
+   "new": {
+    "median": 0.84,
+    "p5": 0.25,
+    "p90": 2.157,
+    "p95": 2.819,
+    "sigma": 0.736
+   },
+   "units": "years",
+   "evidence": "J (A10)"
+  },
+  "fact_build_a": {
+   "old": {
+    "median": 0.5,
+    "p5": 0.239,
+    "p90": 0.89,
+    "p95": 1.048,
+    "sigma": 0.45
+   },
+   "new": {
+    "median": 0.342,
+    "p5": 0.1,
+    "p90": 0.89,
+    "p95": 1.168,
+    "sigma": 0.747
+   },
+   "units": "years",
+   "evidence": "J (A10)"
+  },
+  "Td_fab_auto": {
+   "old": {
+    "median": 1.042,
+    "p5": 0.5,
+    "p90": 2.613,
+    "p95": 3.391,
+    "sigma_raw": 0.718,
+    "note": "old floor = max(raw, 0.5)"
+   },
+   "new": {
+    "median": 0.935,
+    "p5": 0.25,
+    "p90": 2.613,
+    "p95": 3.497,
+    "sigma": 0.802
+   },
+   "units": "years",
+   "evidence": "J (A10)"
+  }
+ },
+ "lever_anchors_match": true,
+ "integrated_headline_reproduction": {
+  "brakes off, greenfield off": {
+   "expected": [
+    0.44656,
+    0.13853
+   ],
+   "got": [
+    0.44656,
+    0.13853
+   ],
+   "identical": true,
+   "runtime_s": 41.6
+  },
+  "brakes on (M8_BRAKES=final), greenfield off": {
+   "expected": [
+    0.36744,
+    0.08784
+   ],
+   "got": [
+    0.36744,
+    0.08784
+   ],
+   "identical": true,
+   "runtime_s": 48.6
+  }
+ },
+ "ALL_OK": true
+}

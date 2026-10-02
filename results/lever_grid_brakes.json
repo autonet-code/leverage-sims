@@ -127010,7 +127010,7 @@
     0.9,
     1.0
    ],
-   "source": "U2: payout to households, all output except service fees that fund the treasury (scenario)",
+   "source": "U2: payout to households, all output except service fees that fund the treasury (network premise)",
    "evidence": "J"
   },
   "lv_s_acc4": {
@@ -127019,7 +127019,7 @@
     0.2,
     0.7
    ],
-   "source": "U3: share of displaced people's needs still covered when a regime tries to cut them off; contracts cannot be altered, only conversion and access (exchanges, goods, token value) can be attacked (scenario)",
+   "source": "U3: share of displaced people's needs still covered when a regime tries to cut them off; contracts cannot be altered, only conversion and access (exchanges, goods, token value) can be attacked (network premise)",
    "evidence": "J"
   },
   "lv_g4": {

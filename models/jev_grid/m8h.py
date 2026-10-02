@@ -59,7 +59,7 @@ import time
 import numpy as np
 from scipy.special import ndtr, ndtri, logit as sp_logit
 
-ROOT = r"C:\code\sims\dystopia"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SEED = 20260930
 T0, T_END, DT = 2026.75, 2075.0, 0.25
 NSTEP = int(round((T_END - T0) / DT))

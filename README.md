@@ -16,13 +16,14 @@ All results are conditional on the assumptions stated in the paper.
   - `m8_v4.py`: the six-bloc model (GPU via PyTorch, CPU fallback).
   - `integrate_v4.py`: the integrated scenario tree, the main results and the structural variants.
   - `m9_lever.py`: the decentralized-network test grid.
-  - `run_brakes.py`: the brake variants.
-  - `check_brakes_identity.py`: checks that the model is bit-identical when the brakes are off.
+  - `run_brakes.py` and `run_greenfield.py`: the brake variants and the matched comparison of the structural changes.
+  - `check_brakes_identity.py` and `check_greenfield_identity.py`: check that the model is bit-identical when the new parts are switched off.
+  - `run_v6_final.sh`: runs the full final configuration.
   - `m1` to `m7`: the upstream stage models whose outputs feed the scenario tree.
   - `jev_grid/`: the judgment-model elicitation.
 - `results/`: output files.
-  - Final model, brakes on: `integrated_v5_brakes.json`, `brakes_v5_variants.json`, `lever_grid_brakes.json`, `m8_v5_brakes.json`.
-  - The same model without brakes, kept for comparison: `integrated_v4.json`, `m8_v4.json`, `lever_grid.json`.
+  - Final model (brakes, dedicated core loop, compute feedback, wider physical floors): `integrated_v6_final.json`, `m8_v6_final.json`, `lever_grid_v6_final.json`, `greenfield_v6_matched.json`.
+  - Earlier configurations kept for comparison: brakes only (`integrated_v5_brakes.json`, `brakes_v5_variants.json`, `lever_grid_brakes.json`, `m8_v5_brakes.json`) and no brakes (`integrated_v4.json`, `m8_v4.json`, `lever_grid.json`).
 - `research/`: evidence notes behind the parameter priors.
 - `figures/`: figures used in the paper.
 
@@ -32,11 +33,12 @@ Requirements: Python 3.11 or later, numpy, scipy, matplotlib, and PyTorch (CUDA 
 
 ```
 cd models
-# final model (evidence-based brakes on)
-M8_BRAKES=final python m8_v4.py        # writes results/m8_v4.json; the published copy is m8_v5_brakes.json
+# final model (M8_FINAL=1): all runs in sequence
+bash run_v6_final.sh
+# brakes only
 M8_BRAKES=final INT_OUT=integrated_v5_brakes.json python integrate_v4.py
 M8_BRAKES=final LV_TAG=_brakes python m9_lever.py
-# brakes off (reproduces the comparison results exactly)
+# everything off (reproduces the earliest comparison results exactly)
 python m8_v4.py
 python integrate_v4.py
 python m9_lever.py

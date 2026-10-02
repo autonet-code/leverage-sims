@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.colors import LinearSegmentedColormap
 
-ROOT = r"C:\code\sims\dystopia"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RES = os.path.join(ROOT, "results"); FIG = os.path.join(ROOT, "figures")
 INK, INK2, MUTED, SURF = "#0b0b0b", "#52514e", "#898781", "#fcfcfb"
 SER = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4"]

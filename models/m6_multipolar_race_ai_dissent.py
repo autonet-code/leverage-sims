@@ -43,7 +43,7 @@ import os
 import numpy as np
 from scipy.stats import spearmanr
 
-ROOT = r"C:\code\sims\dystopia"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SEED = 20260930
 N_DRAWS = 20000
 HORIZON = 50          # years after S6

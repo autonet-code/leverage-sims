@@ -54,7 +54,7 @@ import numpy as np
 from scipy.special import expit, logit
 from scipy.stats import norm, rankdata, spearmanr
 
-ROOT = r"C:\code\sims\dystopia"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RES = os.path.join(ROOT, "results")
 FIG = os.path.join(ROOT, "figures")
 sys.path.insert(0, os.path.join(ROOT, "models"))
@@ -220,13 +220,16 @@ def run_m8(NO, R, variant="baseline", seed=SEED + 800):
     pe_s["collusion_incentive (b_col - (1-s_bunk) p_nx c_self)"] = np.log(pe["b_col"]) - np.log((1 - pe["s_bunk"]) * pe["p_nx"] * pe["c_self"])
     D["pe"] = pe_s
     D["brk_diag"] = brake_diag(o)
+    D["gf_diag"] = M8.gf_diag(o) if "t_cl_gf" in o else None      # greenfield core loop diagnostics (m8 main world)
+    D["leader_diag"] = M8.leader_diag(o) if "E_end" in o else None   # US-China race / compute feedback diagnostics
     return D
 
 
 # brake parameters enter the sensitivity table only when their brake is on (flags in m8_v4.BRK_FLAGS)
 BRK_KEYS = {"p_pid": ["pid_on"], "k_pid": ["pid_on"], "c_selfrisk": ["sr_on"], "e_ex": ["sr_on"],
             "h_mort": ["brk_mort"], "g_mort": ["brk_mort"], "k_le": ["brk_mort"], "p_heir": ["brk_mort"],
-            "b_id": ["sr_on"], "m_dis": ["dis_on"]}
+            "b_id": ["sr_on"], "m_dis": ["dis_on"],
+            "eta_cf": ["cf_on"], "s_sp": ["cf_on"], "Td_fab_auto_w": ["wfl_on"]}     # compute-feedback priors: only when cf_on (same rule as the brakes)
 
 
 def brake_diag(o):
@@ -1306,8 +1309,18 @@ def main():
         outp = os.path.join(RES, os.environ["INT_OUT"]); FIG = os.environ.get("INT_FIG", os.path.join(ROOT, "figures", "brakes_v5"))
         os.makedirs(FIG, exist_ok=True)
         assert not os.path.exists(outp), outp + " exists"
-        res["brakes"] = dict(M8_BRAKES=os.environ.get("M8_BRAKES", ""), diagnostics_m8_world=D8["brk_diag"],
-                             note="all brake flags on in every run of this file, incl. structural variants (M8_BRAKES=final)")
+        res["brakes"] = dict(M8_BRAKES=os.environ.get("M8_BRAKES", ""), M8_FINAL=os.environ.get("M8_FINAL", ""),
+                             diagnostics_m8_world=D8["brk_diag"],
+                             note="all brake flags on in every run of this file, incl. structural variants (M8_BRAKES=final or M8_FINAL=1)")
+        if os.environ.get("M8_FINAL", "") == "1" or os.environ.get("M8_GF", "") == "1":
+            res["greenfield_core_loop"] = dict(spec=M8.GF_NOTE, diagnostics_m8_world=D8["gf_diag"],
+                                               note="gf_on in every run of this file, incl. structural variants")
+        if os.environ.get("M8_FINAL", "") == "1" or os.environ.get("M8_CF", "") == "1":
+            res["compute_feedback"] = dict(spec=M8.CF_NOTE, priors={k: dict(spec=list(v[0]), source=v[1], evidence=v[2]) for k, v in M8.PRIORS_CF.items()},
+                                           note="cf_on in every run of this file, incl. structural variants")
+        if os.environ.get("M8_FINAL", "") == "1" or os.environ.get("M8_WFL", "") == "1":
+            res["wide_floors"] = dict(table=M8.wfl_table(), note="wfl_on in every run of this file, incl. structural variants (quantile map of the same draws)")
+        res["leaders_diagnostics_m8_world"] = D8["leader_diag"]
     if small:
         outp = os.path.join(os.environ["INT_SMALL_DIR"], "integrated_v4_smoke.json"); FIG = os.environ["INT_SMALL_DIR"]
     with open(outp, "w") as f:

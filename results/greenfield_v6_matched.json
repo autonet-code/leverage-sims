@@ -1,0 +1,2686 @@
+{
+ "design": "1000 outer draws x 8 m8 replicates x 200 inner paths; m8 seed SEED+900, integrator seed SEED+11; brakes on in every arm (M8_BRAKES=final). Arms: brakes only (m8 variant baseline), brakes + greenfield (variant greenfield, gf_on), + own-industry compute feedback (variant greenfield_cf), + wide automated doubling floors = final configuration (variant greenfield_cf_wfl). gf_on adds no draws; the compute-feedback priors come from their own stream, so all arms share every existing draw. Changes are paired over outer draws (bootstrap, 2000 resamples).",
+ "seed": 20260930,
+ "device": "cuda",
+ "spec_greenfield": {
+  "flag": "gf_on (off by default). M8_FINAL=1 = final configuration (four final brakes + greenfield); M8_BRAKES=final = brakes only; M8_GF=1 = greenfield only; variant 'greenfield' turns it on in a single run",
+  "flaw": "closure was modelled as converting the existing economy: the automated share of each core segment grows logistically from today's share under capacity-turnover caps (i_K, r_retro). A power center can instead build a NEW dedicated automated loop beside the economy, sized q_core x the full chain",
+  "state": "ygf[bloc, segment] = automated capacity of the dedicated loop as a fraction of that segment's share of the minimal loop; starts at 0 (today's automated plants are not counted as dedicated)",
+  "build_limits": [
+   "mining/energy/chips: the loop takes the core_alloc share of the bloc's new domestic sector capacity, growing at the existing Gm/Ge/Gc rates (Td_*_base/race by psi, automated floors Td_mine_auto/Td_en_auto/Td_fab_auto (fab_build), switching with the sector's automation); new capacity x own / q",
+   "factory-type segments (manufacturing, logistics, construction, maintenance, admin): parallel build, online after the factory lead time (fact_build_h -> fact_build_a as the resource chain automates, A_rr blend as for bld), capped by the gross investment flow at core priority concentrated on the loop: i_K (1 + (i_boost - 1) core_alloc) / k_int x bld boost x capex-correction / q",
+   "security is not built by the loop: A3 security automation is shared (loop security = existing path)",
+   "capability gate: ygf <= F_tot (bloc, B6-lagged); cognitive share = existing core path acc (shared software automation, B6-lagged Fcog gate)",
+   "robots/kit: from the same supply; only automation not installed in the existing economy (supply - xf T_s), core_alloc share, after both conversion paths' security increments (A3 first call), and within room_c; the loop stock is then removed from both conversion paths' non-security room (no double counting); input pools mat_cap/chip_cap/hum_cap bound supply"
+  ],
+  "dependence": "per segment: Dg = Dcs - (1 - CS)(phys_ex - (1 - ygf)/(1 - X0)), phys_ex = own (1 - xc)/(1 - X0) + (1 - own) hxu; security Dg = Dcs. D_loop = sum W_S Dg. With gf_on the core dependence everywhere downstream is min(Dcs, Dg) elementwise; closure when its W_S-weighted sum < trig (0.2)",
+  "new_priors": "none; no new random draws"
+ },
+ "spec_compute_feedback": {
+  "flag": "cf_on (off by default). M8_FINAL=1 = final configuration (four final brakes + greenfield + compute feedback); M8_CF=1 = compute feedback only; variants 'computefb' (cf), 'greenfield_cf' (gf + cf)",
+  "state": "E[bloc] = extra capability doublings of the bloc beyond the shared (B6-lagged) trend L; the bloc's capability is L_b + E. Ep[bloc] = the matching extra physical-capability logit: the bloc's physical capability grows at rp evaluated at L + E instead of L (difference accumulated), capped by the shared physical ceiling Lpcap",
+  "driver": "dE/dt = eta_cf x max(0, dlnC_b/dt - g_trend) / ln2 (doublings/yr). C_b = min(domestic chip capacity (rsh_c x Gc under B6, chip_share x Gc otherwise), energy capacity Ge), both normalised to 2026 = 1. g_trend = the compute growth the shared trend already embodies = min(ln2/Td_fab_race, ln2/Td_en_race) x lc (human-run race fab and energy growth, the regime in which the trend was observed). Accrues only while max(A_fab, loop chip share) > 0.5 and max(A_en, loop energy share) > 0.5",
+  "spillover": "every other bloc closes its gap to the leader's E at s_sp x (1 - 0.7 psi_leader) per year",
+  "caps": "the bloc's total capability growth (actual shared-trend growth this step + dE/dt) is capped at min(15 doublings/yr, 30 x r0 slow corr): the existing 15/yr clamp and the 30x AI-R&D feedback cap applied to the bloc's own rate. No level cap on E: the shared trend's level caps (1e5-hour horizon ceiling, cognitive wall Lcap) bind the shared L only, so a compute-rich bloc can push past a cognitive wall; beyond the horizon ceiling extra doublings change little because Fcog and the physical-capability rate (kc term clamped at L_m3 + 8) are already saturated, except means availability (A8). Physical capability is capped at Lpcap",
+  "replaces": "L_b + E replaces the shared capability in Fcog_b; Lp_b + Ep in Fp_b (hence F_tot, the greenfield gate, conversion ceilings, security automation and kinetic power Mk via k_am x automated security share x output, robot profitability prof_b); L + E in means availability (A8, dL_means). Kept shared (conservative): the AI learning-curve multiplier lc/ph3 on build rates and robot labor, the decision-lag speed-up spd, the economy-wide cognitive adoption rate (mat), the AI-R&D feedback multiplier, the capability milestones",
+  "timing": "E is updated after the step's chip/energy capacity update and used from the next step; E at closure is recorded 0.25 y after closure"
+ },
+ "spec_wide_floors": {
+  "Td_mine_auto": {
+   "old": {
+    "median": 1.5,
+    "p5": 0.716,
+    "p90": 2.67,
+    "p95": 3.144,
+    "sigma": 0.45
+   },
+   "new": {
+    "median": 0.946,
+    "p5": 0.25,
+    "p90": 2.67,
+    "p95": 3.583,
+    "sigma": 0.809
+   },
+   "units": "years",
+   "evidence": "J (A10)"
+  },
+  "Td_en_auto": {
+   "old": {
+    "median": 1.5,
+    "p5": 0.716,
+    "p90": 2.67,
+    "p95": 3.144,
+    "sigma": 0.45
+   },
+   "new": {
+    "median": 0.946,
+    "p5": 0.25,
+    "p90": 2.67,
+    "p95": 3.583,
+    "sigma": 0.809
+   },
+   "units": "years",
+   "evidence": "J (A10)"
+  },
+  "Td_auto": {
+   "old": {
+    "median": 1.0,
+    "p5": 0.373,
+    "p90": 2.157,
+    "p95": 2.683,
+    "sigma": 0.6
+   },
+   "new": {
+    "median": 0.84,
+    "p5": 0.25,
+    "p90": 2.157,
+    "p95": 2.819,
+    "sigma": 0.736
+   },
+   "units": "years",
+   "evidence": "J (A10)"
+  },
+  "fact_build_a": {
+   "old": {
+    "median": 0.5,
+    "p5": 0.239,
+    "p90": 0.89,
+    "p95": 1.048,
+    "sigma": 0.45
+   },
+   "new": {
+    "median": 0.342,
+    "p5": 0.1,
+    "p90": 0.89,
+    "p95": 1.168,
+    "sigma": 0.747
+   },
+   "units": "years",
+   "evidence": "J (A10)"
+  },
+  "Td_fab_auto": {
+   "old": {
+    "median": 1.042,
+    "p5": 0.5,
+    "p90": 2.613,
+    "p95": 3.391,
+    "sigma_raw": 0.718,
+    "note": "old floor = max(raw, 0.5)"
+   },
+   "new": {
+    "median": 0.935,
+    "p5": 0.25,
+    "p90": 2.613,
+    "p95": 3.497,
+    "sigma": 0.802
+   },
+   "units": "years",
+   "evidence": "J (A10)"
+  }
+ },
+ "headline_by_arm": {
+  "brakes_only": {
+   "P(>=99.9% deliberate) US or China, 2075": {
+    "mean": 0.3729,
+    "mc_ci95_bootstrap": [
+     0.35108,
+     0.39491
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.98
+    ],
+    "epistemic_ci95_denoised": [
+     0.01946,
+     0.94832
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.9255
+    ],
+    "sd_epistemic": 0.33109,
+    "share_noise_var": 0.10164
+   },
+   "P(>=99.9% deliberate) any bloc, 2075": {
+    "mean": 0.57789,
+    "mc_ci95_bootstrap": [
+     0.55432,
+     0.60263
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.99
+    ],
+    "epistemic_ci95_denoised": [
+     0.01595,
+     0.97862
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.975
+    ],
+    "sd_epistemic": 0.38507,
+    "share_noise_var": 0.05445
+   },
+   "P(world population loss >=99.9%), 2075": {
+    "mean": 0.09432,
+    "mc_ci95_bootstrap": [
+     0.08227,
+     0.10591
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.78037
+    ],
+    "epistemic_ci95_denoised": [
+     0.00574,
+     0.73863
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.3805
+    ],
+    "sd_epistemic": 0.19014,
+    "share_noise_var": 0.118
+   },
+   "P(S5 deliberate >=10%) US or China, 2075": {
+    "mean": 0.4369,
+    "mc_ci95_bootstrap": [
+     0.41412,
+     0.46042
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.985
+    ],
+    "epistemic_ci95_denoised": [
+     0.02258,
+     0.95667
+    ],
+    "epistemic_p10_p90": [
+     0.005,
+     0.965
+    ],
+    "sd_epistemic": 0.33491,
+    "share_noise_var": 0.10071
+   },
+   "P(S5 deliberate >=10%) any bloc, 2075": {
+    "mean": 0.63668,
+    "mc_ci95_bootstrap": [
+     0.61339,
+     0.65943
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.995
+    ],
+    "epistemic_ci95_denoised": [
+     0.01762,
+     0.98508
+    ],
+    "epistemic_p10_p90": [
+     0.035,
+     0.985
+    ],
+    "sd_epistemic": 0.36827,
+    "share_noise_var": 0.05459
+   },
+   "P(>=99.9% deliberate) US or China, by 2050": {
+    "mean": 0.21831,
+    "mc_ci95_bootstrap": [
+     0.20086,
+     0.23608
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.90512
+    ],
+    "epistemic_ci95_denoised": [
+     0.0149,
+     0.85825
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.68
+    ],
+    "sd_epistemic": 0.26381,
+    "share_noise_var": 0.13183
+   },
+   "P(S5 deliberate >=10%) US or China, by 2050": {
+    "mean": 0.3156,
+    "mc_ci95_bootstrap": [
+     0.29464,
+     0.33587
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.98012
+    ],
+    "epistemic_ci95_denoised": [
+     0.01802,
+     0.94217
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.8605
+    ],
+    "sd_epistemic": 0.31337,
+    "share_noise_var": 0.11096
+   },
+   "P(US or China public stripped of rights, 2075)": {
+    "mean": 0.71144,
+    "mc_ci95_bootstrap": [
+     0.69688,
+     0.72543
+    ],
+    "epistemic_ci95": [
+     0.19,
+     0.99
+    ],
+    "epistemic_ci95_denoised": [
+     0.2534,
+     0.95613
+    ],
+    "epistemic_p10_p90": [
+     0.355,
+     0.975
+    ],
+    "sd_epistemic": 0.20968,
+    "share_noise_var": 0.22839
+   },
+   "P(closure: some bloc core chain <20% human) by 2035": {
+    "mean": 0.32921,
+    "mc_ci95_bootstrap": [
+     0.30246,
+     0.35749
+    ],
+    "epistemic_ci95": [
+     0.0,
+     1.0
+    ],
+    "epistemic_ci95_denoised": [
+     0.002,
+     0.99593
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.995
+    ],
+    "sd_epistemic": 0.44481,
+    "share_noise_var": 0.0121
+   },
+   "P(closure: some bloc core chain <20% human) by 2040": {
+    "mean": 0.73692,
+    "mc_ci95_bootstrap": [
+     0.70902,
+     0.76433
+    ],
+    "epistemic_ci95": [
+     0.0,
+     1.0
+    ],
+    "epistemic_ci95_denoised": [
+     0.00107,
+     0.99962
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.995
+    ],
+    "sd_epistemic": 0.42354,
+    "share_noise_var": 0.0029
+   }
+  },
+  "brakes_greenfield": {
+   "P(>=99.9% deliberate) US or China, 2075": {
+    "mean": 0.36634,
+    "mc_ci95_bootstrap": [
+     0.3441,
+     0.38813
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.98
+    ],
+    "epistemic_ci95_denoised": [
+     0.01919,
+     0.94785
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.9305
+    ],
+    "sd_epistemic": 0.3293,
+    "share_noise_var": 0.10203
+   },
+   "P(>=99.9% deliberate) any bloc, 2075": {
+    "mean": 0.57652,
+    "mc_ci95_bootstrap": [
+     0.5525,
+     0.60111
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.99
+    ],
+    "epistemic_ci95_denoised": [
+     0.0168,
+     0.97795
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.98
+    ],
+    "sd_epistemic": 0.38359,
+    "share_noise_var": 0.05742
+   },
+   "P(world population loss >=99.9%), 2075": {
+    "mean": 0.08163,
+    "mc_ci95_bootstrap": [
+     0.07036,
+     0.09282
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.73
+    ],
+    "epistemic_ci95_denoised": [
+     0.00499,
+     0.69038
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.325
+    ],
+    "sd_epistemic": 0.17809,
+    "share_noise_var": 0.11847
+   },
+   "P(S5 deliberate >=10%) US or China, 2075": {
+    "mean": 0.42762,
+    "mc_ci95_bootstrap": [
+     0.40562,
+     0.44951
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.98512
+    ],
+    "epistemic_ci95_denoised": [
+     0.02176,
+     0.95676
+    ],
+    "epistemic_p10_p90": [
+     0.005,
+     0.9655
+    ],
+    "sd_epistemic": 0.33521,
+    "share_noise_var": 0.09917
+   },
+   "P(S5 deliberate >=10%) any bloc, 2075": {
+    "mean": 0.64013,
+    "mc_ci95_bootstrap": [
+     0.61641,
+     0.66277
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.995
+    ],
+    "epistemic_ci95_denoised": [
+     0.01909,
+     0.98442
+    ],
+    "epistemic_p10_p90": [
+     0.04,
+     0.99
+    ],
+    "sd_epistemic": 0.36424,
+    "share_noise_var": 0.05876
+   },
+   "P(>=99.9% deliberate) US or China, by 2050": {
+    "mean": 0.22632,
+    "mc_ci95_bootstrap": [
+     0.20753,
+     0.24337
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.945
+    ],
+    "epistemic_ci95_denoised": [
+     0.0153,
+     0.89642
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.7
+    ],
+    "sd_epistemic": 0.2679,
+    "share_noise_var": 0.13061
+   },
+   "P(S5 deliberate >=10%) US or China, by 2050": {
+    "mean": 0.30935,
+    "mc_ci95_bootstrap": [
+     0.28963,
+     0.32965
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.985
+    ],
+    "epistemic_ci95_denoised": [
+     0.01728,
+     0.94726
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.87
+    ],
+    "sd_epistemic": 0.31366,
+    "share_noise_var": 0.1086
+   },
+   "P(US or China public stripped of rights, 2075)": {
+    "mean": 0.70926,
+    "mc_ci95_bootstrap": [
+     0.69433,
+     0.72327
+    ],
+    "epistemic_ci95": [
+     0.19488,
+     0.99
+    ],
+    "epistemic_ci95_denoised": [
+     0.25869,
+     0.95517
+    ],
+    "epistemic_p10_p90": [
+     0.365,
+     0.975
+    ],
+    "sd_epistemic": 0.20816,
+    "share_noise_var": 0.23273
+   },
+   "P(closure: some bloc core chain <20% human) by 2035": {
+    "mean": 0.62255,
+    "mc_ci95_bootstrap": [
+     0.5944,
+     0.6529
+    ],
+    "epistemic_ci95": [
+     0.0,
+     1.0
+    ],
+    "epistemic_ci95_denoised": [
+     0.00122,
+     0.99926
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     1.0
+    ],
+    "sd_epistemic": 0.47132,
+    "share_noise_var": 0.0039
+   },
+   "P(closure: some bloc core chain <20% human) by 2040": {
+    "mean": 0.76834,
+    "mc_ci95_bootstrap": [
+     0.74194,
+     0.79444
+    ],
+    "epistemic_ci95": [
+     0.0,
+     1.0
+    ],
+    "epistemic_ci95_denoised": [
+     0.00017,
+     0.99995
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     1.0
+    ],
+    "sd_epistemic": 0.41177,
+    "share_noise_var": 0.00043
+   }
+  },
+  "brakes_greenfield_computefb": {
+   "P(>=99.9% deliberate) US or China, 2075": {
+    "mean": 0.39029,
+    "mc_ci95_bootstrap": [
+     0.36944,
+     0.41229
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.985
+    ],
+    "epistemic_ci95_denoised": [
+     0.02134,
+     0.95249
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.945
+    ],
+    "sd_epistemic": 0.32921,
+    "share_noise_var": 0.10635
+   },
+   "P(>=99.9% deliberate) any bloc, 2075": {
+    "mean": 0.60136,
+    "mc_ci95_bootstrap": [
+     0.57816,
+     0.62507
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.99
+    ],
+    "epistemic_ci95_denoised": [
+     0.02034,
+     0.97686
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.98
+    ],
+    "sd_epistemic": 0.36896,
+    "share_noise_var": 0.06649
+   },
+   "P(world population loss >=99.9%), 2075": {
+    "mean": 0.08878,
+    "mc_ci95_bootstrap": [
+     0.07707,
+     0.10071
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.72525
+    ],
+    "epistemic_ci95_denoised": [
+     0.00526,
+     0.68754
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.3505
+    ],
+    "sd_epistemic": 0.18694,
+    "share_noise_var": 0.115
+   },
+   "P(S5 deliberate >=10%) US or China, 2075": {
+    "mean": 0.45204,
+    "mc_ci95_bootstrap": [
+     0.43058,
+     0.47413
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.99
+    ],
+    "epistemic_ci95_denoised": [
+     0.02479,
+     0.9605
+    ],
+    "epistemic_p10_p90": [
+     0.005,
+     0.97
+    ],
+    "sd_epistemic": 0.33189,
+    "share_noise_var": 0.10668
+   },
+   "P(S5 deliberate >=10%) any bloc, 2075": {
+    "mean": 0.66126,
+    "mc_ci95_bootstrap": [
+     0.63917,
+     0.68298
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.995
+    ],
+    "epistemic_ci95_denoised": [
+     0.02293,
+     0.98343
+    ],
+    "epistemic_p10_p90": [
+     0.0595,
+     0.99
+    ],
+    "sd_epistemic": 0.34966,
+    "share_noise_var": 0.06816
+   },
+   "P(>=99.9% deliberate) US or China, by 2050": {
+    "mean": 0.23342,
+    "mc_ci95_bootstrap": [
+     0.21605,
+     0.251
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.945
+    ],
+    "epistemic_ci95_denoised": [
+     0.01631,
+     0.89529
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.71
+    ],
+    "sd_epistemic": 0.26812,
+    "share_noise_var": 0.13485
+   },
+   "P(S5 deliberate >=10%) US or China, by 2050": {
+    "mean": 0.31435,
+    "mc_ci95_bootstrap": [
+     0.29449,
+     0.33491
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.985
+    ],
+    "epistemic_ci95_denoised": [
+     0.01827,
+     0.94603
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.87
+    ],
+    "sd_epistemic": 0.31199,
+    "share_noise_var": 0.11285
+   },
+   "P(US or China public stripped of rights, 2075)": {
+    "mean": 0.7299,
+    "mc_ci95_bootstrap": [
+     0.71672,
+     0.74375
+    ],
+    "epistemic_ci95": [
+     0.23,
+     0.99
+    ],
+    "epistemic_ci95_denoised": [
+     0.29583,
+     0.95575
+    ],
+    "epistemic_p10_p90": [
+     0.39,
+     0.98
+    ],
+    "sd_epistemic": 0.19896,
+    "share_noise_var": 0.24602
+   },
+   "P(closure: some bloc core chain <20% human) by 2035": {
+    "mean": 0.6316,
+    "mc_ci95_bootstrap": [
+     0.60451,
+     0.662
+    ],
+    "epistemic_ci95": [
+     0.0,
+     1.0
+    ],
+    "epistemic_ci95_denoised": [
+     0.00121,
+     0.9993
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     1.0
+    ],
+    "sd_epistemic": 0.46908,
+    "share_noise_var": 0.00382
+   },
+   "P(closure: some bloc core chain <20% human) by 2040": {
+    "mean": 0.78705,
+    "mc_ci95_bootstrap": [
+     0.76181,
+     0.81357
+    ],
+    "epistemic_ci95": [
+     0.0,
+     1.0
+    ],
+    "epistemic_ci95_denoised": [
+     0.00021,
+     0.99994
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     1.0
+    ],
+    "sd_epistemic": 0.39861,
+    "share_noise_var": 0.00054
+   }
+  },
+  "final_brakes_greenfield_computefb_widefloors": {
+   "P(>=99.9% deliberate) US or China, 2075": {
+    "mean": 0.38352,
+    "mc_ci95_bootstrap": [
+     0.36287,
+     0.40493
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.98012
+    ],
+    "epistemic_ci95_denoised": [
+     0.02085,
+     0.94769
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.945
+    ],
+    "sd_epistemic": 0.32922,
+    "share_noise_var": 0.10579
+   },
+   "P(>=99.9% deliberate) any bloc, 2075": {
+    "mean": 0.59692,
+    "mc_ci95_bootstrap": [
+     0.5741,
+     0.62033
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.99
+    ],
+    "epistemic_ci95_denoised": [
+     0.01995,
+     0.97686
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.98
+    ],
+    "sd_epistemic": 0.37074,
+    "share_noise_var": 0.06574
+   },
+   "P(world population loss >=99.9%), 2075": {
+    "mean": 0.09051,
+    "mc_ci95_bootstrap": [
+     0.07831,
+     0.10353
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.80525
+    ],
+    "epistemic_ci95_denoised": [
+     0.00513,
+     0.76475
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.36
+    ],
+    "sd_epistemic": 0.19135,
+    "share_noise_var": 0.11011
+   },
+   "P(S5 deliberate >=10%) US or China, 2075": {
+    "mean": 0.44277,
+    "mc_ci95_bootstrap": [
+     0.42125,
+     0.46512
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.99
+    ],
+    "epistemic_ci95_denoised": [
+     0.02387,
+     0.9605
+    ],
+    "epistemic_p10_p90": [
+     0.005,
+     0.9655
+    ],
+    "sd_epistemic": 0.33327,
+    "share_noise_var": 0.10492
+   },
+   "P(S5 deliberate >=10%) any bloc, 2075": {
+    "mean": 0.65688,
+    "mc_ci95_bootstrap": [
+     0.6345,
+     0.67848
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.995
+    ],
+    "epistemic_ci95_denoised": [
+     0.02232,
+     0.98351
+    ],
+    "epistemic_p10_p90": [
+     0.055,
+     0.99
+    ],
+    "sd_epistemic": 0.35252,
+    "share_noise_var": 0.06682
+   },
+   "P(>=99.9% deliberate) US or China, by 2050": {
+    "mean": 0.22398,
+    "mc_ci95_bootstrap": [
+     0.2069,
+     0.24173
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.92525
+    ],
+    "epistemic_ci95_denoised": [
+     0.01574,
+     0.87597
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.71
+    ],
+    "sd_epistemic": 0.26381,
+    "share_noise_var": 0.13562
+   },
+   "P(S5 deliberate >=10%) US or China, by 2050": {
+    "mean": 0.30736,
+    "mc_ci95_bootstrap": [
+     0.28791,
+     0.32746
+    ],
+    "epistemic_ci95": [
+     0.0,
+     0.985
+    ],
+    "epistemic_ci95_denoised": [
+     0.01776,
+     0.94584
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     0.87
+    ],
+    "sd_epistemic": 0.31052,
+    "share_noise_var": 0.11225
+   },
+   "P(US or China public stripped of rights, 2075)": {
+    "mean": 0.72983,
+    "mc_ci95_bootstrap": [
+     0.71617,
+     0.74333
+    ],
+    "epistemic_ci95": [
+     0.235,
+     0.99
+    ],
+    "epistemic_ci95_denoised": [
+     0.30095,
+     0.95533
+    ],
+    "epistemic_p10_p90": [
+     0.4,
+     0.98
+    ],
+    "sd_epistemic": 0.19771,
+    "share_noise_var": 0.24878
+   },
+   "P(closure: some bloc core chain <20% human) by 2035": {
+    "mean": 0.64825,
+    "mc_ci95_bootstrap": [
+     0.62113,
+     0.67717
+    ],
+    "epistemic_ci95": [
+     0.0,
+     1.0
+    ],
+    "epistemic_ci95_denoised": [
+     0.00129,
+     0.9993
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     1.0
+    ],
+    "sd_epistemic": 0.464,
+    "share_noise_var": 0.00399
+   },
+   "P(closure: some bloc core chain <20% human) by 2040": {
+    "mean": 0.79436,
+    "mc_ci95_bootstrap": [
+     0.77012,
+     0.81937
+    ],
+    "epistemic_ci95": [
+     0.0,
+     1.0
+    ],
+    "epistemic_ci95_denoised": [
+     0.00033,
+     0.99991
+    ],
+    "epistemic_p10_p90": [
+     0.0,
+     1.0
+    ],
+    "sd_epistemic": 0.39309,
+    "share_noise_var": 0.00084
+   }
+  }
+ },
+ "paired_change": {
+  "greenfield_vs_brakes_only": {
+   "P(>=99.9% deliberate) US or China, 2075": {
+    "variant": 0.36635,
+    "matched_baseline": 0.3729,
+    "change": -0.00655,
+    "change_paired_bootstrap_ci95": [
+     -0.0128,
+     -0.00023
+    ],
+    "relative_change": -0.0176
+   },
+   "P(>=99.9% deliberate) any bloc, 2075": {
+    "variant": 0.57652,
+    "matched_baseline": 0.57789,
+    "change": -0.00137,
+    "change_paired_bootstrap_ci95": [
+     -0.00914,
+     0.00641
+    ],
+    "relative_change": -0.0024
+   },
+   "P(world population loss >=99.9%), 2075": {
+    "variant": 0.08163,
+    "matched_baseline": 0.09432,
+    "change": -0.01269,
+    "change_paired_bootstrap_ci95": [
+     -0.01768,
+     -0.00768
+    ],
+    "relative_change": -0.1345
+   },
+   "P(S5 deliberate >=10%) US or China, 2075": {
+    "variant": 0.42762,
+    "matched_baseline": 0.43689,
+    "change": -0.00928,
+    "change_paired_bootstrap_ci95": [
+     -0.01496,
+     -0.00348
+    ],
+    "relative_change": -0.0212
+   },
+   "P(S5 deliberate >=10%) any bloc, 2075": {
+    "variant": 0.64013,
+    "matched_baseline": 0.63668,
+    "change": 0.00345,
+    "change_paired_bootstrap_ci95": [
+     -0.00421,
+     0.01149
+    ],
+    "relative_change": 0.0054
+   },
+   "P(>=99.9% deliberate) US or China, by 2050": {
+    "variant": 0.22632,
+    "matched_baseline": 0.21831,
+    "change": 0.00802,
+    "change_paired_bootstrap_ci95": [
+     0.00102,
+     0.01551
+    ],
+    "relative_change": 0.0367
+   },
+   "P(S5 deliberate >=10%) US or China, by 2050": {
+    "variant": 0.30935,
+    "matched_baseline": 0.3156,
+    "change": -0.00625,
+    "change_paired_bootstrap_ci95": [
+     -0.01293,
+     0.00055
+    ],
+    "relative_change": -0.0198
+   },
+   "P(US or China public stripped of rights, 2075)": {
+    "variant": 0.70925,
+    "matched_baseline": 0.71144,
+    "change": -0.00218,
+    "change_paired_bootstrap_ci95": [
+     -0.00619,
+     0.00211
+    ],
+    "relative_change": -0.0031
+   },
+   "P(closure: some bloc core chain <20% human) by 2035": {
+    "variant": 0.62255,
+    "matched_baseline": 0.32921,
+    "change": 0.29333,
+    "change_paired_bootstrap_ci95": [
+     0.26752,
+     0.31888
+    ],
+    "relative_change": 0.891
+   },
+   "P(closure: some bloc core chain <20% human) by 2040": {
+    "variant": 0.76833,
+    "matched_baseline": 0.73691,
+    "change": 0.03142,
+    "change_paired_bootstrap_ci95": [
+     0.02203,
+     0.04107
+    ],
+    "relative_change": 0.0426
+   }
+  },
+  "greenfield_computefb_vs_brakes_only": {
+   "P(>=99.9% deliberate) US or China, 2075": {
+    "variant": 0.39029,
+    "matched_baseline": 0.3729,
+    "change": 0.01739,
+    "change_paired_bootstrap_ci95": [
+     0.00786,
+     0.02685
+    ],
+    "relative_change": 0.0466
+   },
+   "P(>=99.9% deliberate) any bloc, 2075": {
+    "variant": 0.60135,
+    "matched_baseline": 0.57789,
+    "change": 0.02346,
+    "change_paired_bootstrap_ci95": [
+     0.01112,
+     0.03576
+    ],
+    "relative_change": 0.0406
+   },
+   "P(world population loss >=99.9%), 2075": {
+    "variant": 0.08879,
+    "matched_baseline": 0.09432,
+    "change": -0.00553,
+    "change_paired_bootstrap_ci95": [
+     -0.011,
+     0.00023
+    ],
+    "relative_change": -0.0587
+   },
+   "P(S5 deliberate >=10%) US or China, 2075": {
+    "variant": 0.45203,
+    "matched_baseline": 0.43689,
+    "change": 0.01514,
+    "change_paired_bootstrap_ci95": [
+     0.006,
+     0.02474
+    ],
+    "relative_change": 0.0347
+   },
+   "P(S5 deliberate >=10%) any bloc, 2075": {
+    "variant": 0.66126,
+    "matched_baseline": 0.63668,
+    "change": 0.02458,
+    "change_paired_bootstrap_ci95": [
+     0.01282,
+     0.03612
+    ],
+    "relative_change": 0.0386
+   },
+   "P(>=99.9% deliberate) US or China, by 2050": {
+    "variant": 0.23341,
+    "matched_baseline": 0.21831,
+    "change": 0.01511,
+    "change_paired_bootstrap_ci95": [
+     0.00707,
+     0.02332
+    ],
+    "relative_change": 0.0692
+   },
+   "P(S5 deliberate >=10%) US or China, by 2050": {
+    "variant": 0.31435,
+    "matched_baseline": 0.3156,
+    "change": -0.00125,
+    "change_paired_bootstrap_ci95": [
+     -0.00929,
+     0.00654
+    ],
+    "relative_change": -0.004
+   },
+   "P(US or China public stripped of rights, 2075)": {
+    "variant": 0.7299,
+    "matched_baseline": 0.71144,
+    "change": 0.01846,
+    "change_paired_bootstrap_ci95": [
+     0.01201,
+     0.02523
+    ],
+    "relative_change": 0.0259
+   },
+   "P(closure: some bloc core chain <20% human) by 2035": {
+    "variant": 0.6316,
+    "matched_baseline": 0.32921,
+    "change": 0.30239,
+    "change_paired_bootstrap_ci95": [
+     0.27607,
+     0.32776
+    ],
+    "relative_change": 0.9185
+   },
+   "P(closure: some bloc core chain <20% human) by 2040": {
+    "variant": 0.78705,
+    "matched_baseline": 0.73691,
+    "change": 0.05014,
+    "change_paired_bootstrap_ci95": [
+     0.03806,
+     0.06278
+    ],
+    "relative_change": 0.068
+   }
+  },
+  "computefb_increment_vs_greenfield": {
+   "P(>=99.9% deliberate) US or China, 2075": {
+    "variant": 0.39029,
+    "matched_baseline": 0.36635,
+    "change": 0.02395,
+    "change_paired_bootstrap_ci95": [
+     0.01612,
+     0.03195
+    ],
+    "relative_change": 0.0654
+   },
+   "P(>=99.9% deliberate) any bloc, 2075": {
+    "variant": 0.60135,
+    "matched_baseline": 0.57652,
+    "change": 0.02483,
+    "change_paired_bootstrap_ci95": [
+     0.01482,
+     0.03464
+    ],
+    "relative_change": 0.0431
+   },
+   "P(world population loss >=99.9%), 2075": {
+    "variant": 0.08879,
+    "matched_baseline": 0.08163,
+    "change": 0.00715,
+    "change_paired_bootstrap_ci95": [
+     0.00346,
+     0.01109
+    ],
+    "relative_change": 0.0877
+   },
+   "P(S5 deliberate >=10%) US or China, 2075": {
+    "variant": 0.45203,
+    "matched_baseline": 0.42762,
+    "change": 0.02442,
+    "change_paired_bootstrap_ci95": [
+     0.01647,
+     0.03228
+    ],
+    "relative_change": 0.0571
+   },
+   "P(S5 deliberate >=10%) any bloc, 2075": {
+    "variant": 0.66126,
+    "matched_baseline": 0.64013,
+    "change": 0.02113,
+    "change_paired_bootstrap_ci95": [
+     0.01169,
+     0.03057
+    ],
+    "relative_change": 0.033
+   },
+   "P(>=99.9% deliberate) US or China, by 2050": {
+    "variant": 0.23341,
+    "matched_baseline": 0.22632,
+    "change": 0.00709,
+    "change_paired_bootstrap_ci95": [
+     0.00319,
+     0.01113
+    ],
+    "relative_change": 0.0313
+   },
+   "P(S5 deliberate >=10%) US or China, by 2050": {
+    "variant": 0.31435,
+    "matched_baseline": 0.30935,
+    "change": 0.00499,
+    "change_paired_bootstrap_ci95": [
+     0.00029,
+     0.00989
+    ],
+    "relative_change": 0.0161
+   },
+   "P(US or China public stripped of rights, 2075)": {
+    "variant": 0.7299,
+    "matched_baseline": 0.70925,
+    "change": 0.02065,
+    "change_paired_bootstrap_ci95": [
+     0.01524,
+     0.02634
+    ],
+    "relative_change": 0.0291
+   },
+   "P(closure: some bloc core chain <20% human) by 2035": {
+    "variant": 0.6316,
+    "matched_baseline": 0.62255,
+    "change": 0.00906,
+    "change_paired_bootstrap_ci95": [
+     0.00412,
+     0.01407
+    ],
+    "relative_change": 0.0146
+   },
+   "P(closure: some bloc core chain <20% human) by 2040": {
+    "variant": 0.78705,
+    "matched_baseline": 0.76833,
+    "change": 0.01871,
+    "change_paired_bootstrap_ci95": [
+     0.01054,
+     0.02684
+    ],
+    "relative_change": 0.0244
+   }
+  },
+  "final_vs_brakes_only": {
+   "P(>=99.9% deliberate) US or China, 2075": {
+    "variant": 0.38353,
+    "matched_baseline": 0.3729,
+    "change": 0.01062,
+    "change_paired_bootstrap_ci95": [
+     0.00056,
+     0.0207
+    ],
+    "relative_change": 0.0285
+   },
+   "P(>=99.9% deliberate) any bloc, 2075": {
+    "variant": 0.59692,
+    "matched_baseline": 0.57789,
+    "change": 0.01903,
+    "change_paired_bootstrap_ci95": [
+     0.00518,
+     0.03211
+    ],
+    "relative_change": 0.0329
+   },
+   "P(world population loss >=99.9%), 2075": {
+    "variant": 0.09051,
+    "matched_baseline": 0.09432,
+    "change": -0.00381,
+    "change_paired_bootstrap_ci95": [
+     -0.00965,
+     0.00279
+    ],
+    "relative_change": -0.0403
+   },
+   "P(S5 deliberate >=10%) US or China, 2075": {
+    "variant": 0.44277,
+    "matched_baseline": 0.43689,
+    "change": 0.00587,
+    "change_paired_bootstrap_ci95": [
+     -0.00414,
+     0.01571
+    ],
+    "relative_change": 0.0134
+   },
+   "P(S5 deliberate >=10%) any bloc, 2075": {
+    "variant": 0.65688,
+    "matched_baseline": 0.63668,
+    "change": 0.0202,
+    "change_paired_bootstrap_ci95": [
+     0.00713,
+     0.03224
+    ],
+    "relative_change": 0.0317
+   },
+   "P(>=99.9% deliberate) US or China, by 2050": {
+    "variant": 0.22399,
+    "matched_baseline": 0.21831,
+    "change": 0.00568,
+    "change_paired_bootstrap_ci95": [
+     -0.00283,
+     0.0144
+    ],
+    "relative_change": 0.026
+   },
+   "P(S5 deliberate >=10%) US or China, by 2050": {
+    "variant": 0.30736,
+    "matched_baseline": 0.3156,
+    "change": -0.00824,
+    "change_paired_bootstrap_ci95": [
+     -0.01744,
+     0.00062
+    ],
+    "relative_change": -0.0261
+   },
+   "P(US or China public stripped of rights, 2075)": {
+    "variant": 0.72983,
+    "matched_baseline": 0.71144,
+    "change": 0.01839,
+    "change_paired_bootstrap_ci95": [
+     0.01139,
+     0.02555
+    ],
+    "relative_change": 0.0258
+   },
+   "P(closure: some bloc core chain <20% human) by 2035": {
+    "variant": 0.64825,
+    "matched_baseline": 0.32921,
+    "change": 0.31904,
+    "change_paired_bootstrap_ci95": [
+     0.29217,
+     0.34553
+    ],
+    "relative_change": 0.9691
+   },
+   "P(closure: some bloc core chain <20% human) by 2040": {
+    "variant": 0.79436,
+    "matched_baseline": 0.73691,
+    "change": 0.05745,
+    "change_paired_bootstrap_ci95": [
+     0.0445,
+     0.07068
+    ],
+    "relative_change": 0.078
+   }
+  },
+  "widefloors_increment_vs_greenfield_computefb": {
+   "P(>=99.9% deliberate) US or China, 2075": {
+    "variant": 0.38353,
+    "matched_baseline": 0.39029,
+    "change": -0.00677,
+    "change_paired_bootstrap_ci95": [
+     -0.01223,
+     -0.00146
+    ],
+    "relative_change": -0.0173
+   },
+   "P(>=99.9% deliberate) any bloc, 2075": {
+    "variant": 0.59692,
+    "matched_baseline": 0.60135,
+    "change": -0.00443,
+    "change_paired_bootstrap_ci95": [
+     -0.00992,
+     0.00087
+    ],
+    "relative_change": -0.0074
+   },
+   "P(world population loss >=99.9%), 2075": {
+    "variant": 0.09051,
+    "matched_baseline": 0.08879,
+    "change": 0.00173,
+    "change_paired_bootstrap_ci95": [
+     -0.00168,
+     0.00551
+    ],
+    "relative_change": 0.0195
+   },
+   "P(S5 deliberate >=10%) US or China, 2075": {
+    "variant": 0.44277,
+    "matched_baseline": 0.45203,
+    "change": -0.00927,
+    "change_paired_bootstrap_ci95": [
+     -0.01456,
+     -0.00397
+    ],
+    "relative_change": -0.0205
+   },
+   "P(S5 deliberate >=10%) any bloc, 2075": {
+    "variant": 0.65688,
+    "matched_baseline": 0.66126,
+    "change": -0.00438,
+    "change_paired_bootstrap_ci95": [
+     -0.00955,
+     0.00039
+    ],
+    "relative_change": -0.0066
+   },
+   "P(>=99.9% deliberate) US or China, by 2050": {
+    "variant": 0.22399,
+    "matched_baseline": 0.23341,
+    "change": -0.00943,
+    "change_paired_bootstrap_ci95": [
+     -0.01446,
+     -0.00454
+    ],
+    "relative_change": -0.0404
+   },
+   "P(S5 deliberate >=10%) US or China, by 2050": {
+    "variant": 0.30736,
+    "matched_baseline": 0.31435,
+    "change": -0.00698,
+    "change_paired_bootstrap_ci95": [
+     -0.01321,
+     -0.00072
+    ],
+    "relative_change": -0.0222
+   },
+   "P(US or China public stripped of rights, 2075)": {
+    "variant": 0.72983,
+    "matched_baseline": 0.7299,
+    "change": -7e-05,
+    "change_paired_bootstrap_ci95": [
+     -0.00386,
+     0.00368
+    ],
+    "relative_change": -0.0001
+   },
+   "P(closure: some bloc core chain <20% human) by 2035": {
+    "variant": 0.64825,
+    "matched_baseline": 0.6316,
+    "change": 0.01665,
+    "change_paired_bootstrap_ci95": [
+     0.01039,
+     0.02354
+    ],
+    "relative_change": 0.0264
+   },
+   "P(closure: some bloc core chain <20% human) by 2040": {
+    "variant": 0.79436,
+    "matched_baseline": 0.78705,
+    "change": 0.00731,
+    "change_paired_bootstrap_ci95": [
+     0.00288,
+     0.01232
+    ],
+    "relative_change": 0.0093
+   }
+  }
+ },
+ "closure_timing_m8_world": {
+  "brakes_only": {
+   "first_closer_any_bloc": {
+    "median_year": 2036.5,
+    "p10_p90": [
+     2033.75,
+     2040.5
+    ],
+    "P_by": {
+     "2030": 0.0,
+     "2035": 0.3331,
+     "2040": 0.7479,
+     "2050": 0.8047
+    },
+    "paired_shift_vs_brakes_only_years": {
+     "median": 0.0,
+     "mean": 0.0,
+     "p10": 0.0,
+     "p90": 0.0
+    }
+   },
+   "US_or_China": {
+    "median_year": 2036.5,
+    "p10_p90": [
+     2033.75,
+     2040.5
+    ],
+    "P_by": {
+     "2030": 0.0,
+     "2035": 0.3331,
+     "2040": 0.7479,
+     "2050": 0.8047
+    },
+    "paired_shift_vs_brakes_only_years": {
+     "median": 0.0,
+     "mean": 0.0,
+     "p10": 0.0,
+     "p90": 0.0
+    }
+   },
+   "US_bloc": {
+    "median_year": 2036.75,
+    "p10_p90": [
+     2034.0,
+     2041.0
+    ],
+    "P_by": {
+     "2030": 0.0,
+     "2035": 0.2979,
+     "2040": 0.7381,
+     "2050": 0.8046
+    },
+    "paired_shift_vs_brakes_only_years": {
+     "median": 0.0,
+     "mean": 0.0,
+     "p10": 0.0,
+     "p90": 0.0
+    }
+   },
+   "China_bloc": {
+    "median_year": 2036.5,
+    "p10_p90": [
+     2033.75,
+     2040.5
+    ],
+    "P_by": {
+     "2030": 0.0,
+     "2035": 0.3331,
+     "2040": 0.7479,
+     "2050": 0.8047
+    },
+    "paired_shift_vs_brakes_only_years": {
+     "median": 0.0,
+     "mean": 0.0,
+     "p10": 0.0,
+     "p90": 0.0
+    }
+   }
+  },
+  "brakes_greenfield": {
+   "first_closer_any_bloc": {
+    "median_year": 2034.0,
+    "p10_p90": [
+     2032.0,
+     2038.25
+    ],
+    "P_by": {
+     "2030": 0.0044,
+     "2035": 0.6289,
+     "2040": 0.7766,
+     "2050": 0.806
+    },
+    "paired_shift_vs_brakes_only_years": {
+     "median": -1.75,
+     "mean": -2.142,
+     "p10": -4.75,
+     "p90": -0.25
+    }
+   },
+   "US_or_China": {
+    "median_year": 2034.0,
+    "p10_p90": [
+     2032.0,
+     2038.25
+    ],
+    "P_by": {
+     "2030": 0.0044,
+     "2035": 0.6289,
+     "2040": 0.7766,
+     "2050": 0.806
+    },
+    "paired_shift_vs_brakes_only_years": {
+     "median": -1.75,
+     "mean": -2.142,
+     "p10": -4.75,
+     "p90": -0.25
+    }
+   },
+   "US_bloc": {
+    "median_year": 2034.25,
+    "p10_p90": [
+     2032.25,
+     2038.5
+    ],
+    "P_by": {
+     "2030": 0.0026,
+     "2035": 0.607,
+     "2040": 0.7744,
+     "2050": 0.806
+    },
+    "paired_shift_vs_brakes_only_years": {
+     "median": -1.75,
+     "mean": -2.189,
+     "p10": -4.75,
+     "p90": -0.25
+    }
+   },
+   "China_bloc": {
+    "median_year": 2034.25,
+    "p10_p90": [
+     2032.0,
+     2038.25
+    ],
+    "P_by": {
+     "2030": 0.0044,
+     "2035": 0.627,
+     "2040": 0.7765,
+     "2050": 0.806
+    },
+    "paired_shift_vs_brakes_only_years": {
+     "median": -1.5,
+     "mean": -2.121,
+     "p10": -4.75,
+     "p90": -0.25
+    }
+   }
+  },
+  "brakes_greenfield_computefb": {
+   "first_closer_any_bloc": {
+    "median_year": 2034.25,
+    "p10_p90": [
+     2032.0,
+     2039.5
+    ],
+    "P_by": {
+     "2030": 0.0044,
+     "2035": 0.6378,
+     "2040": 0.7955,
+     "2050": 0.842
+    },
+    "paired_shift_vs_brakes_only_years": {
+     "median": -1.75,
+     "mean": -2.422,
+     "p10": -5.0,
+     "p90": -0.25
+    }
+   },
+   "US_or_China": {
+    "median_year": 2034.25,
+    "p10_p90": [
+     2032.0,
+     2039.5
+    ],
+    "P_by": {
+     "2030": 0.0044,
+     "2035": 0.6378,
+     "2040": 0.7955,
+     "2050": 0.842
+    },
+    "paired_shift_vs_brakes_only_years": {
+     "median": -1.75,
+     "mean": -2.422,
+     "p10": -5.0,
+     "p90": -0.25
+    }
+   },
+   "US_bloc": {
+    "median_year": 2034.5,
+    "p10_p90": [
+     2032.5,
+     2039.75
+    ],
+    "P_by": {
+     "2030": 0.0026,
+     "2035": 0.6132,
+     "2040": 0.7935,
+     "2050": 0.842
+    },
+    "paired_shift_vs_brakes_only_years": {
+     "median": -2.0,
+     "mean": -2.472,
+     "p10": -5.25,
+     "p90": -0.25
+    }
+   },
+   "China_bloc": {
+    "median_year": 2034.25,
+    "p10_p90": [
+     2032.0,
+     2039.5
+    ],
+    "P_by": {
+     "2030": 0.0044,
+     "2035": 0.636,
+     "2040": 0.7955,
+     "2050": 0.842
+    },
+    "paired_shift_vs_brakes_only_years": {
+     "median": -1.75,
+     "mean": -2.402,
+     "p10": -5.0,
+     "p90": -0.25
+    }
+   }
+  },
+  "final_brakes_greenfield_computefb_widefloors": {
+   "first_closer_any_bloc": {
+    "median_year": 2034.0,
+    "p10_p90": [
+     2032.0,
+     2039.5
+    ],
+    "P_by": {
+     "2030": 0.0091,
+     "2035": 0.6542,
+     "2040": 0.8026,
+     "2050": 0.852
+    },
+    "paired_shift_vs_brakes_only_years": {
+     "median": -2.0,
+     "mean": -2.618,
+     "p10": -5.25,
+     "p90": -0.5
+    }
+   },
+   "US_or_China": {
+    "median_year": 2034.0,
+    "p10_p90": [
+     2032.0,
+     2039.5
+    ],
+    "P_by": {
+     "2030": 0.0091,
+     "2035": 0.6542,
+     "2040": 0.8026,
+     "2050": 0.852
+    },
+    "paired_shift_vs_brakes_only_years": {
+     "median": -2.0,
+     "mean": -2.618,
+     "p10": -5.25,
+     "p90": -0.5
+    }
+   },
+   "US_bloc": {
+    "median_year": 2034.25,
+    "p10_p90": [
+     2032.25,
+     2039.75
+    ],
+    "P_by": {
+     "2030": 0.005,
+     "2035": 0.6298,
+     "2040": 0.7943,
+     "2050": 0.852
+    },
+    "paired_shift_vs_brakes_only_years": {
+     "median": -2.0,
+     "mean": -2.673,
+     "p10": -5.5,
+     "p90": -0.5
+    }
+   },
+   "China_bloc": {
+    "median_year": 2034.0,
+    "p10_p90": [
+     2032.0,
+     2039.5
+    ],
+    "P_by": {
+     "2030": 0.0091,
+     "2035": 0.6525,
+     "2040": 0.8026,
+     "2050": 0.852
+    },
+    "paired_shift_vs_brakes_only_years": {
+     "median": -2.0,
+     "mean": -2.599,
+     "p10": -5.25,
+     "p90": -0.5
+    }
+   }
+  }
+ },
+ "greenfield_diagnostics_m8_world": {
+  "brakes_only": {
+   "active": false,
+   "closure_any_bloc_year": {
+    "p10": 2033.75,
+    "median": 2036.5,
+    "p90": 2040.5,
+    "share_reached": 0.822
+   },
+   "P_closure_any_bloc_by": {
+    "2030": 0.0,
+    "2035": 0.2318,
+    "2040": 0.7239,
+    "2050": 0.804
+   },
+   "P_closure_US_or_China_by": {
+    "2030": 0.0,
+    "2035": 0.2318,
+    "2040": 0.7239,
+    "2050": 0.804
+   },
+   "closure_year_by_bloc": {
+    "US_bloc": {
+     "p10": 2034.0,
+     "median": 2036.75,
+     "p90": 2041.0,
+     "share_reached": 0.822
+    },
+    "China_bloc": {
+     "p10": 2033.75,
+     "median": 2036.5,
+     "p90": 2040.5,
+     "share_reached": 0.822
+    },
+    "Europe_plus": {
+     "p10": 2036.0,
+     "median": 2039.25,
+     "p90": 2044.5,
+     "share_reached": 0.8036
+    },
+    "Russia_MENA": {
+     "p10": 2037.25,
+     "median": 2041.0,
+     "p90": 2047.0,
+     "share_reached": 0.7875
+    },
+    "South_Asia": {
+     "p10": 2037.5,
+     "median": 2041.5,
+     "p90": 2047.75,
+     "share_reached": 0.7836
+    },
+    "Global_South": {
+     "p10": 2037.5,
+     "median": 2041.5,
+     "p90": 2047.5,
+     "share_reached": 0.7844
+    }
+   },
+   "P_closure_by_bloc_by": {
+    "US_bloc": {
+     "2030": 0.0,
+     "2035": 0.208,
+     "2040": 0.7079
+    },
+    "China_bloc": {
+     "2030": 0.0,
+     "2035": 0.2318,
+     "2040": 0.7239
+    },
+    "Europe_plus": {
+     "2030": 0.0,
+     "2035": 0.0331,
+     "2040": 0.4808
+    },
+    "Russia_MENA": {
+     "2030": 0.0,
+     "2035": 0.0096,
+     "2040": 0.308
+    },
+    "South_Asia": {
+     "2030": 0.0,
+     "2035": 0.0076,
+     "2040": 0.257
+    },
+    "Global_South": {
+     "2030": 0.0,
+     "2035": 0.0076,
+     "2040": 0.2622
+    }
+   },
+   "first_closer_share": {
+    "US_bloc": 0.1557,
+    "China_bloc": 0.6663,
+    "Europe_plus": 0.0,
+    "Russia_MENA": 0.0,
+    "South_Asia": 0.0,
+    "Global_South": 0.0,
+    "none_by_2075": 0.178
+   },
+   "US_minus_China_closure_years": {
+    "median": 0.25,
+    "p10": 0.0,
+    "p90": 0.5,
+    "abs_median": 0.25,
+    "share_US_first": 0.005,
+    "share_China_first": 0.8105,
+    "share_same_quarter": 0.1845
+   }
+  },
+  "brakes_greenfield": {
+   "active": true,
+   "closure_any_bloc_year": {
+    "p10": 2032.0,
+    "median": 2034.0,
+    "p90": 2038.25,
+    "share_reached": 0.823
+   },
+   "P_closure_any_bloc_by": {
+    "2030": 0.0,
+    "2035": 0.5567,
+    "2040": 0.769,
+    "2050": 0.806
+   },
+   "P_closure_US_or_China_by": {
+    "2030": 0.0,
+    "2035": 0.5567,
+    "2040": 0.769,
+    "2050": 0.806
+   },
+   "closure_year_by_bloc": {
+    "US_bloc": {
+     "p10": 2032.25,
+     "median": 2034.25,
+     "p90": 2038.5,
+     "share_reached": 0.822
+    },
+    "China_bloc": {
+     "p10": 2032.0,
+     "median": 2034.25,
+     "p90": 2038.25,
+     "share_reached": 0.822
+    },
+    "Europe_plus": {
+     "p10": 2033.5,
+     "median": 2036.0,
+     "p90": 2040.25,
+     "share_reached": 0.822
+    },
+    "Russia_MENA": {
+     "p10": 2034.5,
+     "median": 2036.75,
+     "p90": 2041.75,
+     "share_reached": 0.8229
+    },
+    "South_Asia": {
+     "p10": 2034.75,
+     "median": 2037.25,
+     "p90": 2043.0,
+     "share_reached": 0.8141
+    },
+    "Global_South": {
+     "p10": 2034.75,
+     "median": 2037.25,
+     "p90": 2042.75,
+     "share_reached": 0.8149
+    }
+   },
+   "P_closure_by_bloc_by": {
+    "US_bloc": {
+     "2030": 0.0,
+     "2035": 0.5324,
+     "2040": 0.7675
+    },
+    "China_bloc": {
+     "2030": 0.0,
+     "2035": 0.5523,
+     "2040": 0.769
+    },
+    "Europe_plus": {
+     "2030": 0.0,
+     "2035": 0.2963,
+     "2040": 0.735
+    },
+    "Russia_MENA": {
+     "2030": 0.0,
+     "2035": 0.1565,
+     "2040": 0.6953
+    },
+    "South_Asia": {
+     "2030": 0.0,
+     "2035": 0.1079,
+     "2040": 0.6458
+    },
+    "Global_South": {
+     "2030": 0.0,
+     "2035": 0.1075,
+     "2040": 0.6573
+    }
+   },
+   "first_closer_share": {
+    "US_bloc": 0.3312,
+    "China_bloc": 0.4908,
+    "Europe_plus": 0.0,
+    "Russia_MENA": 0.001,
+    "South_Asia": 0.0,
+    "Global_South": 0.0,
+    "none_by_2075": 0.177
+   },
+   "US_minus_China_closure_years": {
+    "median": 0.25,
+    "p10": 0.0,
+    "p90": 0.5,
+    "abs_median": 0.25,
+    "share_US_first": 0.0776,
+    "share_China_first": 0.597,
+    "share_same_quarter": 0.3254
+   },
+   "US_or_China_blocs": {
+    "share_of_closures_loop_alone_first": 0.8589,
+    "share_of_closures_conversion_alone_first": 0.0349,
+    "share_of_closures_same_step": 0.1062,
+    "share_of_closures_before_either_path_alone": 0.0473,
+    "lead_years_loop_over_conversion_given_loop_first": {
+     "median": 1.25,
+     "p10": 0.25,
+     "p90": 4.0,
+     "share_conversion_never_by_2075": 0.0
+    },
+    "closure_year_loop_alone": {
+     "p10": 2032.0,
+     "median": 2034.25,
+     "p90": 2038.25,
+     "share_reached": 0.822
+    },
+    "closure_year_conversion_alone": {
+     "p10": 2033.25,
+     "median": 2035.75,
+     "p90": 2040.25,
+     "share_reached": 0.822
+    },
+    "closure_year_effective": {
+     "p10": 2032.0,
+     "median": 2034.0,
+     "p90": 2038.25,
+     "share_reached": 0.822
+    },
+    "P_loop_alone_by_2040": 0.769,
+    "P_conversion_alone_by_2040": 0.7369,
+    "share_of_build_steps_robot_limited": 0.0135,
+    "share_of_build_steps_at_capability_gate": 0.796
+   },
+   "all_blocs": {
+    "share_of_closures_loop_alone_first": 0.95,
+    "share_of_closures_conversion_alone_first": 0.0118,
+    "share_of_closures_same_step": 0.0382,
+    "share_of_closures_before_either_path_alone": 0.0377,
+    "lead_years_loop_over_conversion_given_loop_first": {
+     "median": 2.75,
+     "p10": 0.75,
+     "p90": 8.25,
+     "share_conversion_never_by_2075": 0.0295
+    },
+    "closure_year_loop_alone": {
+     "p10": 2032.0,
+     "median": 2034.25,
+     "p90": 2038.25,
+     "share_reached": 0.823
+    },
+    "closure_year_conversion_alone": {
+     "p10": 2033.25,
+     "median": 2035.75,
+     "p90": 2040.25,
+     "share_reached": 0.822
+    },
+    "closure_year_effective": {
+     "p10": 2032.0,
+     "median": 2034.0,
+     "p90": 2038.25,
+     "share_reached": 0.823
+    },
+    "P_loop_alone_by_2040": 0.769,
+    "P_conversion_alone_by_2040": 0.7369,
+    "share_of_build_steps_robot_limited": 0.1013,
+    "share_of_build_steps_at_capability_gate": 0.7488
+   },
+   "loop_automated_share_2075_median_by_segment_US": {
+    "mining": 0.9954,
+    "energy": 0.9952,
+    "chips": 0.9967,
+    "manufacturing": 0.9953,
+    "logistics": 0.9952,
+    "construction": 0.995,
+    "maintenance": 0.995,
+    "security": 0.0,
+    "admin": 0.9952
+   },
+   "loop_automated_share_2075_median_by_segment_China": {
+    "mining": 0.9954,
+    "energy": 0.9952,
+    "chips": 0.9965,
+    "manufacturing": 0.9954,
+    "logistics": 0.9952,
+    "construction": 0.995,
+    "maintenance": 0.995,
+    "security": 0.0,
+    "admin": 0.9952
+   }
+  },
+  "brakes_greenfield_computefb": {
+   "active": true,
+   "closure_any_bloc_year": {
+    "p10": 2032.0,
+    "median": 2034.25,
+    "p90": 2039.5,
+    "share_reached": 0.868
+   },
+   "P_closure_any_bloc_by": {
+    "2030": 0.0,
+    "2035": 0.5664,
+    "2040": 0.7903,
+    "2050": 0.842
+   },
+   "P_closure_US_or_China_by": {
+    "2030": 0.0,
+    "2035": 0.5664,
+    "2040": 0.7903,
+    "2050": 0.842
+   },
+   "closure_year_by_bloc": {
+    "US_bloc": {
+     "p10": 2032.5,
+     "median": 2034.5,
+     "p90": 2039.75,
+     "share_reached": 0.868
+    },
+    "China_bloc": {
+     "p10": 2032.0,
+     "median": 2034.25,
+     "p90": 2039.5,
+     "share_reached": 0.868
+    },
+    "Europe_plus": {
+     "p10": 2033.5,
+     "median": 2036.0,
+     "p90": 2042.25,
+     "share_reached": 0.867
+    },
+    "Russia_MENA": {
+     "p10": 2034.5,
+     "median": 2037.0,
+     "p90": 2043.25,
+     "share_reached": 0.867
+    },
+    "South_Asia": {
+     "p10": 2035.0,
+     "median": 2037.25,
+     "p90": 2044.75,
+     "share_reached": 0.859
+    },
+    "Global_South": {
+     "p10": 2034.75,
+     "median": 2037.5,
+     "p90": 2044.5,
+     "share_reached": 0.8619
+    }
+   },
+   "P_closure_by_bloc_by": {
+    "US_bloc": {
+     "2030": 0.0,
+     "2035": 0.5403,
+     "2040": 0.7854
+    },
+    "China_bloc": {
+     "2030": 0.0,
+     "2035": 0.5621,
+     "2040": 0.7901
+    },
+    "Europe_plus": {
+     "2030": 0.0,
+     "2035": 0.3004,
+     "2040": 0.7444
+    },
+    "Russia_MENA": {
+     "2030": 0.0,
+     "2035": 0.1581,
+     "2040": 0.7066
+    },
+    "South_Asia": {
+     "2030": 0.0,
+     "2035": 0.11,
+     "2040": 0.6571
+    },
+    "Global_South": {
+     "2030": 0.0,
+     "2035": 0.1113,
+     "2040": 0.6655
+    }
+   },
+   "first_closer_share": {
+    "US_bloc": 0.3336,
+    "China_bloc": 0.5327,
+    "Europe_plus": 0.0,
+    "Russia_MENA": 0.0006,
+    "South_Asia": 0.001,
+    "Global_South": 0.0,
+    "none_by_2075": 0.132
+   },
+   "US_minus_China_closure_years": {
+    "median": 0.25,
+    "p10": 0.0,
+    "p90": 0.5,
+    "abs_median": 0.25,
+    "share_US_first": 0.0707,
+    "share_China_first": 0.6138,
+    "share_same_quarter": 0.3155
+   },
+   "US_or_China_blocs": {
+    "share_of_closures_loop_alone_first": 0.8513,
+    "share_of_closures_conversion_alone_first": 0.0346,
+    "share_of_closures_same_step": 0.1141,
+    "share_of_closures_before_either_path_alone": 0.046,
+    "lead_years_loop_over_conversion_given_loop_first": {
+     "median": 1.25,
+     "p10": 0.25,
+     "p90": 3.75,
+     "share_conversion_never_by_2075": 0.0
+    },
+    "closure_year_loop_alone": {
+     "p10": 2032.0,
+     "median": 2034.25,
+     "p90": 2039.5,
+     "share_reached": 0.868
+    },
+    "closure_year_conversion_alone": {
+     "p10": 2033.25,
+     "median": 2036.0,
+     "p90": 2041.25,
+     "share_reached": 0.868
+    },
+    "closure_year_effective": {
+     "p10": 2032.0,
+     "median": 2034.25,
+     "p90": 2039.5,
+     "share_reached": 0.868
+    },
+    "P_loop_alone_by_2040": 0.7891,
+    "P_conversion_alone_by_2040": 0.7534,
+    "share_of_build_steps_robot_limited": 0.0136,
+    "share_of_build_steps_at_capability_gate": 0.7945
+   },
+   "all_blocs": {
+    "share_of_closures_loop_alone_first": 0.9477,
+    "share_of_closures_conversion_alone_first": 0.0118,
+    "share_of_closures_same_step": 0.0404,
+    "share_of_closures_before_either_path_alone": 0.036,
+    "lead_years_loop_over_conversion_given_loop_first": {
+     "median": 2.5,
+     "p10": 0.5,
+     "p90": 7.5,
+     "share_conversion_never_by_2075": 0.0165
+    },
+    "closure_year_loop_alone": {
+     "p10": 2032.0,
+     "median": 2034.25,
+     "p90": 2039.5,
+     "share_reached": 0.868
+    },
+    "closure_year_conversion_alone": {
+     "p10": 2033.25,
+     "median": 2036.0,
+     "p90": 2041.25,
+     "share_reached": 0.868
+    },
+    "closure_year_effective": {
+     "p10": 2032.0,
+     "median": 2034.25,
+     "p90": 2039.5,
+     "share_reached": 0.868
+    },
+    "P_loop_alone_by_2040": 0.7891,
+    "P_conversion_alone_by_2040": 0.7534,
+    "share_of_build_steps_robot_limited": 0.1,
+    "share_of_build_steps_at_capability_gate": 0.7484
+   },
+   "loop_automated_share_2075_median_by_segment_US": {
+    "mining": 0.9954,
+    "energy": 0.9952,
+    "chips": 0.9967,
+    "manufacturing": 0.9953,
+    "logistics": 0.9952,
+    "construction": 0.995,
+    "maintenance": 0.995,
+    "security": 0.0,
+    "admin": 0.9952
+   },
+   "loop_automated_share_2075_median_by_segment_China": {
+    "mining": 0.9954,
+    "energy": 0.9952,
+    "chips": 0.9965,
+    "manufacturing": 0.9954,
+    "logistics": 0.9952,
+    "construction": 0.995,
+    "maintenance": 0.995,
+    "security": 0.0,
+    "admin": 0.9952
+   }
+  },
+  "final_brakes_greenfield_computefb_widefloors": {
+   "active": true,
+   "closure_any_bloc_year": {
+    "p10": 2032.0,
+    "median": 2034.0,
+    "p90": 2039.5,
+    "share_reached": 0.872
+   },
+   "P_closure_any_bloc_by": {
+    "2030": 0.0,
+    "2035": 0.5823,
+    "2040": 0.7916,
+    "2050": 0.852
+   },
+   "P_closure_US_or_China_by": {
+    "2030": 0.0,
+    "2035": 0.5823,
+    "2040": 0.7916,
+    "2050": 0.852
+   },
+   "closure_year_by_bloc": {
+    "US_bloc": {
+     "p10": 2032.25,
+     "median": 2034.25,
+     "p90": 2039.75,
+     "share_reached": 0.872
+    },
+    "China_bloc": {
+     "p10": 2032.0,
+     "median": 2034.0,
+     "p90": 2039.5,
+     "share_reached": 0.872
+    },
+    "Europe_plus": {
+     "p10": 2033.5,
+     "median": 2035.75,
+     "p90": 2042.0,
+     "share_reached": 0.8704
+    },
+    "Russia_MENA": {
+     "p10": 2034.25,
+     "median": 2036.75,
+     "p90": 2043.0,
+     "share_reached": 0.8704
+    },
+    "South_Asia": {
+     "p10": 2034.75,
+     "median": 2037.25,
+     "p90": 2044.75,
+     "share_reached": 0.8631
+    },
+    "Global_South": {
+     "p10": 2034.5,
+     "median": 2037.25,
+     "p90": 2044.5,
+     "share_reached": 0.8659
+    }
+   },
+   "P_closure_by_bloc_by": {
+    "US_bloc": {
+     "2030": 0.0,
+     "2035": 0.5611,
+     "2040": 0.7885
+    },
+    "China_bloc": {
+     "2030": 0.0,
+     "2035": 0.5793,
+     "2040": 0.7915
+    },
+    "Europe_plus": {
+     "2030": 0.0,
+     "2035": 0.33,
+     "2040": 0.7524
+    },
+    "Russia_MENA": {
+     "2030": 0.0,
+     "2035": 0.1851,
+     "2040": 0.7212
+    },
+    "South_Asia": {
+     "2030": 0.0,
+     "2035": 0.1425,
+     "2040": 0.6704
+    },
+    "Global_South": {
+     "2030": 0.0,
+     "2035": 0.1384,
+     "2040": 0.6761
+    }
+   },
+   "first_closer_share": {
+    "US_bloc": 0.341,
+    "China_bloc": 0.5308,
+    "Europe_plus": 0.0,
+    "Russia_MENA": 0.0,
+    "South_Asia": 0.0003,
+    "Global_South": 0.0,
+    "none_by_2075": 0.128
+   },
+   "US_minus_China_closure_years": {
+    "median": 0.25,
+    "p10": 0.0,
+    "p90": 0.5,
+    "abs_median": 0.25,
+    "share_US_first": 0.0705,
+    "share_China_first": 0.6087,
+    "share_same_quarter": 0.3208
+   },
+   "US_or_China_blocs": {
+    "share_of_closures_loop_alone_first": 0.7878,
+    "share_of_closures_conversion_alone_first": 0.0317,
+    "share_of_closures_same_step": 0.1805,
+    "share_of_closures_before_either_path_alone": 0.0563,
+    "lead_years_loop_over_conversion_given_loop_first": {
+     "median": 0.75,
+     "p10": 0.25,
+     "p90": 3.5,
+     "share_conversion_never_by_2075": 0.0
+    },
+    "closure_year_loop_alone": {
+     "p10": 2032.0,
+     "median": 2034.0,
+     "p90": 2039.75,
+     "share_reached": 0.872
+    },
+    "closure_year_conversion_alone": {
+     "p10": 2032.75,
+     "median": 2035.25,
+     "p90": 2040.75,
+     "share_reached": 0.872
+    },
+    "closure_year_effective": {
+     "p10": 2032.0,
+     "median": 2034.0,
+     "p90": 2039.5,
+     "share_reached": 0.872
+    },
+    "P_loop_alone_by_2040": 0.7916,
+    "P_conversion_alone_by_2040": 0.767,
+    "share_of_build_steps_robot_limited": 0.0184,
+    "share_of_build_steps_at_capability_gate": 0.7429
+   },
+   "all_blocs": {
+    "share_of_closures_loop_alone_first": 0.9259,
+    "share_of_closures_conversion_alone_first": 0.0113,
+    "share_of_closures_same_step": 0.0627,
+    "share_of_closures_before_either_path_alone": 0.0473,
+    "lead_years_loop_over_conversion_given_loop_first": {
+     "median": 2.0,
+     "p10": 0.5,
+     "p90": 6.75,
+     "share_conversion_never_by_2075": 0.0154
+    },
+    "closure_year_loop_alone": {
+     "p10": 2032.0,
+     "median": 2034.0,
+     "p90": 2039.75,
+     "share_reached": 0.872
+    },
+    "closure_year_conversion_alone": {
+     "p10": 2032.75,
+     "median": 2035.25,
+     "p90": 2040.75,
+     "share_reached": 0.872
+    },
+    "closure_year_effective": {
+     "p10": 2032.0,
+     "median": 2034.0,
+     "p90": 2039.5,
+     "share_reached": 0.872
+    },
+    "P_loop_alone_by_2040": 0.7916,
+    "P_conversion_alone_by_2040": 0.767,
+    "share_of_build_steps_robot_limited": 0.1281,
+    "share_of_build_steps_at_capability_gate": 0.689
+   },
+   "loop_automated_share_2075_median_by_segment_US": {
+    "mining": 0.9954,
+    "energy": 0.9952,
+    "chips": 0.9967,
+    "manufacturing": 0.9953,
+    "logistics": 0.9952,
+    "construction": 0.995,
+    "maintenance": 0.995,
+    "security": 0.0,
+    "admin": 0.9952
+   },
+   "loop_automated_share_2075_median_by_segment_China": {
+    "mining": 0.9954,
+    "energy": 0.9952,
+    "chips": 0.9965,
+    "manufacturing": 0.9954,
+    "logistics": 0.9952,
+    "construction": 0.995,
+    "maintenance": 0.995,
+    "security": 0.0,
+    "admin": 0.9952
+   }
+  }
+ },
+ "leaders_and_compute_feedback_diagnostics_m8_world": {
+  "brakes_only": {
+   "US_China_closure_gap_years_given_either_closes": {
+    "median": 0.25,
+    "p90": 0.5,
+    "share_over_1y": 0.0015,
+    "share_over_2y": 0.0,
+    "share_over_5y": 0.0,
+    "share_only_one_closes_by_2075": 0.0,
+    "note": "gap = |t_US - t_China|, a bloc that never closes counted at 2076"
+   },
+   "kinetic_dominance_between_leaders": {
+    "P_US_reaches_dom_thr_over_China_by_2075": 0.0639,
+    "P_China_reaches_dom_thr_over_US_by_2075": 0.0015,
+    "P_either": 0.0654,
+    "P_either_by_2040": 0.0586,
+    "P_either_by_2050": 0.064,
+    "year_first": {
+     "p10": 2027.0,
+     "median": 2027.0,
+     "p90": 2041.3,
+     "share_reached": 0.0654
+    },
+    "note": "dom = own kinetic power / (US + China kinetic power) >= dom_thr (the B5 attack threshold); diagnostic of the pair only"
+   },
+   "cross_bloc_attacks_between_leaders": {
+    "P_China_campaign_against_US": 0.0,
+    "P_US_campaign_against_China": 0.0015,
+    "P_either": 0.0015
+   }
+  },
+  "brakes_greenfield": {
+   "US_China_closure_gap_years_given_either_closes": {
+    "median": 0.25,
+    "p90": 0.5,
+    "share_over_1y": 0.0018,
+    "share_over_2y": 0.0002,
+    "share_over_5y": 0.0,
+    "share_only_one_closes_by_2075": 0.0,
+    "note": "gap = |t_US - t_China|, a bloc that never closes counted at 2076"
+   },
+   "kinetic_dominance_between_leaders": {
+    "P_US_reaches_dom_thr_over_China_by_2075": 0.0735,
+    "P_China_reaches_dom_thr_over_US_by_2075": 0.0026,
+    "P_either": 0.0761,
+    "P_either_by_2040": 0.0617,
+    "P_either_by_2050": 0.0755,
+    "year_first": {
+     "p10": 2027.0,
+     "median": 2027.0,
+     "p90": 2042.0,
+     "share_reached": 0.0761
+    },
+    "note": "dom = own kinetic power / (US + China kinetic power) >= dom_thr (the B5 attack threshold); diagnostic of the pair only"
+   },
+   "cross_bloc_attacks_between_leaders": {
+    "P_China_campaign_against_US": 0.0,
+    "P_US_campaign_against_China": 0.0015,
+    "P_either": 0.0015
+   }
+  },
+  "brakes_greenfield_computefb": {
+   "US_China_closure_gap_years_given_either_closes": {
+    "median": 0.25,
+    "p90": 0.5,
+    "share_over_1y": 0.0017,
+    "share_over_2y": 0.0003,
+    "share_over_5y": 0.0,
+    "share_only_one_closes_by_2075": 0.0,
+    "note": "gap = |t_US - t_China|, a bloc that never closes counted at 2076"
+   },
+   "kinetic_dominance_between_leaders": {
+    "P_US_reaches_dom_thr_over_China_by_2075": 0.0742,
+    "P_China_reaches_dom_thr_over_US_by_2075": 0.0029,
+    "P_either": 0.0771,
+    "P_either_by_2040": 0.0617,
+    "P_either_by_2050": 0.0766,
+    "year_first": {
+     "p10": 2027.0,
+     "median": 2027.0,
+     "p90": 2042.25,
+     "share_reached": 0.0771
+    },
+    "note": "dom = own kinetic power / (US + China kinetic power) >= dom_thr (the B5 attack threshold); diagnostic of the pair only"
+   },
+   "cross_bloc_attacks_between_leaders": {
+    "P_China_campaign_against_US": 0.0001,
+    "P_US_campaign_against_China": 0.0015,
+    "P_either": 0.0016
+   },
+   "compute_feedback": {
+    "extra_doublings_of_first_closer_at_its_closure": {
+     "median": 0.5668,
+     "p10": 0.0,
+     "p90": 2.4835,
+     "share_positive": 0.858
+    },
+    "extra_doublings_2040_median": {
+     "US": 1.4822,
+     "China": 1.5235,
+     "max_bloc": 1.6249
+    },
+    "extra_doublings_2040_p90_max_bloc": 4.7962,
+    "leader_lead_over_second_2040": {
+     "median": 0.0268,
+     "p90": 0.1929,
+     "share_over_1_doubling": 0.0009
+    },
+    "US_minus_China_2040": {
+     "median": -0.0223,
+     "p10": -0.1733,
+     "p90": 0.0067
+    },
+    "extra_doublings_2075_median": {
+     "US": 5.6179,
+     "China": 5.6038
+    },
+    "share_of_steps_with_automation_gate_open_US_China": 0.9267
+   }
+  },
+  "final_brakes_greenfield_computefb_widefloors": {
+   "US_China_closure_gap_years_given_either_closes": {
+    "median": 0.25,
+    "p90": 0.5,
+    "share_over_1y": 0.0042,
+    "share_over_2y": 0.0024,
+    "share_over_5y": 0.0,
+    "share_only_one_closes_by_2075": 0.0,
+    "note": "gap = |t_US - t_China|, a bloc that never closes counted at 2076"
+   },
+   "kinetic_dominance_between_leaders": {
+    "P_US_reaches_dom_thr_over_China_by_2075": 0.0805,
+    "P_China_reaches_dom_thr_over_US_by_2075": 0.0031,
+    "P_either": 0.0833,
+    "P_either_by_2040": 0.0679,
+    "P_either_by_2050": 0.0823,
+    "year_first": {
+     "p10": 2027.0,
+     "median": 2027.0,
+     "p90": 2042.0,
+     "share_reached": 0.0833
+    },
+    "note": "dom = own kinetic power / (US + China kinetic power) >= dom_thr (the B5 attack threshold); diagnostic of the pair only"
+   },
+   "cross_bloc_attacks_between_leaders": {
+    "P_China_campaign_against_US": 0.0,
+    "P_US_campaign_against_China": 0.0011,
+    "P_either": 0.0011
+   },
+   "compute_feedback": {
+    "extra_doublings_of_first_closer_at_its_closure": {
+     "median": 0.8534,
+     "p10": 0.0,
+     "p90": 3.5309,
+     "share_positive": 0.8718
+    },
+    "extra_doublings_2040_median": {
+     "US": 2.2989,
+     "China": 2.378,
+     "max_bloc": 2.5759
+    },
+    "extra_doublings_2040_p90_max_bloc": 8.2329,
+    "leader_lead_over_second_2040": {
+     "median": 0.0546,
+     "p90": 0.3156,
+     "share_over_1_doubling": 0.0064
+    },
+    "US_minus_China_2040": {
+     "median": -0.0473,
+     "p10": -0.2647,
+     "p90": 0.0122
+    },
+    "extra_doublings_2075_median": {
+     "US": 7.5641,
+     "China": 7.5678
+    },
+    "share_of_steps_with_automation_gate_open_US_China": 0.9266
+   }
+  }
+ },
+ "runtime_s": 120.9
+}

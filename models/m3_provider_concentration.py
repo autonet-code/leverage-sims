@@ -72,7 +72,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-ROOT = r"C:\code\sims\dystopia"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SEED = 20260930
 N_DRAWS = 40000
 N_VAR = 20000

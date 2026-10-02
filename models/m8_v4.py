@@ -514,6 +514,79 @@ PRIORS_BRK2 = {
 }
 
 
+# ---- OWN-INDUSTRY COMPUTE FEEDBACK (cf_on; see the COMPUTE FEEDBACK blocks in _sim_chunk). Two new priors, drawn from
+# their OWN numpy stream (seeded from sim_seed with a different tag than the brake stream) after every existing draw, so
+# no existing parameter changes. OFF by default.
+PRIORS_CF = {
+    "eta_cf": (("uniform", 0.5, 1.5), "COMPUTE FEEDBACK: horizon doublings per extra doubling of a bloc's own compute production beyond the trend. Anchor: horizon doubles every 4-7 months while frontier training compute grows ~4-5x/yr (~2.1 compute doublings/yr), i.e. ~0.8-1.4 horizon doublings per compute doubling", "C"),
+    "s_sp": (("uniform", 0.1, 0.5), "COMPUTE FEEDBACK: yearly rate at which other blocs close the gap to the leader's extra capability (theft, open weights, talent); multiplied by 1 - 0.7 psi of the leader (a racing leader leaks less)", "J"),
+}
+CF_NOTE = dict(
+    flag="cf_on (off by default). M8_FINAL=1 = final configuration (four final brakes + greenfield + compute feedback); M8_CF=1 = compute feedback only; variants 'computefb' (cf), 'greenfield_cf' (gf + cf)",
+    state="E[bloc] = extra capability doublings of the bloc beyond the shared (B6-lagged) trend L; the bloc's capability is L_b + E. Ep[bloc] = the matching extra physical-capability logit: the bloc's physical capability grows at rp evaluated at L + E instead of L (difference accumulated), capped by the shared physical ceiling Lpcap",
+    driver="dE/dt = eta_cf x max(0, dlnC_b/dt - g_trend) / ln2 (doublings/yr). C_b = min(domestic chip capacity (rsh_c x Gc under B6, chip_share x Gc otherwise), energy capacity Ge), both normalised to 2026 = 1. g_trend = the compute growth the shared trend already embodies = min(ln2/Td_fab_race, ln2/Td_en_race) x lc (human-run race fab and energy growth, the regime in which the trend was observed). Accrues only while max(A_fab, loop chip share) > 0.5 and max(A_en, loop energy share) > 0.5",
+    spillover="every other bloc closes its gap to the leader's E at s_sp x (1 - 0.7 psi_leader) per year",
+    caps="the bloc's total capability growth (actual shared-trend growth this step + dE/dt) is capped at min(15 doublings/yr, 30 x r0 slow corr): the existing 15/yr clamp and the 30x AI-R&D feedback cap applied to the bloc's own rate. No level cap on E: the shared trend's level caps (1e5-hour horizon ceiling, cognitive wall Lcap) bind the shared L only, so a compute-rich bloc can push past a cognitive wall; beyond the horizon ceiling extra doublings change little because Fcog and the physical-capability rate (kc term clamped at L_m3 + 8) are already saturated, except means availability (A8). Physical capability is capped at Lpcap",
+    replaces="L_b + E replaces the shared capability in Fcog_b; Lp_b + Ep in Fp_b (hence F_tot, the greenfield gate, conversion ceilings, security automation and kinetic power Mk via k_am x automated security share x output, robot profitability prof_b); L + E in means availability (A8, dL_means). Kept shared (conservative): the AI learning-curve multiplier lc/ph3 on build rates and robot labor, the decision-lag speed-up spd, the economy-wide cognitive adoption rate (mat), the AI-R&D feedback multiplier, the capability milestones",
+    timing="E is updated after the step's chip/energy capacity update and used from the next step; E at closure is recorded 0.25 y after closure",
+)
+
+
+# ---- WIDE PHYSICAL DOUBLING FLOORS UNDER AUTOMATION (wfl_on). A10: no precedent (robots building robots, AI doing all
+# planning, design and coordination) means a wide range, not a low one, so the fast tails reach further; the slow tails
+# (90th percentile) stay where they were. Implemented as a quantile map of the SAME standard-normal draw: with
+# z = ln(x / old_median) / old_sigma recovered from the existing value, x_new = new_median x exp(new_sigma x z). No random
+# stream moves; overrides (tornado) are mapped the same way (same quantile); the 1e9 sentinel of variant
+# no_self_replication is left untouched. OFF by default. Evidence label J (A10). Td_mat unchanged.
+# new_sigma = ln(p90 / p5_target) / (1.2816 + 1.6449), new_median = p90 / exp(1.2816 new_sigma)
+WFL_SPEC = {   # name: (old median, old sigma, p5 target)
+    "Td_mine_auto": (1.5, 0.45, 0.25),
+    "Td_en_auto": (1.5, 0.45, 0.25),
+    "Td_auto": (1.0, 0.6, 0.25),
+    "fact_build_a": (0.5, 0.45, 0.10),
+}
+# automated fab doubling floor: Td_fab_auto = max(fab_build x fact_build_a / fact_build_h, 0.5) in the existing code
+# (no separate automated fab build time exists; this derived build time IS the floor). Under wfl_on its raw value
+# X = fab_build x fact_build_a(old) / fact_build_h is lognormal (median 2.5 x 0.5 / 1.2, sigma sqrt(.25^2 + .45^2 + .5^2)
+# from the three existing draws); it is quantile-mapped to p90 unchanged, p5 = 0.25 y, and the 0.5 y clamp is dropped.
+WFL_FAB = (2.5 * 0.5 / 1.2, float(np.sqrt(0.25 ** 2 + 0.45 ** 2 + 0.5 ** 2)), 0.25)
+_Z90, _Z5, _Z95 = 1.2815516, -1.6448536, 1.6448536
+
+
+def _wfl_new(med, sig, p5t):
+    p90 = med * np.exp(_Z90 * sig)
+    s2 = np.log(p90 / p5t) / (_Z90 - _Z5)
+    return p90 / np.exp(_Z90 * s2), s2
+
+
+def wfl_table():
+    out = {}
+    for k, (m, sg, t) in list(WFL_SPEC.items()) + [("Td_fab_auto", WFL_FAB)]:
+        m2, s2 = _wfl_new(m, sg, t)
+        q = lambda mm, ss, z: round(float(mm * np.exp(ss * z)), 3)
+        old = dict(median=round(m, 3), p5=q(m, sg, _Z5), p90=q(m, sg, _Z90), p95=q(m, sg, _Z95), sigma=round(sg, 3))
+        if k == "Td_fab_auto":
+            old = dict(median=round(m, 3), p5=max(q(m, sg, _Z5), 0.5), p90=q(m, sg, _Z90), p95=q(m, sg, _Z95), sigma_raw=round(sg, 3),
+                       note="old floor = max(raw, 0.5)")
+        out[k] = dict(old=old, new=dict(median=round(float(m2), 3), p5=q(m2, s2, _Z5), p90=q(m2, s2, _Z90), p95=q(m2, s2, _Z95),
+                                        sigma=round(float(s2), 3)), units="years", evidence="J (A10)")
+    return out
+
+
+GF_NOTE = dict(
+    flag="gf_on (off by default). M8_FINAL=1 = final configuration (four final brakes + greenfield); M8_BRAKES=final = brakes only; M8_GF=1 = greenfield only; variant 'greenfield' turns it on in a single run",
+    flaw="closure was modelled as converting the existing economy: the automated share of each core segment grows logistically from today's share under capacity-turnover caps (i_K, r_retro). A power center can instead build a NEW dedicated automated loop beside the economy, sized q_core x the full chain",
+    state="ygf[bloc, segment] = automated capacity of the dedicated loop as a fraction of that segment's share of the minimal loop; starts at 0 (today's automated plants are not counted as dedicated)",
+    build_limits=["mining/energy/chips: the loop takes the core_alloc share of the bloc's new domestic sector capacity, growing at the existing Gm/Ge/Gc rates (Td_*_base/race by psi, automated floors Td_mine_auto/Td_en_auto/Td_fab_auto (fab_build), switching with the sector's automation); new capacity x own / q",
+                  "factory-type segments (manufacturing, logistics, construction, maintenance, admin): parallel build, online after the factory lead time (fact_build_h -> fact_build_a as the resource chain automates, A_rr blend as for bld), capped by the gross investment flow at core priority concentrated on the loop: i_K (1 + (i_boost - 1) core_alloc) / k_int x bld boost x capex-correction / q",
+                  "security is not built by the loop: A3 security automation is shared (loop security = existing path)",
+                  "capability gate: ygf <= F_tot (bloc, B6-lagged); cognitive share = existing core path acc (shared software automation, B6-lagged Fcog gate)",
+                  "robots/kit: from the same supply; only automation not installed in the existing economy (supply - xf T_s), core_alloc share, after both conversion paths' security increments (A3 first call), and within room_c; the loop stock is then removed from both conversion paths' non-security room (no double counting); input pools mat_cap/chip_cap/hum_cap bound supply"],
+    dependence="per segment: Dg = Dcs - (1 - CS)(phys_ex - (1 - ygf)/(1 - X0)), phys_ex = own (1 - xc)/(1 - X0) + (1 - own) hxu; security Dg = Dcs. D_loop = sum W_S Dg. With gf_on the core dependence everywhere downstream is min(Dcs, Dg) elementwise; closure when its W_S-weighted sum < trig (0.2)",
+    new_priors="none; no new random draws",
+)
+
+
 def sample_params(N, rng, overrides=None, variant="baseline"):
     A = A_N
     p = {}
@@ -769,6 +842,60 @@ def sample_params(N, rng, overrides=None, variant="baseline"):
             p[k][:] = True
     elif os.environ.get("M8_BRAKES", "") not in ("", "off"):
         raise ValueError("M8_BRAKES must be unset, 'off' or 'final'")
+    # ---- GREENFIELD CORE LOOP (gf_on; see the GREENFIELD block in _sim_chunk). A pure structural switch: no new prior
+    # and no new random draw (the loop size is the existing q_core, the build limits are existing priors), so neither
+    # numpy stream is touched. OFF by default. Switches:
+    #   variant "greenfield"            -> gf_on (with whatever brakes the variant/env sets)
+    #   M8_GF=1                         -> gf_on in every variant
+    #   M8_FINAL=1                      -> FINAL CONFIGURATION: the four final brakes (pid_on, sr_on, dis_on, brk_mort)
+    #                                      plus gf_on plus cf_on (compute feedback) plus wfl_on (wide floors). M8_BRAKES=final keeps its old meaning (brakes
+    #                                      only, greenfield off) so the brakes-on/greenfield-off run still reproduces.
+    p["gf_on"] = np.zeros(N, bool)
+    if v in ("greenfield", "brakes_final_gf", "greenfield_cf"):
+        p["gf_on"][:] = True
+    if v == "brakes_final_gf":
+        for k in ["pid_on", "sr_on", "dis_on", "brk_mort"]:
+            p[k][:] = True
+    if os.environ.get("M8_GF", "") == "1":
+        p["gf_on"][:] = True
+    # ---- OWN-INDUSTRY COMPUTE FEEDBACK: own numpy stream, drawn after every existing draw (see PRIORS_CF)
+    rng_c = np.random.default_rng(np.random.SeedSequence([int(x) for x in np.asarray(p["sim_seed"]).ravel()] + [0xCF0B5E]))
+    p["eta_cf"] = rng_c.uniform(0.5, 1.5, N)
+    p["s_sp"] = rng_c.uniform(0.1, 0.5, N)
+    if overrides:
+        for k, ov in overrides.items():
+            if k in PRIORS_CF:
+                p[k] = np.full(N, float(ov))
+    p["cf_on"] = np.zeros(N, bool)
+    if v in ("computefb", "greenfield_cf"):
+        p["cf_on"][:] = True
+    if os.environ.get("M8_CF", "") == "1":
+        p["cf_on"][:] = True
+    # ---- WIDE FLOORS flag (see WFL_SPEC)
+    p["wfl_on"] = np.zeros(N, bool)
+    if v in ("widefloors", "greenfield_cf_wfl"):
+        p["wfl_on"][:] = True
+    if v == "greenfield_cf_wfl":
+        p["gf_on"][:] = True; p["cf_on"][:] = True
+    if os.environ.get("M8_WFL", "") == "1":
+        p["wfl_on"][:] = True
+    if os.environ.get("M8_FINAL", "") == "1":      # final configuration: brakes + greenfield + compute feedback + wide floors
+        for k in ["pid_on", "sr_on", "dis_on", "brk_mort", "gf_on", "cf_on", "wfl_on"]:
+            p[k][:] = True
+    # automated fab floor under wide floors, from the existing draws (computed always, used only when wfl_on)
+    mf, sf, tf = WFL_FAB
+    zf = np.log(p["fab_build"] * p["fact_build_a"] / p["fact_build_h"] / mf) / sf
+    m2f, s2f = _wfl_new(mf, sf, tf)
+    p["Td_fab_auto_w"] = m2f * np.exp(s2f * zf)
+    w = p["wfl_on"]
+    if w.any():
+        for k, (m, sg, t) in WFL_SPEC.items():
+            m2, s2 = _wfl_new(m, sg, t)
+            x = p[k]
+            z = np.log(np.maximum(x, 1e-12) / m) / sg
+            p[k] = np.where(w & (x < 1e8), m2 * np.exp(s2 * z), x)
+    elif os.environ.get("M8_FINAL", "") not in ("", "0"):
+        raise ValueError("M8_FINAL must be unset, '0' or '1'")
     p["dis_on"] = p["dis_on"] & p["sr_on"]      # dissent risk exists only inside Brake 2
     if not (p["id_on"].all()):                   # note step 3: pid_on off in every variant that turns id_on off
         p["pid_on"] = p["pid_on"] & p["id_on"]
@@ -884,6 +1011,8 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
     psi0 = torch.where(P["a2_prio"][:, None] & (aidx[None] < 2), torch.ones_like(psi0), psi0)
     psi = psi0.clone()
     Td_fab_auto = torch.clamp(P["fab_build"] * P["fact_build_a"] / P["fact_build_h"], min=0.5)
+    if bool(P["wfl_on"].any()):      # WIDE FLOORS: quantile-mapped automated fab floor, no 0.5 y clamp (see WFL_FAB)
+        Td_fab_auto = torch.where(P["wfl_on"], P["Td_fab_auto_w"], Td_fab_auto)
     # ---------------- democracy / regime
     Ddem = T(D0).expand(N, A).clone()
     free = Ddem < D_BREAK
@@ -1017,6 +1146,33 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
     n_dpun = zeroNA.clone(); n_dis_dec = zeroNA.clone(); n_dis_netneg = zeroNA.clone(); n_dis_expo = zeroNA.clone()
     sum_dis_net = zeroNA.clone(); n_dis_flip = zeroNA.clone(); n_dis_restore_harsh = zeroNA.clone(); n_dis_restoreX = zeroNA.clone()
     n_dis_memback = zeroNA.clone()
+    # ================= GREENFIELD CORE LOOP state (gf_on). No random numbers are used, so no generator is needed and
+    # every existing stream (g, g2, g3, g4) is untouched. ygf[n, a, s] = automated capacity of the bloc's DEDICATED loop
+    # in segment s, as a fraction of that segment's share of the minimal loop (the loop is q_core x the full chain, so
+    # its segment s needs q x T_s worker-equivalents of task capacity). It starts at 0 (conservative: today's automated
+    # plants are not counted as already dedicated to the loop; they stay in the conversion path).
+    gf_any = bool(P["gf_on"].any())
+    gf = P["gf_on"][:, None]; gf3 = P["gf_on"][:, None, None]
+    ygf = torch.zeros(N, A, S, device=dev)
+    Rg = zeroNA.clone()                                       # loop's robot/kit stock (worker-equivalents)
+    t_cl_conv = torch.full((N, A), INF, device=dev); t_cl_gf = t_cl_conv.clone()   # each path alone crossing trig
+    n_gf_build = zeroNA.clone(); n_gf_rob = zeroNA.clone()   # steps the loop was building / was robot-limited
+    n_gf_gate = zeroNA.clone()                               # building steps with the loop at >= 98% of the capability gate
+    FAC_SEG = torch.tensor([3, 4, 5, 6, 8], device=dev)       # 'factory-type' segments (built with factory lead times)
+    no_sec = torch.ones(S, device=dev); no_sec[7] = 0.0       # security is NOT built by the loop (A3, shared)
+    recA["Dloop"] = torch.zeros(N, A, ny, device=dev); recA["Dconv"] = torch.zeros(N, A, ny, device=dev)   # gf only
+    # ================= OWN-INDUSTRY COMPUTE FEEDBACK state (cf_on). Deterministic: no generator used.
+    cf_any = bool(P["cf_on"].any())
+    cf = P["cf_on"][:, None]; cf3 = P["cf_on"][:, None, None]
+    Ecf = zeroNA.clone(); Epf = zeroNA.clone()               # extra cognitive doublings / extra physical logit per bloc
+    lnC_prev = zeroNA.clone()                                 # ln of own compute capacity (2026 = 1)
+    chip0_cf = T(CHIP_SHARE0 / CHIP_SHARE0.sum()).expand(N, A).clone()   # rsh_c at t0 (normalisation under B6)
+    E_close = torch.full((N, A), float("nan"), device=dev); E_2040 = torch.full((N, A), float("nan"), device=dev)
+    n_cf_gate = zeroNA.clone()                                # steps with the automation gate open
+    recA["Ecf"] = torch.zeros(N, A, ny, device=dev)
+    # leader-vs-leader kinetic dominance (diagnostic only, always recorded, changes nothing): first time the US (China)
+    # bloc holds >= dom_thr of the combined US + China kinetic power
+    t_domUS = torch.full((N,), INF, device=dev); t_domCN = t_domUS.clone()
     t_ten = torch.full((N, A), T0, device=dev); ldr_prev = torch.full((N, A), -1, dtype=torch.long, device=dev)
     split = torch.zeros(N, A, dtype=torch.bool, device=dev)
     t_ref_reset = torch.full((N, A), -INF, device=dev)        # brake 3: refusal-convergence restart after a split
@@ -1123,6 +1279,7 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
         lnh = torch.log(h80r0) + L * LN2
         s_rnd = nd((lnh - mu_rnd) / sr)
         mult = torch.clamp(((1 - P["rnd0"]) / torch.clamp(1 - s_rnd, min=1e-3)) ** fb, max=30.0)
+        L_old = L                                            # compute feedback: actual shared growth this step
         L = torch.minimum(L + torch.clamp(r0 * slow * corr * mult, max=15.0) * DT, Lcap)
         lnh = torch.log(h80r0) + L * LN2
         sw = nd((lnh - mu_sw) / st); s_rnd = nd((lnh - mu_rnd) / sr)
@@ -1137,6 +1294,10 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
         # ---- physical capability
         rp = torch.minimum(P["rp_max"], P["rp0"] * (1 + P["kc"] * torch.clamp(L - L_m3, 0, 8)))
         Lp = torch.minimum(Lp + rp * DT, Lpcap)
+        if cf_any:
+            # COMPUTE FEEDBACK: a bloc with extra cognitive capability E also advances faster physically (rp at L + E)
+            rp_cf = torch.minimum(P["rp_max"][:, None], P["rp0"][:, None] * (1 + P["kc"][:, None] * torch.clamp(L[:, None] + Ecf - L_m3[:, None], 0, 8)))
+            Epf = torch.where(cf, torch.clamp(torch.minimum(Epf + (rp_cf - rp[:, None]) * DT, Lpcap[:, None] - Lp[:, None]), min=0), Epf)
         t_dex = torch.where(torch.isinf(t_dex) & (Lp >= Np), t, t_dex)
         Fp = torch.clamp(torch.sigmoid(lFp0 + (float(np.log(0.85 / 0.15)) - lFp0) * Lp[:, None] / (Np[:, None] * T(NP_MULT)[None])), 0, 0.995)
         # B6: bloc-specific deployable capability = frontier capability some years earlier (lag_cog, lag_phys)
@@ -1149,11 +1310,21 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
         we = P["shifts"] * speed
         auth = (t >= P["t_leth"]) | (war & (t >= P["t_leth"] - 3.0))
         Fp_a = torch.where(b6[..., None], Fp_b, Fp[:, None, :].repeat(1, A, 1))
+        if cf_any:
+            # COMPUTE FEEDBACK: bloc capability = (B6-lagged) shared trend + the bloc's own extra doublings
+            Lbe = torch.where(b6, L_b, L[:, None]) + Ecf
+            Fcog_b = torch.where(cf, 0.95 * nd((torch.log(h80r0)[:, None] + Lbe * LN2 - mu_ec[:, None]) / se[:, None]), Fcog_b)
+            Lpbe = torch.minimum(torch.where(b6, Lp_b, Lp[:, None]) + Epf, Lpcap[:, None])
+            Fp_cf = torch.clamp(torch.sigmoid(lFp0[:, None] + (float(np.log(0.85 / 0.15)) - lFp0[:, None]) * Lpbe[:, :, None]
+                                              / (Np[:, None, None] * T(NP_MULT)[None, None])), 0, 0.995)
+            Fp_a = torch.where(cf3, Fp_cf, Fp_a)
         a3 = P["a3_sec"][:, None]
         Fp_a[:, :, 7] = Fp_a[:, :, 7] * torch.where(auth | a3, 1.0, 0.5)
         F_tot = X0b + (1 - X0b) * Fp_a
         prof = torch.where(P["prof_on"], torch.clamp((Lp / Np - 0.5) / 0.5, 0, 1), 0.0)
         prof_b = torch.where(P["prof_on"][:, None] & b6, torch.clamp((Lp_b / Np[:, None] - 0.5) / 0.5, 0, 1), prof[:, None])
+        if cf_any:
+            prof_b = torch.where(cf & P["prof_on"][:, None], torch.clamp((Lpbe / Np[:, None] - 0.5) / 0.5, 0, 1), prof_b)
         # ---- pursuit
         clos = 1 - Dc_prev
         psi = torch.clamp(psi0 + 0.2 * (sw >= SW_THR["M3"]).float()[:, None] + 0.15 * war.float()
@@ -1215,6 +1386,68 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
         # the kit cap now needs both b6_wire and f6_kitcap
         kit = torch.where(b6 & P["f6_kitcap"][:, None], torch.minimum(kit_new, kit + kit_inc_cap), kit_new)
         supply = kit + Rst * we[:, None]
+        if gf_any:
+            # ---- GREENFIELD CORE LOOP: build step. Interpretation choices (all documented in results/m8_v6_final.json):
+            # (b) build limits, existing priors only.
+            #   mining / energy / chips (segments 0-2): the loop takes the core_alloc share of the bloc's NEW domestic
+            #   capacity in that sector. That capacity grows at exactly the existing Gm/Ge/Gc rates (Td_*_base/race
+            #   blended by psi, switching to the automated floors Td_mine_auto / Td_en_auto / Td_fab_auto, the last
+            #   derived from fab_build, as the sector automates). New capacity per year = g x G x own (the domestic base),
+            #   expressed as a share of the loop segment (divided by q). So a small loop (q ~ 0.15) needs only ~15% of
+            #   today's domestic sector capacity in new build: this is where the loop size enters.
+            #   factory-type segments (manufacturing, logistics, construction, maintenance, admin): built in parallel,
+            #   each plant online after the factory lead time (first-order approach to the capability gate with time
+            #   constant fact_build_h, moving to fact_build_a (robotic/prefab construction) as the bloc's resource chain
+            #   automates, A_rr, the same blend the existing code uses for bld), and capped by the bloc's gross investment
+            #   flow at core priority concentrated on the loop: i_K (1 + (i_boost - 1) core_alloc) / k_int x the same
+            #   automated-build boost bld, / q (a funding cap on NEW capacity, not turnover of existing plants;
+            #   about one loop-share per year at the median q).
+            #   security (segment 7) is NOT built by the loop: security automation follows A3 and is shared, so the loop
+            #   uses the existing security path (no double counting of security capacity, h_sec unchanged by the loop).
+            # (c) capability gate: the loop's automated share of segment s never exceeds F_tot[s] for that bloc (B6
+            #   lagged frontier physical capability). Its cognitive share is the existing core path's acc (logistic at
+            #   the core priority rate toward the B6-lagged Fcog gate; software deployment is not turnover-limited),
+            #   so the loop and the conversion path share cognitive automation.
+            # (a) robots and kit: the loop draws on the SAME supply. It can only use automation not installed in the
+            #   existing economy (supply - xf T_s; existing kit is bolted into existing plants), at core priority
+            #   (core_alloc share), after the security increments of both conversion paths (A3 first call), and it
+            #   also respects the core budget room_c: q xc T_s + loop stock <= core_alloc x supply. Its stock is then
+            #   removed from the non-security room of both conversion paths below, so no robot is counted twice. The
+            #   input pools (mat_cap, chip_cap, hum_cap with the B6 wiring) bound robot production and the kit
+            #   increment, hence supply; the loop cannot exceed them.
+            ca = core_alloc
+            fl_g = P["floors_on"][:, None]
+            Am_g = 1 - Dcs[:, :, 0]; Ae_g = 1 - Dcs[:, :, 1]; Af_g = 1 - Dcs[:, :, 2]      # previous step (effective)
+            gm_h = ((LN2 / P["Td_mine_base"])[:, None] * (1 - psi) + (LN2 / P["Td_mine_race"])[:, None] * psi) * lc[:, None]
+            ge_h = ((LN2 / P["Td_en_base"])[:, None] * (1 - psi) + (LN2 / P["Td_en_race"])[:, None] * psi) * lc[:, None]
+            gc_h = ((LN2 / P["Td_fab_base"])[:, None] * (1 - psi) + (LN2 / P["Td_fab_race"])[:, None] * psi) * lc[:, None]
+            gm_a = torch.where(fl_g, torch.minimum(g_auto, (LN2 / P["Td_mine_auto"])[:, None]), g_auto)
+            ge_a = torch.where(fl_g, torch.minimum(g_auto, (LN2 / P["Td_en_auto"])[:, None]), g_auto)
+            gc_a = torch.where(fl_g, torch.minimum(g_auto, (LN2 / Td_fab_auto)[:, None]), g_auto)
+            g_m = gm_h * (1 - Am_g) + torch.maximum(gm_a, gm_h) * Am_g
+            g_e = ge_h * (1 - Ae_g) + torch.maximum(ge_a, ge_h) * Ae_g
+            g_c = gc_h * (1 - Af_g) + torch.maximum(gc_a, gc_h) * Af_g
+            heavy = torch.stack([g_m * Gm * own[:, :, 0], g_e * Ge * own[:, :, 1], g_c * Gc * own[:, :, 2]], -1) * (ca / q)[..., None]
+            dy_g = torch.zeros_like(ygf)
+            dy_g[:, :, :3] = torch.minimum(heavy * DT, F_tot[:, :, :3] - ygf[:, :, :3])
+            inv_lead = (1 - A_rr) / P["fact_build_h"][:, None] + A_rr / P["fact_build_a"][:, None]
+            dy_lead = (F_tot - ygf) * (1 - torch.exp(-inv_lead * DT))[..., None]
+            r_inv = (P["i_K"][:, None] * (1 + (P["i_boost"][:, None] - 1) * ca) / P["k_int"][:, None]
+                     * (1 + (bld[..., 0] - 1) * A_rr) * corr[:, None] / q)
+            dy_g[:, :, FAC_SEG] = torch.minimum(dy_lead[:, :, FAC_SEG], (r_inv * DT)[..., None])
+            dy_g = torch.clamp(dy_g, min=0) * no_sec
+            d7f_dem = torch.where(a3, dxf[:, :, 7] * T_s[:, :, 7], 0.0)
+            d7c_dem = torch.where(a3, q * dxc[:, :, 7] * T_s[:, :, 7], 0.0)
+            pool_new = ca * torch.clamp(supply - (xf * T_s).sum(-1) - d7f_dem - Rg, min=0)
+            pool_core = torch.clamp(ca * supply - q * (xc * T_s).sum(-1) - d7c_dem - Rg, min=0)
+            need_g = q * (dy_g * T_s).sum(-1)
+            sg = torch.clamp(torch.minimum(pool_new, pool_core) / torch.clamp(need_g, min=1e-12), max=1.0)
+            bld_now = gf & (need_g > 1e-9)
+            n_gf_build += bld_now; n_gf_rob += bld_now & (sg < 0.999)
+            wg = W_S_ * (1 - CS_) * no_sec
+            n_gf_gate += bld_now & ((ygf * wg).sum(-1) >= 0.98 * (F_tot * wg).sum(-1))
+            ygf = torch.where(gf3, torch.minimum(ygf + dy_g * sg[..., None], torch.maximum(F_tot, ygf)), ygf)
+            Rg = torch.where(gf, q * (ygf * T_s).sum(-1), Rg)
         room_f = torch.clamp(supply - (xf * T_s).sum(-1), min=0)
         room_c = torch.clamp(core_alloc * supply - q * (xc * T_s).sum(-1), min=0)
         sc_f = torch.clamp(room_f / torch.clamp((dxf * T_s).sum(-1), min=1e-12), max=1.0)
@@ -1231,6 +1464,17 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
         w6 = b6 & a3
         scf = torch.where(w6[..., None], so_f[..., None].expand(N, A, S), scf); scc = torch.where(w6[..., None], so_c[..., None].expand(N, A, S), scc)
         scf[:, :, 7] = torch.where(w6, s7f, scf[:, :, 7]); scc[:, :, 7] = torch.where(w6, s7c, scc[:, :, 7])
+        if gf_any:
+            # GREENFIELD: the loop's robots/kit (Rg) are unavailable to both conversion paths' non-security increments;
+            # security keeps its first call on the original room (A3), so the loop never crowds out security
+            room_f2 = torch.clamp(room_f - Rg, min=0); room_c2 = torch.clamp(room_c - Rg, min=0)
+            sc_f2 = torch.clamp(room_f2 / torch.clamp((dxf * T_s).sum(-1), min=1e-12), max=1.0)
+            sc_c2 = torch.clamp(room_c2 / torch.clamp(q * (dxc * T_s).sum(-1), min=1e-12), max=1.0)
+            so_f2 = torch.clamp(torch.clamp(room_f2 - s7f * d7f, min=0) / torch.clamp(oth_f, min=1e-12), max=1.0)
+            so_c2 = torch.clamp(torch.clamp(room_c2 - s7c * d7c, min=0) / torch.clamp(oth_c, min=1e-12), max=1.0)
+            scf2 = torch.where(w6, so_f2, sc_f2)[..., None].expand(N, A, S).clone(); scf2[:, :, 7] = scf[:, :, 7]
+            scc2 = torch.where(w6, so_c2, sc_c2)[..., None].expand(N, A, S).clone(); scc2[:, :, 7] = scc[:, :, 7]
+            scf = torch.where(gf3, scf2, scf); scc = torch.where(gf3, scc2, scc)
         xf = torch.clamp(xf + dxf * scf, max=0.999)
         xc = torch.clamp(xc + dxc * scc, max=0.999)
         Fc = torch.maximum(Fcog_b[:, :, None], a0c)
@@ -1251,6 +1495,24 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
         Dfs = own * hf + (1 - own) * hxu
         Dc = (Dcs * W_S_).sum(-1); Df = (Dfs * W_S_).sum(-1)
         Dfd = (hf * W_S_).sum(-1)
+        if gf_any:
+            # ---- GREENFIELD: loop dependence. Per segment, Dcs = CS x (cognitive part) + (1 - CS) x phys_ex with
+            # phys_ex = own (1 - xc)/(1 - X0) + (1 - own) hxu. The loop shares the cognitive part (acc, see above) and
+            # replaces the physical part by its own uncovered share (1 - ygf)/(1 - X0): human labor still needed by
+            # the minimal loop relative to 2026 (its built capacity is domestic by construction; the uncovered part is
+            # counted as human, conservative). Security uses the shared A3 path (Dg = Dcs). D_loop = labor-weighted
+            # (W_S) sum = 1 minus the covered share. Everything downstream (Dc, closure, t_core, psi race, h_sa,
+            # h_sec, A_rr, A_mine/A_fab/A_en, hum_cap via h_rr, the lever hooks) uses the elementwise minimum.
+            Dc_conv = Dc
+            phys_ex = own * (1 - xc) / (1 - X0b) + (1 - own) * hxu
+            Dg = Dcs + (1 - CS_) * ((1 - ygf) / (1 - X0b) - phys_ex)
+            Dg[:, :, 7] = Dcs[:, :, 7]
+            Dc_loop = (Dg * W_S_).sum(-1)
+            Dcs = torch.where(gf3, torch.minimum(Dcs, Dg), Dcs)
+            Dc = torch.where(gf, (Dcs * W_S_).sum(-1), Dc)
+            trg_g = P["trig"][:, None]
+            t_cl_conv = torch.where(gf & torch.isinf(t_cl_conv) & (Dc_conv < trg_g), t, t_cl_conv)
+            t_cl_gf = torch.where(gf & torch.isinf(t_cl_gf) & (Dc_loop < trg_g), t, t_cl_gf)
         Dc_prev = Dc
         h_sec_f = hf[:, :, 7]
         # ---- general-purpose robot production
@@ -1287,6 +1549,31 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
             return dom * (1 - opx) + ex * omega + omega * (ex.sum(1, keepdim=True) - ex)
         mat_cap = torch.where(b6, P["M0"][:, None] * avail_pool(rsh_m * Gm), mat_cap)
         chip_cap = torch.where(b6, P["C0"][:, None] * avail_pool(rsh_c * Gc), chip_cap)
+        if cf_any:
+            # ---- COMPUTE FEEDBACK: own compute capacity C_b = min(domestic chip capacity, energy capacity), 2026 = 1
+            chip_dom = torch.where(b6, rsh_c * Gc / chip0_cf, chip_share * Gc / T(CHIP_SHARE0)[None])
+            lnC = torch.log(torch.clamp(torch.minimum(chip_dom, Ge), min=1e-9))
+            dlnC = (lnC - lnC_prev) / DT
+            lnC_prev = lnC
+            g_tr = (torch.minimum(LN2 / P["Td_fab_race"], LN2 / P["Td_en_race"]) * lc)[:, None]
+            ygc = ygf[:, :, 2] if gf_any else zeroNA
+            yge = ygf[:, :, 1] if gf_any else zeroNA
+            gate_cf = (torch.maximum(A_fab, ygc) > 0.5) & (torch.maximum(A_en, yge) > 0.5)
+            n_cf_gate += cf & gate_cf
+            trend_rate = (L - L_old) / DT                    # actual shared-trend growth this step (0 once L is capped)
+            rate_max = torch.clamp(torch.minimum(torch.full_like(r0, 15.0), 30.0 * r0 * slow * corr) - trend_rate, min=0)[:, None]
+            dE = torch.minimum(P["eta_cf"][:, None] * torch.clamp(dlnC - g_tr, min=0) / LN2 * gate_cf.float(), rate_max)
+            E_new = Ecf + dE * DT
+            # spillover toward the leader (theft, open weights, talent), slowed by the leader's racing intensity
+            Emax, lead_i = E_new.max(1)
+            psiL = psi.gather(1, lead_i[:, None])[:, 0]
+            E_new = E_new + (P["s_sp"] * (1 - 0.7 * psiL))[:, None] * torch.clamp(Emax[:, None] - E_new, min=0) * DT
+            # no level cap on E: the shared trend's level caps (the 1e5-hour horizon ceiling and the cognitive wall,
+            # Lcap) apply to the shared L only; the instructed caps are the rate caps (15 doublings/yr, 30x)
+            Ecf = torch.where(cf, E_new, Ecf)
+            E_close = torch.where(torch.isnan(E_close) & torch.isfinite(t_closed), Ecf, E_close)
+            if abs(t - 2040.0) < 1e-9:
+                E_2040 = Ecf.clone()
         hum_cap = P["Pmax_h"][:, None] * T(MFG_SHARE)[None] * (1 + (P["adl"] - 1) * ph3)[:, None] / torch.clamp(h_rr, min=0.01)
         cap = torch.minimum(torch.minimum(mat_cap, chip_cap), hum_cap)
         Fp_avg = (Fp_a * wsc).sum(-1) / wsc.sum()
@@ -1307,6 +1594,9 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
         Ytot = T(WORLD_W)[None] * (1 + (acf * W_S_).sum(-1)) + Y_AVG * Rst * we[:, None]
         Mk = MIL_INT_ * Ytot * (1 + P["k_am"][:, None] * (1 - h_sec_f))            # military intensity x output x automation
         omega = Ytot / Ytot.sum(1, keepdim=True)
+        dUS = Mk[:, 0] / (Mk[:, 0] + Mk[:, 1])          # diagnostic only
+        t_domUS = torch.where(torch.isinf(t_domUS) & (dUS >= P["dom_thr"]), t, t_domUS)
+        t_domCN = torch.where(torch.isinf(t_domCN) & (1 - dUS >= P["dom_thr"]), t, t_domCN)
         for j, th in enumerate(thr):
             t_core[:, :, j] = torch.where(torch.isinf(t_core[:, :, j]) & (Dc < th), t, t_core[:, :, j])
             t_full[:, :, j] = torch.where(torch.isinf(t_full[:, :, j]) & (Df < th), t, t_full[:, :, j])
@@ -1425,7 +1715,10 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
         hx = h0x + (h1x - h0x) * torch.clamp(tau_x / P["T_full"][:, None], 0, 1)
         alive_t = torch.clamp(alive - (1 - tgt.double()), min=0)
         d_x = torch.where(exec_on, alive_t * (1 - torch.exp(-hx * DT)).double(), 0.0)
-        avail = P["a8_means"][:, None] & (L[:, None] >= thr_means[:, None])
+        if cf_any:      # COMPUTE FEEDBACK: means availability at the bloc's own capability
+            avail = P["a8_means"][:, None] & (torch.where(cf, L[:, None] + Ecf, L[:, None]) >= thr_means[:, None])
+        else:
+            avail = P["a8_means"][:, None] & (L[:, None] >= thr_means[:, None])
         use = exec_on & avail & (ue[:, :, 1] < 1 - torch.exp(-P["h_use"][:, None] * DT))
         t_means = torch.where(use & torch.isinf(t_means), t, t_means)
         d_eng = torch.where(use, P["f_eng"][:, None].double() * torch.clamp(alive_t - d_x, min=0), 0.0)
@@ -1925,6 +2218,10 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
                          ("Mk", Mk), ("enf", enf)]:
                 recA[k][:, :, yi] = v.float()
             xseg[:, :, :, yi] = xf
+            if gf_any:
+                recA["Dloop"][:, :, yi] = Dc_loop; recA["Dconv"][:, :, yi] = Dc_conv
+            if cf_any:
+                recA["Ecf"][:, :, yi] = Ecf
             yi += 1
 
     lead_actor = torch.argmin(torch.where(torch.isinf(t_core[:, :, 1]), 1e9, t_core[:, :, 1]) + 1e-6 * aidx[None], 1)
@@ -1957,7 +2254,11 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
                n_death_exec=n_death_exec,
                n_dpun=n_dpun, n_dis_dec=n_dis_dec, n_dis_netneg=n_dis_netneg, n_dis_expo=n_dis_expo, sum_dis_net=sum_dis_net,
                n_dis_flip=n_dis_flip, n_dis_restore_harsh=n_dis_restore_harsh, n_dis_restoreX=n_dis_restoreX,
-               n_dis_memback=n_dis_memback)
+               n_dis_memback=n_dis_memback,
+               # greenfield core loop (diagnostics; INF / 0 when gf_on is off)
+               t_cl_conv=t_cl_conv, t_cl_gf=t_cl_gf, n_gf_build=n_gf_build, n_gf_rob=n_gf_rob, n_gf_gate=n_gf_gate, ygf_end=ygf,
+               # compute feedback (diagnostics; 0 / NaN when cf_on is off) and leader-vs-leader dominance (always)
+               E_close=E_close, E_2040=E_2040, E_end=Ecf, Ep_end=Epf, n_cf_gate=n_cf_gate, t_domUS=t_domUS, t_domCN=t_domCN)
     out = {k: v.cpu().numpy() for k, v in out.items()}
     out["tm"] = {k: v.cpu().numpy() for k, v in tm.items()}
     out["rec"] = {k: v.cpu().numpy() for k, v in rec.items()}
@@ -2119,7 +2420,119 @@ def round3_diag(o):
     if gs.any():
         r3["B6_Global_South_lag_behind_first_closer_years_median"] = round(float(np.median((tc[:, 5] - tc.min(1))[gs])), 2)
     r3["world_pop_share_near_total_deliberate"] = round(pop_share(nt), 4)
+    if "t_cl_gf" in o:
+        r3["greenfield"] = gf_diag(o)
+    if "E_end" in o:
+        r3["leaders_and_compute_feedback"] = leader_diag(o)
     return r3
+
+
+def leader_diag(o):
+    """US-China race diagnostics (closure gap, kinetic dominance, attacks between the two) and, when cf_on is active,
+    the own-industry compute-feedback capability lead"""
+    r = lambda x: round(float(x), 4)
+    tc = o["t_closed"]; d = {}
+    a, b = tc[:, 0], tc[:, 1]
+    one = np.isfinite(a) | np.isfinite(b)
+    gap = np.abs(np.where(np.isfinite(a), a, 2076.0) - np.where(np.isfinite(b), b, 2076.0))[one]   # never = 2076
+    if len(gap):
+        d["US_China_closure_gap_years_given_either_closes"] = dict(
+            median=r(np.median(gap)), p90=r(np.percentile(gap, 90)), share_over_1y=r((gap > 1).mean()),
+            share_over_2y=r((gap > 2).mean()), share_over_5y=r((gap > 5).mean()), share_only_one_closes_by_2075=r((np.isfinite(a) ^ np.isfinite(b))[one].mean()),
+            note="gap = |t_US - t_China|, a bloc that never closes counted at 2076")
+    tU, tC = o["t_domUS"], o["t_domCN"]
+    d["kinetic_dominance_between_leaders"] = dict(
+        P_US_reaches_dom_thr_over_China_by_2075=r(np.isfinite(tU).mean()), P_China_reaches_dom_thr_over_US_by_2075=r(np.isfinite(tC).mean()),
+        P_either=r((np.isfinite(tU) | np.isfinite(tC)).mean()),
+        P_either_by_2040=r(((tU <= 2040) | (tC <= 2040)).mean()), P_either_by_2050=r(((tU <= 2050) | (tC <= 2050)).mean()),
+        year_first=med_year(np.minimum(tU, tC)),
+        note="dom = own kinetic power / (US + China kinetic power) >= dom_thr (the B5 attack threshold); diagnostic of the pair only")
+    xb = np.isfinite(o["t_xb"]); by = o["xb_by"]
+    us_hit_by_cn = xb[:, 0] & (by[:, 0] == 1); cn_hit_by_us = xb[:, 1] & (by[:, 1] == 0)
+    d["cross_bloc_attacks_between_leaders"] = dict(P_China_campaign_against_US=r(us_hit_by_cn.mean()), P_US_campaign_against_China=r(cn_hit_by_us.mean()),
+                                                   P_either=r((us_hit_by_cn | cn_hit_by_us).mean()))
+    E = o["E_end"]
+    if np.any(E > 0):
+        first = np.argmin(np.where(np.isfinite(tc), tc, 1e9), 1); hasc = np.isfinite(tc).any(1)
+        Ec = o["E_close"]
+        e_first = Ec[np.arange(len(first)), first][hasc]
+        E40 = o["E_2040"]
+        srt = np.sort(E40, 1)
+        lead40 = srt[:, -1] - srt[:, -2]
+        d["compute_feedback"] = dict(
+            extra_doublings_of_first_closer_at_its_closure=dict(median=r(np.nanmedian(e_first)), p10=r(np.nanpercentile(e_first, 10)), p90=r(np.nanpercentile(e_first, 90)),
+                                                                 share_positive=r(np.nanmean(e_first > 0.01))),
+            extra_doublings_2040_median=dict(US=r(np.nanmedian(E40[:, 0])), China=r(np.nanmedian(E40[:, 1])), max_bloc=r(np.nanmedian(srt[:, -1]))),
+            extra_doublings_2040_p90_max_bloc=r(np.nanpercentile(srt[:, -1], 90)),
+            leader_lead_over_second_2040=dict(median=r(np.nanmedian(lead40)), p90=r(np.nanpercentile(lead40, 90)), share_over_1_doubling=r(np.nanmean(lead40 > 1))),
+            US_minus_China_2040=dict(median=r(np.nanmedian(E40[:, 0] - E40[:, 1])), p10=r(np.nanpercentile(E40[:, 0] - E40[:, 1], 10)), p90=r(np.nanpercentile(E40[:, 0] - E40[:, 1], 90))),
+            extra_doublings_2075_median=dict(US=r(np.median(E[:, 0])), China=r(np.median(E[:, 1]))),
+            share_of_steps_with_automation_gate_open_US_China=r(o["n_cf_gate"][:, :2].mean() / max(len(YEARS) * 4, 1)))
+        if "recA" in o and "Ecf" in o["recA"] and o["recA"]["Ecf"].shape[-1] == len(YEARS):
+            Y = list(YEARS)
+            d["compute_feedback"]["extra_doublings_median_by_year"] = {an: {str(y): r(np.median(o["recA"]["Ecf"][:, a, Y.index(y)])) for y in (2030, 2035, 2040, 2045, 2050, 2060)} for a, an in enumerate(ACTORS[:3])}
+    return d
+
+
+def gf_diag(o, gf_on=None):
+    """greenfield core loop diagnostics: closure timing and whether the dedicated loop, rather than the conversion
+    path, drives closure. t_closed uses the elementwise minimum; t_cl_conv / t_cl_gf are the first times the
+    conversion path alone / the loop alone (labor-weighted) fall below the trigger, within the same gf-on world."""
+    r = lambda x: round(float(x), 4)
+    tc = o["t_closed"]; tv = o["t_cl_conv"]; tg = o["t_cl_gf"]
+    d = {}
+    if not np.isfinite(tg).any() and not np.isfinite(tv).any():
+        d["active"] = False
+    else:
+        d["active"] = True
+    first = np.where(np.isfinite(tc).any(1), np.argmin(np.where(np.isfinite(tc), tc, 1e9), 1), -1)
+    d["closure_any_bloc_year"] = med_year(tc.min(1))
+    d["P_closure_any_bloc_by"] = {str(y): r((tc.min(1) <= y + 1e-9).mean()) for y in (2030, 2035, 2040, 2050)}
+    d["P_closure_US_or_China_by"] = {str(y): r((tc[:, :2].min(1) <= y + 1e-9).mean()) for y in (2030, 2035, 2040, 2050)}
+    d["closure_year_by_bloc"] = {an: med_year(tc[:, a]) for a, an in enumerate(ACTORS)}
+    d["P_closure_by_bloc_by"] = {an: {str(y): r((tc[:, a] <= y + 1e-9).mean()) for y in (2030, 2035, 2040)} for a, an in enumerate(ACTORS)}
+    d["first_closer_share"] = {an: r((first == a).mean()) for a, an in enumerate(ACTORS)}
+    d["first_closer_share"]["none_by_2075"] = r((first < 0).mean())
+    tie = np.isfinite(tc[:, 0]) & np.isfinite(tc[:, 1])
+    if tie.any():
+        gp = tc[tie, 0] - tc[tie, 1]
+        d["US_minus_China_closure_years"] = dict(median=r(np.median(gp)), p10=r(np.percentile(gp, 10)), p90=r(np.percentile(gp, 90)),
+                                                 abs_median=r(np.median(np.abs(gp))), share_US_first=r((gp < 0).mean()),
+                                                 share_China_first=r((gp > 0).mean()), share_same_quarter=r((gp == 0).mean()))
+    if d["active"]:
+        for tag, cols in [("US_or_China_blocs", [0, 1]), ("all_blocs", list(range(A_N)))]:
+            c = tc[:, cols]; v = tv[:, cols]; g = tg[:, cols]
+            closed = np.isfinite(c)
+            gfin = np.where(np.isfinite(g), g, np.inf); vfin = np.where(np.isfinite(v), v, np.inf)
+            loop_first = closed & (gfin < vfin)
+            conv_first = closed & (vfin < gfin)
+            same = closed & (gfin == vfin) & np.isfinite(gfin)
+            mixed = closed & (c < np.minimum(gfin, vfin))
+            lead = (np.minimum(vfin, 2076.0) - gfin)[loop_first]
+            d[tag] = dict(
+                share_of_closures_loop_alone_first=r(loop_first.sum() / max(closed.sum(), 1)),
+                share_of_closures_conversion_alone_first=r(conv_first.sum() / max(closed.sum(), 1)),
+                share_of_closures_same_step=r(same.sum() / max(closed.sum(), 1)),
+                share_of_closures_before_either_path_alone=r(mixed.sum() / max(closed.sum(), 1)),
+                lead_years_loop_over_conversion_given_loop_first=(dict(median=r(np.median(lead)), p10=r(np.percentile(lead, 10)),
+                                                                      p90=r(np.percentile(lead, 90)),
+                                                                      share_conversion_never_by_2075=r((~np.isfinite(v)[loop_first]).mean()))
+                                                                 if len(lead) else None),
+                closure_year_loop_alone=med_year(g.min(1)), closure_year_conversion_alone=med_year(v.min(1)),
+                closure_year_effective=med_year(c.min(1)),
+                P_loop_alone_by_2040=r((g.min(1) <= 2040 + 1e-9).mean()), P_conversion_alone_by_2040=r((v.min(1) <= 2040 + 1e-9).mean()),
+                share_of_build_steps_robot_limited=r(o["n_gf_rob"][:, cols].sum() / max(o["n_gf_build"][:, cols].sum(), 1)),
+                share_of_build_steps_at_capability_gate=r(o["n_gf_gate"][:, cols].sum() / max(o["n_gf_build"][:, cols].sum(), 1)))
+        ye = o["ygf_end"]
+        d["loop_automated_share_2075_median_by_segment_US"] = {SEG[s]: r(np.median(ye[:, 0, s])) for s in range(len(SEG))}
+        d["loop_automated_share_2075_median_by_segment_China"] = {SEG[s]: r(np.median(ye[:, 1, s])) for s in range(len(SEG))}
+    if "recA" in o and "Dloop" in o["recA"] and d["active"] and o["recA"]["Dloop"].shape[-1] == len(YEARS):
+        Y = list(YEARS)
+        d["D_core_median_by_year"] = {an: {str(y): dict(effective=r(np.median(o["recA"]["Dc"][:, a, Y.index(y)])),
+                                                        loop=r(np.median(o["recA"]["Dloop"][:, a, Y.index(y)])),
+                                                        conversion=r(np.median(o["recA"]["Dconv"][:, a, Y.index(y)])))
+                                           for y in (2027, 2028, 2030, 2032, 2035, 2040)} for a, an in enumerate(ACTORS[:3])}
+    return d
 
 
 def summarize(o, p, rng, boot=True):
@@ -2494,8 +2907,20 @@ def main():
                               lag_cog_years=dict(zip(ACTORS, [[float(a), float(b)] for a, b in zip(LAGC_LO, LAGC_HI)])),
                               lag_phys_years=dict(zip(ACTORS, [[float(a), float(b)] for a, b in zip(LAGP_LO, LAGP_HI)]))),
         samples=samples)
+    if bool(p["gf_on"].any()):
+        out["greenfield_core_loop"] = GF_NOTE
+    if bool(p["wfl_on"].any()):
+        out["wide_floors"] = dict(rule="A10: fast tails widened, 90th percentile kept, 5th percentile to 0.25 y (0.1 y for fact_build_a); quantile map of the same standard-normal draws", table=wfl_table())
+    if bool(p["cf_on"].any()):
+        out["compute_feedback"] = dict(spec=CF_NOTE, priors={k: dict(spec=list(v[0]), source=v[1], evidence=v[2]) for k, v in PRIORS_CF.items()})
+    out["config_env"] = dict(M8_FINAL=os.environ.get("M8_FINAL", ""), M8_BRAKES=os.environ.get("M8_BRAKES", ""),
+                             M8_GF=os.environ.get("M8_GF", ""), M8_CF=os.environ.get("M8_CF", ""), M8_WFL=os.environ.get("M8_WFL", ""))
     os.makedirs(os.path.join(ROOT, "results"), exist_ok=True)
-    with open(os.path.join(ROOT, "results", "m8_v4.json"), "w") as fh:
+    # M8_OUT (file name in results/) and M8_FIG (figure folder) redirect the outputs; default = the published paths
+    outp = os.path.join(ROOT, "results", os.environ.get("M8_OUT", "m8_v4.json"))
+    if os.environ.get("M8_OUT"):
+        assert not os.path.exists(outp), outp + " exists; not overwriting"
+    with open(outp, "w") as fh:
         json.dump(out, fh, indent=1, default=float)
     figures(o, res, var_res, torn, base_t)
     figure_round3(o, res, var_res)
@@ -2510,7 +2935,7 @@ def figures(o, res, var_res, torn, base_t):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    fd = os.path.join(ROOT, "figures")
+    fd = os.environ.get("M8_FIG", os.path.join(ROOT, "figures"))
     os.makedirs(fd, exist_ok=True)
     ink, muted, grid = "#0b0b0b", "#52514e", "#e4e3df"
     c = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#4a3aa7", "#e34948"]
@@ -2614,7 +3039,7 @@ def figure_round3(o, res, var_res):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    fd = os.path.join(ROOT, "figures")
+    fd = os.environ.get("M8_FIG", os.path.join(ROOT, "figures"))
     ink, muted, grid = "#0b0b0b", "#52514e", "#e4e3df"
     c = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#4a3aa7", "#e34948"]
 

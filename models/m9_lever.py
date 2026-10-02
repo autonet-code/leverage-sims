@@ -153,7 +153,7 @@ import types
 
 import numpy as np
 
-ROOT = r"C:\code\sims\dystopia"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MOD = os.path.join(ROOT, "models")
 RES = os.path.join(ROOT, "results")
 FIG = os.path.join(ROOT, "figures")
@@ -414,8 +414,8 @@ LEVER_PRIORS3 = {
 # lever round 3 updates (U1-U4), own numpy stream so all earlier draws are unchanged
 LEVER_PRIORS4 = {
     "lv_fnode": (("uniform", 0.5, 0.9), "U1: share of a ban's calibrated adoption loss that is physical removal of hardware or node connections (stops activity 1:1); the rest (P2P partition, user exit) is survivable for an autonomous network. China mining 2021 (hardware moved out, ~1) vs Tornado Cash (contracts kept running, usage fell, ~0); hosts who unplug out of fear still count", "J"),
-    "lv_y_h4": (("uniform", 0.9, 1.0), "U2: payout to households, all output except service fees that fund the treasury (scenario)", "J"),
-    "lv_s_acc4": (("uniform", 0.2, 0.7), "U3: share of displaced people's needs still covered when a regime tries to cut them off; contracts cannot be altered, only conversion and access (exchanges, goods, token value) can be attacked (scenario)", "J"),
+    "lv_y_h4": (("uniform", 0.9, 1.0), "U2: payout to households, all output except service fees that fund the treasury (network premise)", "J"),
+    "lv_s_acc4": (("uniform", 0.2, 0.7), "U3: share of displaced people's needs still covered when a regime tries to cut them off; contracts cannot be altered, only conversion and access (exchanges, goods, token value) can be attacked (network premise)", "J"),
     "lv_g4": (("uniform", 0.02, 0.06), "U4: growth of the log relative amortization advantage per coverage-weighted use-year (doubling every 12-35 years; Zipf: library value grows ~log of size; AWM/Voyager reuse gains)", "J"),
     "lv_amort": (("uniform", 0.1, 0.3), "U4: cost per covered task relative to solving from scratch (r14b: reusable workflows 10-30%); 1/amort caps the relative advantage", "C"),
 }
@@ -1319,9 +1319,12 @@ def main(mode="all"):
     tag = os.environ.get("LV_TAG", "")           # brake runs: e.g. LV_TAG=_brakes -> results/lever_grid_brakes.json
     out_path = os.path.join(RES, f"lever_grid{tag}.json")
     part = os.path.join(RES, f"lever_grid_partial{tag}.json")
-    brakes = os.environ.get("M8_BRAKES", "") == "final"
+    # M8_FINAL=1 (final configuration: brakes + greenfield core loop + compute feedback + wide floors) counts as a brake run too; m8_v4.sample_params
+    # reads M8_BRAKES / M8_FINAL itself, so the patched generator picks the configuration up unchanged
+    final = os.environ.get("M8_FINAL", "") == "1"
+    brakes = os.environ.get("M8_BRAKES", "") == "final" or final
     if brakes:
-        assert tag, "set LV_TAG with M8_BRAKES=final so the published lever grid is not touched"
+        assert tag, "set LV_TAG with M8_BRAKES=final or M8_FINAL=1 so the published lever grid is not touched"
     res = json.load(open(part)) if os.path.exists(part) else {}
     NO = int(os.environ.get("LV_NO", 1500))
     if mode in ("verify", "all") and "verify" not in res:
@@ -1391,7 +1394,8 @@ def main(mode="all"):
     res["notes_round2"] = dict(P_SUC9=P_SUC9, round1_results="results/lever_grid_round1.json", round1_code="models/m9_lever_round1.py")
     res["notes_round3"] = dict(round2_results="results/lever_grid_round2.json", round2_code="models/m9_lever_round2.py",
                                reproduction="round-2 spec (round-3 fixes off) and round-1 spec decomp rows must equal the stored values")
-    res["brakes"] = dict(M8_BRAKES=os.environ.get("M8_BRAKES", ""), note="final brake configuration (pid_on, sr_on, dis_on, brk_mort) on in every cell incl. the lever-off baseline; U-off reproduction check skipped (it compares with the brake-free grid)") if brakes else None
+    res["brakes"] = dict(M8_BRAKES=os.environ.get("M8_BRAKES", ""), M8_FINAL=os.environ.get("M8_FINAL", ""), note="final brake configuration (pid_on, sr_on, dis_on, brk_mort) on in every cell incl. the lever-off baseline; U-off reproduction check skipped (it compares with the brake-free grid)") if brakes else None
+    res["greenfield"] = dict(M8_FINAL="1", note="final configuration: greenfield core loop (gf_on) and own-industry compute feedback (cf_on) and wide automated doubling floors (wfl_on) on in every cell incl. the lever-off baseline; see m8_v4.GF_NOTE and m8_v4.CF_NOTE") if final else None
     res["notes"] = dict(armed=LEV_ARMED_NOTE, unused_research=UNUSED_RESEARCH, A0=A0, A_REF=A_REF, NO=NO, R8=8, NI=200,
                         trajectories_per_cell=NO * 200)
     json.dump(res, open(out_path, "w"), indent=1)
