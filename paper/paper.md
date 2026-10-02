@@ -1,6 +1,6 @@
 # Losing Leverage: A Game-Theoretic Simulation of Power After Full Automation
 
-**Eight Rice** (contact@autonet.computer)
+**Eight Rice** (contact@autonet.computer; ORCID 0009-0008-2902-0845)
 
 *Draft, October 2026. Code, data and results: https://github.com/autonet-code/leverage-sims. All numbers in this paper are reproducible from the code with the seeds given in Appendix D.*
 

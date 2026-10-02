@@ -5,7 +5,8 @@
   "description": "Throughout history, rulers have needed large numbers of people: to work, to pay taxes and to enforce orders. That need is what made them bargain with, feed and fear their populations. If AI and robots can do nearly all productive and military work, the need may disappear. This paper asks what protects people once it does. We built a game-theoretic Monte Carlo simulation of six world blocs from 2026 to 2075. It tracks: AI capability and robot build-out;; the loss of the public's economic and military leverage;; the erosion of democracy;; purges inside ruling groups;; the choices those groups make once their populations are no longer needed. It draws on historical base rates and includes four restraints on rulers found by a search of the historical record with rules fixed in advance. We cross-checked it against a pre-specified elicitation from a judgment model. Like war games and the scenario side of climate research, the model cannot predict when events will happen. It can compare futures and show which assumptions drive them. We report it that way. Code, data and results: https://github.com/autonet-code/leverage-sims",
   "creators": [
     {
-      "name": "Rice, Eight"
+      "name": "Rice, Eight",
+      "orcid": "0009-0008-2902-0845"
     }
   ],
   "keywords": [

@@ -5,6 +5,7 @@ authors:
   - family-names: Rice
     given-names: Eight
     email: contact@autonet.computer
+    orcid: "https://orcid.org/0009-0008-2902-0845"
 version: "1.0"
 date-released: 2026-10-03
 license: MIT

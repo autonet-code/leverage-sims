@@ -24,7 +24,7 @@ for ln in body.split('\n'):
 body = '\n'.join(out)
 meta = f'''---
 title: "{title}"
-author: "Eight Rice (contact@autonet.computer)"
+author: "Eight Rice (contact@autonet.computer, ORCID 0009-0008-2902-0845)"
 date: "October 2026"
 geometry: margin=2.5cm
 fontsize: 10pt
