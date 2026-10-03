@@ -11,6 +11,8 @@ The paper models what happens to a population's standing, and to its survival, o
 
 All results are conditional on the assumptions stated in the paper.
 
+A companion video essay tells the same scenario as a story, for a general audience. It narrates the scenario rather than reporting the results: [Automation and the RIGGED endgame](https://youtu.be/dPjT1uZc-pU).
+
 ## Layout
 
 - `paper/`: the paper (`paper.md`), the full parameter list, the brake-search protocol and its results (with the Jev elicitation scripts in `paper/jev_brakes/`), and the citation checks.
