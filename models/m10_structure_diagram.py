@@ -103,8 +103,9 @@ box(C4, TOP, "8  Options (mild → harsh)",
     "1  serve the public\n2  live off rents\n3  keep the status quo\n4  warehouse (minimal provision)\n"
     "5  neglect\n6  depopulate", C_DEC)
 box(C4, (25, 26), "9  How deaths happen",
-    "Without an order to kill:\n  strangulation, neglect, despair\n  under warehousing\nOrdered:\n  executed depopulation orders\n"
-    "  abstract means of mass killing (A8)\n  war, up to nuclear exchange (A9)\n  attacks on weaker blocs (B5)", C_OUT, fs=8.4)
+    "Ordered depopulation: automated\n  force, economic strangulation,\n  abstract means of mass killing (A8)\n"
+    "Chosen, with no order to kill:\n  lethal neglect\nWar, up to nuclear exchange (A9);\n  attacks on weaker blocs (B5)\n"
+    "Total loss only: despair, crackdowns", C_OUT, fs=8.4)
 box(C4, (4, 16.5), "What stops a campaign",
     "a successful revolt, a repelled\nattack, or nuclear retaliation", C_STOP, fs=8.6)
 
