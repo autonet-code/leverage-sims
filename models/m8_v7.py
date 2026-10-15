@@ -2560,9 +2560,9 @@ def round3_diag(o):
                                                    share_within_1y=round(float((gap < 1).mean()), 3),
                                                    corr_across_draws=round(float(np.corrcoef(tc[both, 0], tc[both, 1])[0, 1]), 3),
                                                    P_exactly_one_closes=round(float((np.isfinite(tc[:, 0]) ^ np.isfinite(tc[:, 1])).mean()), 4))
-    gs = np.isfinite(tc[:, 5])
+    gs = np.isfinite(tc[:, SSA])
     if gs.any():
-        r3["B6_Global_South_lag_behind_first_closer_years_median"] = round(float(np.median((tc[:, 5] - tc.min(1))[gs])), 2)
+        r3["B6_SS_Africa_lag_behind_first_closer_years_median"] = round(float(np.median((tc[:, SSA] - tc.min(1))[gs])), 2)
     r3["world_pop_share_near_total_deliberate"] = round(pop_share(nt), 4)
     if "t_cl_gf" in o:
         r3["greenfield"] = gf_diag(o)
@@ -3002,10 +3002,10 @@ def main():
         target_2030="Goldman humanoids ~0.9M/yr (0.25-3M)",
         onset_hazard_2026=res["onset_hazard_2026_median_per_yr"],
         target_onset="US/China/Europe ~0.2-0.4%/yr new sustained insurgency at zero displacement (UCDP high-capacity onset rates)",
-        P_first_insurgency_by_2030=res["P_first_sustained_insurgency_by"]["US_bloc"]["2030"],
+        P_first_insurgency_by_2030=res["P_first_sustained_insurgency_by"]["US"]["2030"],
         ideology_US_or_China_by_2045=res["P_ideology_US_or_China_by"]["2045"],
         target_ideology="r9d: ~0.08 (0.03-0.2)",
-        P_US_breakdown_by_2030=res["P_democratic_breakdown_by"]["US_bloc"]["2030"],
+        P_US_breakdown_by_2030=res["P_democratic_breakdown_by"]["US"]["2030"],
         target_US="current V-Dem episode, U-turn 50-80% with leverage intact",
         P_US_China_war_by_2035=res["P_US_China_war_by"]["2035"], target_war="~5-10% by 2035 (judgment)")
     lab, s5a = s5_channels(o, "t_S5d", "ch_S5d", blocs=[0, 1])
@@ -3061,7 +3061,7 @@ def main():
                  port_verification_gpu_vs_cpu=ver,
                  port_verification_prefix_model="torch-CUDA port of the round-1 numpy model vs numpy at N=20000: S5 2075 0.671 vs 0.670, closure by 2040 0.604 vs 0.604, US insurgency by 2040 0.338 vs 0.341 (5.0 s vs 49 s)"),
         actors=dict(names=ACTORS, population_bn=dict(zip(ACTORS, POP.tolist())),
-                    note="US_bloc = US, Japan, Korea, Taiwan; Europe_plus = EU, UK, Canada, Australia, NZ, Switzerland, Norway; RoW = blocs 2-5, reported as population shares"),
+                    note="v7: 17 actors (v7_actors.ACTORS); RoW = every actor except the US and China, reported as population shares"),
         milestone_definitions=MILESTONES, plain_definitions=DEFS_PLAIN,
         definitions=dict(
             D_full="share of the 2026 human labor-task value of the bloc's full chain (9 segments) still requiring humans, incl. human content of imports",
@@ -3121,6 +3121,7 @@ def figures(o, res, var_res, torn, base_t):
     os.makedirs(fd, exist_ok=True)
     ink, muted, grid = "#0b0b0b", "#52514e", "#e4e3df"
     c = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#4a3aa7", "#e34948"]
+    c = c + [plt.cm.tab20(i % 20) for i in range(max(0, A_N + 2 - len(c)))]      # v7: 17 actors
     plt.rcParams.update({"font.size": 9, "axes.edgecolor": muted, "axes.labelcolor": muted, "xtick.color": muted,
                          "ytick.color": muted, "axes.titlecolor": ink, "lines.linewidth": 2})
 
@@ -3224,6 +3225,7 @@ def figure_round3(o, res, var_res):
     fd = os.environ.get("M8_FIG", os.path.join(ROOT, "figures", "v7"))
     ink, muted, grid = "#0b0b0b", "#52514e", "#e4e3df"
     c = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#4a3aa7", "#e34948"]
+    c = c + [plt.cm.tab20(i % 20) for i in range(max(0, A_N + 2 - len(c)))]      # v7: 17 actors
 
     def style(ax):
         ax.spines[["top", "right"]].set_visible(False); ax.grid(color=grid, lw=0.6); ax.set_axisbelow(True)

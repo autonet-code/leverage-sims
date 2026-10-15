@@ -1344,6 +1344,7 @@ def make_figures(res):
     os.makedirs(FIG, exist_ok=True)
     ink, muted, grid = "#0b0b0b", "#52514e", "#e4e3df"
     c = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#4a3aa7", "#e34948"]
+    c = c + [plt.cm.tab20(i % 20) for i in range(max(0, A_N + 2 - len(c)))]      # v7: 17 actors
     plt.rcParams.update({"font.size": 9, "axes.edgecolor": muted, "axes.labelcolor": muted, "xtick.color": muted,
                          "ytick.color": muted, "axes.titlecolor": ink, "lines.linewidth": 2})
 
