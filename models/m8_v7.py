@@ -389,7 +389,7 @@ PRIORS = {
     "eco_year": (("uniform", 2045.0, 2100.0), "year ecological stress reaches 'severe' (ETR 2025)", "low"),
     "eco_mult": (ln(1.5, 0.35), "conflict multiplier at severe ecological stress (1.2-4)", "M"),
     "eco_land": (("uniform", 0.0, 2.0), "rise in land/resource value share at severe ecological stress (50% mass at zero)", "very low"),
-    "p_id": (ln(0.045, 0.6), "P(depopulation/successionist ideology taken up by a closed bloc's rulers within 9 y, no war; war x2.5). Calibrated so P(US or China bloc by 2045) ~0.08 (r9d)", "L"),
+    "p_id": (("mix", 0.5, ln(0.045, 0.6), ln(0.142, 0.6)), "P(depopulation/successionist ideology taken up by a closed bloc's rulers within 9 y, no war; war x2.5). v6: lognormal median 0.045, calibrated so P(US or China bloc by 2045) ~0.08 (r9d). v7: the pre-registered Jev elicitation (results/jev_ideology.json, 192 calls, jev-1.13.0) gives 0.142, outside the v6 80% interval, so the prior is the pre-registered evidence mixture: weight 0.5 on v6, 0.5 on lognormal(0.142, 0.6)", "L/Jev"),
     "id_hl": (("uniform", 10.0, 20.0), "half-life of a ruling ideology (regime turnover, generational change), years", "L"),
     "id_share": (("uniform", 0.1, 0.3), "coalition hostility share added when that ideology is fully held (builds over ~4 y)", "L"),
     # ------------------------------------------------ endgame (A8, A9, A11). Abstract parameters only: no mechanism specifics

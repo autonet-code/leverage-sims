@@ -1,0 +1,42 @@
+{
+ "protocol": {
+  "registered": "2026-10-16, written before any call; analysis plan fixed here",
+  "tool": "Jev (TypeSafe System One, model jev-latest) via its HTTPS API, one yes/no (noul) question per state",
+  "design": "full factorial closure 2 x coalition 4 x war 2 x unrest 2 x ecology 2 = 64 cells, 3 paraphrases each (reworded sentences, permuted order) = 192 calls. Setting, coalition, resistance and the absent ideology reuse the v6 grid sentences. The ideology is absent at the start of every state",
+  "questions": {
+   "id9": "Within the next 9 years, a doctrine that the human population should be greatly reduced, justified by ecological limits or by making way for AI successors, takes hold among the ruling group."
+  },
+  "analysis": [
+   "cell value = mean over 3 paraphrases; report paraphrase spread (median and 90th percentile of max-min)",
+   "baseline p_id (model: P(uptake within 9 y) after closure, no war, calm, normal ecology) = mean over coalitions of the closed, no-war, calm, normal-ecology cells",
+   "ratios against that baseline, averaged over the other factors: war (model x2.5), insurgency (model m_unrest U(1.5, 3)), severe ecology (model up to x1.5), no closure (model x0.1)",
+   "logistic least squares on the logit of cell means with one-hot factors; report coefficients",
+   "v7 prior: if the Jev baseline lies outside the v6 prior's 80% interval (lognormal median 0.045, sigma 0.6: 0.021-0.098), replace the prior by an evidence mixture (as for pr_red): weight 0.5 on v6, 0.5 on a lognormal at the Jev baseline with sigma 0.6. Ratios are reported against the model's multipliers, not substituted",
+   "no cells dropped; no re-wording after seeing results"
+  ]
+ },
+ "factors": {
+  "closure": [
+   "closed",
+   "control"
+  ],
+  "coalition": [
+   "single",
+   "junta",
+   "oligarchy",
+   "democracy_eroding"
+  ],
+  "war": [
+   "none",
+   "war"
+  ],
+  "unrest": [
+   "none",
+   "insurgency"
+  ],
+  "ecology": [
+   "normal",
+   "severe"
+  ]
+ }
+}

@@ -108,7 +108,7 @@ Everything below is in the code on branch `v7-actors` and has passed small test 
 
 **9. Unrest speeds up the ideology.** By 1.5 to 3 times during an active insurgency (Harff 2003), and the uptake rate scales with the ruling group's average susceptibility.
 
-**10. Ideology baseline.** Pending: the Jev elicitation needs the Jev server running at 127.0.0.1:9117. The first full runs (2026-10-16) use the v6 rate (about 4.5% per nine years after closure).
+**10. Ideology baseline.** Elicited from Jev on 2026-10-16 (pre-registered, 64 situations x 3 paraphrases, `results/jev_ideology.json`). Jev puts uptake within nine years after closure, at peace and calm, at 14%, three times v6's 4.5%. As pre-registered, the prior is now half v6, half Jev. Jev barely moves with war (x1.1, model x2.5) or insurgency (x1.2, model x1.5 to 3), moves with severe ecological stress (x1.4, model up to x1.5), and gives 61% of the rate without closure (model 10%). Those multipliers stay as they are, and the gap is reported.
 
 **11. Variants reported alongside the main result.** v6 mechanics on 17 actors, alliances off, latent threat off, old land term, unrest effect off, drives off, institutions off, Rudolf's best case with and without the latent threat.
 

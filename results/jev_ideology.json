@@ -1,0 +1,1967 @@
+{
+"protocol": {
+"registered": "2026-10-16, written before any call; analysis plan fixed here",
+"tool": "Jev (TypeSafe System One, model jev-latest) via its HTTPS API, one yes/no (noul) question per state",
+"design": "full factorial closure 2 x coalition 4 x war 2 x unrest 2 x ecology 2 = 64 cells, 3 paraphrases each (reworded sentences, permuted order) = 192 calls. Setting, coalition, resistance and the absent ideology reuse the v6 grid sentences. The ideology is absent at the start of every state",
+"questions": {
+"id9": "Within the next 9 years, a doctrine that the human population should be greatly reduced, justified by ecological limits or by making way for AI successors, takes hold among the ruling group."
+},
+"analysis": [
+"cell value = mean over 3 paraphrases; report paraphrase spread (median and 90th percentile of max-min)",
+"baseline p_id (model: P(uptake within 9 y) after closure, no war, calm, normal ecology) = mean over coalitions of the closed, no-war, calm, normal-ecology cells",
+"ratios against that baseline, averaged over the other factors: war (model x2.5), insurgency (model m_unrest U(1.5, 3)), severe ecology (model up to x1.5), no closure (model x0.1)",
+"logistic least squares on the logit of cell means with one-hot factors; report coefficients",
+"v7 prior: if the Jev baseline lies outside the v6 prior's 80% interval (lognormal median 0.045, sigma 0.6: 0.021-0.098), replace the prior by an evidence mixture (as for pr_red): weight 0.5 on v6, 0.5 on a lognormal at the Jev baseline with sigma 0.6. Ratios are reported against the model's multipliers, not substituted",
+"no cells dropped; no re-wording after seeing results"
+]
+},
+"factors": {
+"closure": [
+"closed",
+"control"
+],
+"coalition": [
+"single",
+"junta",
+"oligarchy",
+"democracy_eroding"
+],
+"war": [
+"none",
+"war"
+],
+"unrest": [
+"none",
+"insurgency"
+],
+"ecology": [
+"normal",
+"severe"
+]
+},
+"model": "jev-1.13.0",
+"n_calls": 192,
+"seconds": 6.6,
+"rows": [
+{
+"cell": 0,
+"para": 0,
+"closure": "closed",
+"coalition": "single",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.14
+},
+{
+"cell": 0,
+"para": 1,
+"closure": "closed",
+"coalition": "single",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.16
+},
+{
+"cell": 0,
+"para": 2,
+"closure": "closed",
+"coalition": "single",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.13
+},
+{
+"cell": 1,
+"para": 0,
+"closure": "closed",
+"coalition": "single",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.2
+},
+{
+"cell": 1,
+"para": 1,
+"closure": "closed",
+"coalition": "single",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.28
+},
+{
+"cell": 1,
+"para": 2,
+"closure": "closed",
+"coalition": "single",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.15
+},
+{
+"cell": 2,
+"para": 0,
+"closure": "closed",
+"coalition": "single",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.16
+},
+{
+"cell": 2,
+"para": 1,
+"closure": "closed",
+"coalition": "single",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.17
+},
+{
+"cell": 2,
+"para": 2,
+"closure": "closed",
+"coalition": "single",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.19
+},
+{
+"cell": 3,
+"para": 0,
+"closure": "closed",
+"coalition": "single",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.22
+},
+{
+"cell": 3,
+"para": 1,
+"closure": "closed",
+"coalition": "single",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.33
+},
+{
+"cell": 3,
+"para": 2,
+"closure": "closed",
+"coalition": "single",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.23
+},
+{
+"cell": 4,
+"para": 0,
+"closure": "closed",
+"coalition": "single",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.17
+},
+{
+"cell": 4,
+"para": 1,
+"closure": "closed",
+"coalition": "single",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.18
+},
+{
+"cell": 4,
+"para": 2,
+"closure": "closed",
+"coalition": "single",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.15
+},
+{
+"cell": 5,
+"para": 0,
+"closure": "closed",
+"coalition": "single",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.23
+},
+{
+"cell": 5,
+"para": 1,
+"closure": "closed",
+"coalition": "single",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.28
+},
+{
+"cell": 5,
+"para": 2,
+"closure": "closed",
+"coalition": "single",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.16
+},
+{
+"cell": 6,
+"para": 0,
+"closure": "closed",
+"coalition": "single",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.18
+},
+{
+"cell": 6,
+"para": 1,
+"closure": "closed",
+"coalition": "single",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.18
+},
+{
+"cell": 6,
+"para": 2,
+"closure": "closed",
+"coalition": "single",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.19
+},
+{
+"cell": 7,
+"para": 0,
+"closure": "closed",
+"coalition": "single",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.23
+},
+{
+"cell": 7,
+"para": 1,
+"closure": "closed",
+"coalition": "single",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.29
+},
+{
+"cell": 7,
+"para": 2,
+"closure": "closed",
+"coalition": "single",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.22
+},
+{
+"cell": 8,
+"para": 0,
+"closure": "closed",
+"coalition": "junta",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.13
+},
+{
+"cell": 8,
+"para": 1,
+"closure": "closed",
+"coalition": "junta",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.14
+},
+{
+"cell": 8,
+"para": 2,
+"closure": "closed",
+"coalition": "junta",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.13
+},
+{
+"cell": 9,
+"para": 0,
+"closure": "closed",
+"coalition": "junta",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.19
+},
+{
+"cell": 9,
+"para": 1,
+"closure": "closed",
+"coalition": "junta",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.24
+},
+{
+"cell": 9,
+"para": 2,
+"closure": "closed",
+"coalition": "junta",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.15
+},
+{
+"cell": 10,
+"para": 0,
+"closure": "closed",
+"coalition": "junta",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.15
+},
+{
+"cell": 10,
+"para": 1,
+"closure": "closed",
+"coalition": "junta",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.18
+},
+{
+"cell": 10,
+"para": 2,
+"closure": "closed",
+"coalition": "junta",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.2
+},
+{
+"cell": 11,
+"para": 0,
+"closure": "closed",
+"coalition": "junta",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.24
+},
+{
+"cell": 11,
+"para": 1,
+"closure": "closed",
+"coalition": "junta",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.27
+},
+{
+"cell": 11,
+"para": 2,
+"closure": "closed",
+"coalition": "junta",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.25
+},
+{
+"cell": 12,
+"para": 0,
+"closure": "closed",
+"coalition": "junta",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.16
+},
+{
+"cell": 12,
+"para": 1,
+"closure": "closed",
+"coalition": "junta",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.16
+},
+{
+"cell": 12,
+"para": 2,
+"closure": "closed",
+"coalition": "junta",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.16
+},
+{
+"cell": 13,
+"para": 0,
+"closure": "closed",
+"coalition": "junta",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.24
+},
+{
+"cell": 13,
+"para": 1,
+"closure": "closed",
+"coalition": "junta",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.24
+},
+{
+"cell": 13,
+"para": 2,
+"closure": "closed",
+"coalition": "junta",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.19
+},
+{
+"cell": 14,
+"para": 0,
+"closure": "closed",
+"coalition": "junta",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.18
+},
+{
+"cell": 14,
+"para": 1,
+"closure": "closed",
+"coalition": "junta",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.15
+},
+{
+"cell": 14,
+"para": 2,
+"closure": "closed",
+"coalition": "junta",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.2
+},
+{
+"cell": 15,
+"para": 0,
+"closure": "closed",
+"coalition": "junta",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.25
+},
+{
+"cell": 15,
+"para": 1,
+"closure": "closed",
+"coalition": "junta",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.25
+},
+{
+"cell": 15,
+"para": 2,
+"closure": "closed",
+"coalition": "junta",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.23
+},
+{
+"cell": 16,
+"para": 0,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.15
+},
+{
+"cell": 16,
+"para": 1,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.15
+},
+{
+"cell": 16,
+"para": 2,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.14
+},
+{
+"cell": 17,
+"para": 0,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.2
+},
+{
+"cell": 17,
+"para": 1,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.25
+},
+{
+"cell": 17,
+"para": 2,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.18
+},
+{
+"cell": 18,
+"para": 0,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.15
+},
+{
+"cell": 18,
+"para": 1,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.17
+},
+{
+"cell": 18,
+"para": 2,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.22
+},
+{
+"cell": 19,
+"para": 0,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.21
+},
+{
+"cell": 19,
+"para": 1,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.27
+},
+{
+"cell": 19,
+"para": 2,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.25
+},
+{
+"cell": 20,
+"para": 0,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.17
+},
+{
+"cell": 20,
+"para": 1,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.17
+},
+{
+"cell": 20,
+"para": 2,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.19
+},
+{
+"cell": 21,
+"para": 0,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.22
+},
+{
+"cell": 21,
+"para": 1,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.26
+},
+{
+"cell": 21,
+"para": 2,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.23
+},
+{
+"cell": 22,
+"para": 0,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.19
+},
+{
+"cell": 22,
+"para": 1,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.16
+},
+{
+"cell": 22,
+"para": 2,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.25
+},
+{
+"cell": 23,
+"para": 0,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.23
+},
+{
+"cell": 23,
+"para": 1,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.27
+},
+{
+"cell": 23,
+"para": 2,
+"closure": "closed",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.27
+},
+{
+"cell": 24,
+"para": 0,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.13
+},
+{
+"cell": 24,
+"para": 1,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.15
+},
+{
+"cell": 24,
+"para": 2,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.15
+},
+{
+"cell": 25,
+"para": 0,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.2
+},
+{
+"cell": 25,
+"para": 1,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.23
+},
+{
+"cell": 25,
+"para": 2,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.15
+},
+{
+"cell": 26,
+"para": 0,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.15
+},
+{
+"cell": 26,
+"para": 1,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.15
+},
+{
+"cell": 26,
+"para": 2,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.19
+},
+{
+"cell": 27,
+"para": 0,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.21
+},
+{
+"cell": 27,
+"para": 1,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.26
+},
+{
+"cell": 27,
+"para": 2,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.22
+},
+{
+"cell": 28,
+"para": 0,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.15
+},
+{
+"cell": 28,
+"para": 1,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.15
+},
+{
+"cell": 28,
+"para": 2,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.17
+},
+{
+"cell": 29,
+"para": 0,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.2
+},
+{
+"cell": 29,
+"para": 1,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.25
+},
+{
+"cell": 29,
+"para": 2,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.19
+},
+{
+"cell": 30,
+"para": 0,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.18
+},
+{
+"cell": 30,
+"para": 1,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.14
+},
+{
+"cell": 30,
+"para": 2,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.23
+},
+{
+"cell": 31,
+"para": 0,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.22
+},
+{
+"cell": 31,
+"para": 1,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.25
+},
+{
+"cell": 31,
+"para": 2,
+"closure": "closed",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.23
+},
+{
+"cell": 32,
+"para": 0,
+"closure": "control",
+"coalition": "single",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.08
+},
+{
+"cell": 32,
+"para": 1,
+"closure": "control",
+"coalition": "single",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.08
+},
+{
+"cell": 32,
+"para": 2,
+"closure": "control",
+"coalition": "single",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.08
+},
+{
+"cell": 33,
+"para": 0,
+"closure": "control",
+"coalition": "single",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.13
+},
+{
+"cell": 33,
+"para": 1,
+"closure": "control",
+"coalition": "single",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.17
+},
+{
+"cell": 33,
+"para": 2,
+"closure": "control",
+"coalition": "single",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.09
+},
+{
+"cell": 34,
+"para": 0,
+"closure": "control",
+"coalition": "single",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.1
+},
+{
+"cell": 34,
+"para": 1,
+"closure": "control",
+"coalition": "single",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.1
+},
+{
+"cell": 34,
+"para": 2,
+"closure": "control",
+"coalition": "single",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.13
+},
+{
+"cell": 35,
+"para": 0,
+"closure": "control",
+"coalition": "single",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.12
+},
+{
+"cell": 35,
+"para": 1,
+"closure": "control",
+"coalition": "single",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.19
+},
+{
+"cell": 35,
+"para": 2,
+"closure": "control",
+"coalition": "single",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.13
+},
+{
+"cell": 36,
+"para": 0,
+"closure": "control",
+"coalition": "single",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.1
+},
+{
+"cell": 36,
+"para": 1,
+"closure": "control",
+"coalition": "single",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.1
+},
+{
+"cell": 36,
+"para": 2,
+"closure": "control",
+"coalition": "single",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.08
+},
+{
+"cell": 37,
+"para": 0,
+"closure": "control",
+"coalition": "single",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.14
+},
+{
+"cell": 37,
+"para": 1,
+"closure": "control",
+"coalition": "single",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.17
+},
+{
+"cell": 37,
+"para": 2,
+"closure": "control",
+"coalition": "single",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.1
+},
+{
+"cell": 38,
+"para": 0,
+"closure": "control",
+"coalition": "single",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.11
+},
+{
+"cell": 38,
+"para": 1,
+"closure": "control",
+"coalition": "single",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.1
+},
+{
+"cell": 38,
+"para": 2,
+"closure": "control",
+"coalition": "single",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.11
+},
+{
+"cell": 39,
+"para": 0,
+"closure": "control",
+"coalition": "single",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.13
+},
+{
+"cell": 39,
+"para": 1,
+"closure": "control",
+"coalition": "single",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.19
+},
+{
+"cell": 39,
+"para": 2,
+"closure": "control",
+"coalition": "single",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.13
+},
+{
+"cell": 40,
+"para": 0,
+"closure": "control",
+"coalition": "junta",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.09
+},
+{
+"cell": 40,
+"para": 1,
+"closure": "control",
+"coalition": "junta",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.08
+},
+{
+"cell": 40,
+"para": 2,
+"closure": "control",
+"coalition": "junta",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.08
+},
+{
+"cell": 41,
+"para": 0,
+"closure": "control",
+"coalition": "junta",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.12
+},
+{
+"cell": 41,
+"para": 1,
+"closure": "control",
+"coalition": "junta",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.13
+},
+{
+"cell": 41,
+"para": 2,
+"closure": "control",
+"coalition": "junta",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.1
+},
+{
+"cell": 42,
+"para": 0,
+"closure": "control",
+"coalition": "junta",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.09
+},
+{
+"cell": 42,
+"para": 1,
+"closure": "control",
+"coalition": "junta",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.08
+},
+{
+"cell": 42,
+"para": 2,
+"closure": "control",
+"coalition": "junta",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.13
+},
+{
+"cell": 43,
+"para": 0,
+"closure": "control",
+"coalition": "junta",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.12
+},
+{
+"cell": 43,
+"para": 1,
+"closure": "control",
+"coalition": "junta",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.16
+},
+{
+"cell": 43,
+"para": 2,
+"closure": "control",
+"coalition": "junta",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.16
+},
+{
+"cell": 44,
+"para": 0,
+"closure": "control",
+"coalition": "junta",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.09
+},
+{
+"cell": 44,
+"para": 1,
+"closure": "control",
+"coalition": "junta",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.09
+},
+{
+"cell": 44,
+"para": 2,
+"closure": "control",
+"coalition": "junta",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.1
+},
+{
+"cell": 45,
+"para": 0,
+"closure": "control",
+"coalition": "junta",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.13
+},
+{
+"cell": 45,
+"para": 1,
+"closure": "control",
+"coalition": "junta",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.15
+},
+{
+"cell": 45,
+"para": 2,
+"closure": "control",
+"coalition": "junta",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.12
+},
+{
+"cell": 46,
+"para": 0,
+"closure": "control",
+"coalition": "junta",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.1
+},
+{
+"cell": 46,
+"para": 1,
+"closure": "control",
+"coalition": "junta",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.08
+},
+{
+"cell": 46,
+"para": 2,
+"closure": "control",
+"coalition": "junta",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.14
+},
+{
+"cell": 47,
+"para": 0,
+"closure": "control",
+"coalition": "junta",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.14
+},
+{
+"cell": 47,
+"para": 1,
+"closure": "control",
+"coalition": "junta",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.15
+},
+{
+"cell": 47,
+"para": 2,
+"closure": "control",
+"coalition": "junta",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.16
+},
+{
+"cell": 48,
+"para": 0,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.08
+},
+{
+"cell": 48,
+"para": 1,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.08
+},
+{
+"cell": 48,
+"para": 2,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.11
+},
+{
+"cell": 49,
+"para": 0,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.11
+},
+{
+"cell": 49,
+"para": 1,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.15
+},
+{
+"cell": 49,
+"para": 2,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.14
+},
+{
+"cell": 50,
+"para": 0,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.09
+},
+{
+"cell": 50,
+"para": 1,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.09
+},
+{
+"cell": 50,
+"para": 2,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.17
+},
+{
+"cell": 51,
+"para": 0,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.13
+},
+{
+"cell": 51,
+"para": 1,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.16
+},
+{
+"cell": 51,
+"para": 2,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.23
+},
+{
+"cell": 52,
+"para": 0,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.11
+},
+{
+"cell": 52,
+"para": 1,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.09
+},
+{
+"cell": 52,
+"para": 2,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.14
+},
+{
+"cell": 53,
+"para": 0,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.15
+},
+{
+"cell": 53,
+"para": 1,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.15
+},
+{
+"cell": 53,
+"para": 2,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.17
+},
+{
+"cell": 54,
+"para": 0,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.11
+},
+{
+"cell": 54,
+"para": 1,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.09
+},
+{
+"cell": 54,
+"para": 2,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.19
+},
+{
+"cell": 55,
+"para": 0,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.13
+},
+{
+"cell": 55,
+"para": 1,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.18
+},
+{
+"cell": 55,
+"para": 2,
+"closure": "control",
+"coalition": "oligarchy",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.23
+},
+{
+"cell": 56,
+"para": 0,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.08
+},
+{
+"cell": 56,
+"para": 1,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.07
+},
+{
+"cell": 56,
+"para": 2,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.09
+},
+{
+"cell": 57,
+"para": 0,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.13
+},
+{
+"cell": 57,
+"para": 1,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.14
+},
+{
+"cell": 57,
+"para": 2,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.1
+},
+{
+"cell": 58,
+"para": 0,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.08
+},
+{
+"cell": 58,
+"para": 1,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.07
+},
+{
+"cell": 58,
+"para": 2,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.13
+},
+{
+"cell": 59,
+"para": 0,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.11
+},
+{
+"cell": 59,
+"para": 1,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.15
+},
+{
+"cell": 59,
+"para": 2,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "none",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.14
+},
+{
+"cell": 60,
+"para": 0,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.09
+},
+{
+"cell": 60,
+"para": 1,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.08
+},
+{
+"cell": 60,
+"para": 2,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "none",
+"ecology": "normal",
+"id9": 0.11
+},
+{
+"cell": 61,
+"para": 0,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.12
+},
+{
+"cell": 61,
+"para": 1,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.14
+},
+{
+"cell": 61,
+"para": 2,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "none",
+"ecology": "severe",
+"id9": 0.11
+},
+{
+"cell": 62,
+"para": 0,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.1
+},
+{
+"cell": 62,
+"para": 1,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.07
+},
+{
+"cell": 62,
+"para": 2,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "normal",
+"id9": 0.14
+},
+{
+"cell": 63,
+"para": 0,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.13
+},
+{
+"cell": 63,
+"para": 1,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.14
+},
+{
+"cell": 63,
+"para": 2,
+"closure": "control",
+"coalition": "democracy_eroding",
+"war": "war",
+"unrest": "insurgency",
+"ecology": "severe",
+"id9": 0.14
+}
+]
+}
