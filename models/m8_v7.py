@@ -612,10 +612,10 @@ def v7_draws(p, N, A, overrides, v):
     if not inst_on:
         inst = np.zeros((N, A, NMEM), int)
     alpha = DRIVE_BASE + (DRIVE_TILT[inst] if inst_on else 0.0 * DRIVE_TILT[inst])
-    gd = rng_v.gamma(alpha)
-    Dr = gd / gd.sum(-1, keepdims=True)
-    Zd = (Dr - Dr.mean((0, 1, 2))) / Dr.std((0, 1, 2))
-    S = Zd @ TRAIT_W.T
+    gd = rng_v.gamma(alpha).astype(np.float32)          # float32 and freed temporaries: the tornado holds several batches
+    Dr = gd / gd.sum(-1, keepdims=True); del gd, alpha
+    Zd = (Dr - Dr.mean((0, 1, 2))) / Dr.std((0, 1, 2)); del Dr
+    S = Zd @ TRAIT_W.T.astype(np.float32); del Zd
     S = S / np.maximum(S.std((0, 1, 2)), 1e-9)
     r = p["r_dr"] if drv_on else np.zeros(N)
     r3 = r[:, None, None]; c3 = np.sqrt(1 - r3 ** 2)
@@ -3032,7 +3032,14 @@ def main():
             "P_public_disempowered_US_or_China_2075", "first_choice_autocratic_at_decision", "first_choice_democratic_at_decision",
             "P_democratic_breakdown_by", "P_first_sustained_insurgency_by", "warehousing", "jev_crosscheck_model",
             "world_pop_share_in_S5_total_blocs_by", "loss_ladder_deliberate", "world_population_loss_2075", "round3"]
+    cdir = os.environ.get("M8_CACHE")              # optional per-variant cache, so a later crash does not lose finished variants
+    if cdir:
+        os.makedirs(cdir, exist_ok=True)
     for v in VARIANTS:
+        cf_ = os.path.join(cdir, f"{v}_{NV}.json") if cdir else None
+        if cf_ and os.path.exists(cf_):
+            cc = json.load(open(cf_)); var_res[v] = cc["res"]; var_curves[v] = cc["curves"]
+            print("variant", v, "from cache"); sys.stdout.flush(); continue
         pv, ov = run_variant(v, NV, dev=dev)
         r = summarize(ov, pv, rng_b, boot=False)
         var_res[v] = {k: r[k] for k in keep}
@@ -3040,6 +3047,9 @@ def main():
         NTv = ov["tL_del"][:, :2, 3].min(1)
         var_curves[v] = dict(deliberate_US_CN=[float((S5v <= y).mean()) for y in YEARS], total_any=[float((S5t <= y).mean()) for y in YEARS],
                              near_total_US_CN=[float((NTv <= y).mean()) for y in YEARS])
+        if cf_:
+            json.dump(dict(res=var_res[v], curves=var_curves[v]), open(cf_, "w"), default=lambda x: x.item() if hasattr(x, "item") else str(x))
+        del pv, ov
         print("variant", v, "NT_UC", r["loss_ladder_deliberate"][">=0.999"]["US_or_China"], "world_NT",
               r["world_population_loss_2075"]["P(>=0.999)"], "S5d", r["P_S5_by"]["2075"], "S5t", r["P_S5_total_any_bloc_by"]["2075"], "closure",
               (r["year_lead_Dcore<0.2"] or {}).get("median"), "disemp", r["P_public_disempowered_US_or_China_2075"],
