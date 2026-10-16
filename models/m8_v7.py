@@ -3027,8 +3027,8 @@ def main():
     print("baseline done", round(time.time() - t0, 1), "s", "S5 deliberate US/CN 2075", res["P_S5_by"]["2075"],
           "total any", res["P_S5_total_any_bloc_by"]["2075"]); sys.stdout.flush()
     var_res = {}; var_curves = {}
-    # host memory: keep only the tornado keys of the baseline parameters (the large per-member arrays are not needed again)
-    p = {k: p[k] for k in TORN_KEYS if k in p}
+    # host memory: drop the baseline's per-member and pairwise arrays (ndim >= 3); they are not needed again
+    p = {k: v for k, v in p.items() if not (isinstance(v, np.ndarray) and v.ndim >= 3)}
     import gc
     gc.collect()
     keep = ["P_S5_by", "P_S5_deliberate_any_bloc_by", "P_S5_total_any_bloc_by", "P_S5_total_2075_by_first_channel",
@@ -3053,14 +3053,15 @@ def main():
                              near_total_US_CN=[float((NTv <= y).mean()) for y in YEARS])
         if cf_:
             json.dump(dict(res=var_res[v], curves=var_curves[v]), open(cf_, "w"), default=lambda x: x.item() if hasattr(x, "item") else str(x))
-        del pv, ov, r
-        gc.collect()
-        if torch.cuda.is_available():
-            torch.cuda.empty_cache()
         print("variant", v, "NT_UC", r["loss_ladder_deliberate"][">=0.999"]["US_or_China"], "world_NT",
               r["world_population_loss_2075"]["P(>=0.999)"], "S5d", r["P_S5_by"]["2075"], "S5t", r["P_S5_total_any_bloc_by"]["2075"], "closure",
               (r["year_lead_Dcore<0.2"] or {}).get("median"), "disemp", r["P_public_disempowered_US_or_China_2075"],
               round(time.time() - t0, 1)); sys.stdout.flush()
+        del pv, ov, r
+        gc.collect()
+        import torch as _t
+        if _t.cuda.is_available():
+            _t.cuda.empty_cache()
     tt = time.time()
     torn = run_tornado_batched(TORN_KEYS, p, NT, dev)
     base_t = torn.pop("base")
