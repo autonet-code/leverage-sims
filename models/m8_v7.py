@@ -485,6 +485,18 @@ PRIORS_V7 = {
     "k_lr": (("uniform", 0.0, 1.0), "V7 D2: rise of the latent threat when a rival of comparable force exists (the public as a rival's ally)", "J"),
     # unrest accelerates the depopulation ideology (D3)
     "m_unrest": (("uniform", 1.5, 3.0), "V7 D3: ideology-uptake hazard multiplier during an active insurgency (Harff 2003: upheaval and exclusionary elite ideology)", "C"),
+    # v7 round 2 (research/v7_design.md E). E1: authoritarian collaboration against uprisings (Hungary 1956,
+    # Czechoslovakia 1968, Bahrain 2011, Syria 2015, Kazakhstan 2022; von Soest 2015; Tansey 2016)
+    "p_col": (("uniform", 0.3, 0.8), "V7 E1: P(an autocratic partner sends forces to help suppress a new insurgency in an autocratic actor), per unit tie (or alignment) strength", "C/J"),
+    "a_aff": (("uniform", 0.05, 0.2), "V7 E1: affinity of two autocracies without a tie or alignment, used in place of tie strength for E1 (Russia in Syria and Belarus before any treaty)", "J"),
+    "k_help": (("uniform", 0.3, 0.8), "V7 E1: reduction of the insurgents' success hazard at full foreign help (helpers' force at least the actor's own)", "J"),
+    # E2: an abstract passive, deniable channel of mass death (no mechanism is modeled or described)
+    "e_pas": (("lognormal", 3.0, 0.5), "V7 E2: death-rate multiplier of the passive channel relative to neglect (abstract)", "J"),
+    "m_pas": (("uniform", 1.0, 1.5), "V7 E2: moral cost of the passive channel relative to neglect (a bit above neglect, far below ordered killing)", "J"),
+    "deny": (("uniform", 0.3, 0.8), "V7 E2: share of neglect's outside pressure avoided by deniability", "J"),
+    "dL_pas": (("uniform", -4.0, 0.0), "V7 E2: capability (horizon doublings) at which the passive channel is available, relative to the A8 means threshold (no later than A8)", "J"),
+    # E3: realignment. New ties form between autocracies; a political alignment (US-Russia, 2026) shields without defence
+    "h_form": (("uniform", 0.002, 0.01), "V7 E3: yearly hazard that two autocratic actors without a tie form one (Russia-DPRK 2024, Russia-Belarus 2025; ATOP: a few new pacts a year among ~190 states)", "J"),
 }
 
 PRIORS_CF = {
@@ -558,7 +570,7 @@ GF_NOTE = dict(
 
 
 V7_VARIANTS = ["v6_mechanics", "alliances_off", "latent_off", "land_old", "unrest_id_off", "drives_off",
-               "institutions_off", "rudolf_best", "rudolf_best_latent_off"]
+               "institutions_off", "rudolf_best", "rudolf_best_latent_off", "collab_off", "passive_off", "us_2026_old"]
 
 
 def v7_draws(p, N, A, overrides, v):
@@ -579,6 +591,19 @@ def v7_draws(p, N, A, overrides, v):
     p["land_pref"] = np.full(N, not (off or v == "land_old"))
     p["unrest_id"] = np.full(N, not (off or v == "unrest_id_off"))
     p["rudolf"] = np.full(N, v in ("rudolf_best", "rudolf_best_latent_off"))
+    p["col_on"] = np.full(N, not (off or v == "collab_off"))
+    p["pas_on"] = np.full(N, not (off or v == "passive_off"))
+    us_new = not (off or v == "us_2026_old")
+    p["form_on"] = np.full(N, us_new)
+    # E3: the US commitment to defend each actor (row US of AL0), drawn per run; alignment (both directions)
+    al_us = np.repeat(AL0[US][None].astype(float), N, 0)
+    aln = np.zeros((N, A, A))
+    if us_new:
+        for b, (lo, hi) in US_TIE_DRAW.items():
+            al_us[:, b] = rng_v.uniform(lo, hi, N)
+        for (a, b), (lo, hi) in ALIGN_DRAW.items():
+            x = rng_v.uniform(lo, hi, N); aln[:, a, b] = x; aln[:, b, a] = x
+    p["al_us"] = al_us; p["aln"] = aln
     inst_on = not (off or v == "institutions_off")
     drv_on = not (off or v == "drives_off")
     # institutions: 0 state, 1 military, 2 owners of AI and automated industry
@@ -1099,7 +1124,7 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
     t_captive = t_esc.clone(); tot_ever = torch.zeros(N, A, dtype=torch.bool, device=dev)
     rem = P["rem"][:, None].double()
     col_ok = P["a9_col"] & (P["b_col"] > (1 - P["s_bunk"]) * P["p_nx"] * P["c_self"])     # A9: rulers' own-survival calculus
-    thr_means = None
+    thr_means = None; thr_pas = None
     beta = torch.clamp(torch.log(lam_ref / lam0) / torch.clamp(torch.log(1 / Hr0e), min=0.1), 0.5, 3.5)
 
     def freg(D):
@@ -1159,6 +1184,11 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
     # ---- v7 B: alliance state. Al[n, a, b] = tie strength while the tie is intact (0 once broken or with alliances off)
     ND = len(WAR_DYADS)
     AL_ = T(AL0)[None].expand(N, A, A).clone()
+    AL_[:, US, :] = P["al_us"]                                          # E3: drawn US commitments (Oct 2026)
+    Aln = torch.where(P["al_on"][:, None, None], P["aln"], 0.0)          # E3: alignment without defence
+    help_ = torch.zeros(N, A, A, dtype=torch.bool, device=dev)          # E1: help_[n, a, j]: j helps suppress a's insurgency
+    n_help = torch.zeros(N, A, device=dev); n_al_form = torch.zeros(N, device=dev); lc_pas = z64.clone()
+    lam_suc_nohelp_sum = torch.zeros(N, A, device=dev)
     al_on3 = P["al_on"][:, None, None]
     Al = torch.where(al_on3, AL_, 0.0)
     al_any = bool(P["al_on"].any())
@@ -1625,7 +1655,7 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
                 return base
             # v7 B: friend-shoring. Exporter a restricts sales to b by 0.7 psi_a (1 - Al_ab) instead of 0.7 psi_a, so its
             # export pool (dom_a x opx_a, unchanged in size) is split by purchasing share x preference w_ab = opx_ab / opx_a
-            opx_ab = 1 - 0.7 * psi[:, :, None] * (1 - torch.maximum(Al, Al.transpose(1, 2)))
+            opx_ab = 1 - 0.7 * psi[:, :, None] * (1 - torch.maximum(torch.maximum(Al, Al.transpose(1, 2)), Aln))
             w_ab = torch.where(eyeA, 1.0, opx_ab / torch.clamp(opx[:, :, None], min=1e-6))
             sh = omega[:, None, :] * w_ab
             sh = sh / torch.clamp(sh.sum(-1, keepdim=True), min=1e-12)
@@ -1720,7 +1750,13 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
         rd_eff = P["rd"][:, None] + (1 - P["rd"][:, None]) * (1 - h_sec_f) * P["k_auto"][:, None]
         lam_sup = -torch.log(torch.clamp(1 - rd_eff, min=1e-3)) / 5.0
         lam_suc = (1 - P["coin_win"][:, None]) / P["ins_dur"][:, None] * (1 - (1 - P["def_mult"][:, None]) * (1 - h_sec_f))
-        lam_suc = lam_suc * torch.where(P["f3_defect"][:, None] & (t < def_until), P["OR_def"][:, None], 1.0)   # F3
+        # v7 E1: foreign help (help_[n, a, j]) adds the helpers' force to suppression. hs = helpers' force relative to the
+        # actor's own (capped at 1); it cuts the insurgents' success hazard by k_help x hs and, because foreign forces
+        # do not defect with the actor's own, it removes the same share of the F3 defection boost
+        hs = torch.clamp((help_.float() * (P["w_def"][:, None] * Mk)[:, None, :]).sum(-1) / torch.clamp(Mk, min=1e-9), 0, 1)
+        hs = torch.where(P["col_on"][:, None], hs, 0.0)
+        lam_suc = lam_suc * torch.where(P["f3_defect"][:, None] & (t < def_until), 1 + (P["OR_def"][:, None] - 1) * (1 - hs), 1.0)   # F3
+        lam_suc = lam_suc * (1 - P["k_help"][:, None] * hs)
         pe = 1 - torch.exp(-(lam_sup + lam_suc) * DT)
         ends = Iact & (u[:, :, 1] < pe)
         uu = rnd(A, 3)
@@ -1736,7 +1772,7 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
         mst = torch.where(regime_pers, P["m_stack_pers"][:, None], P["m_stack_olig"][:, None])
         ud = rnd(A, 2)
         lcp_def = P["f3_defect"][:, None] & lcp & (ud[:, :, 0] < P["q_C"][:, None] * mst) \
-            & (P["d_def"][:, None] * h_sec_f > 1 - P["c_req"][:, None])
+            & (P["d_def"][:, None] * h_sec_f * (1 - hs) > 1 - P["c_req"][:, None])
         def_until = torch.where(lcp_def, t + 5.0, def_until)
         lcp = lcp & ~lcp_def
         base = (0.05 + 0.20 * uu[:, :, 1]) * P["cp_scale"][:, None]
@@ -1755,6 +1791,16 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
         Ddem = torch.where(saut, torch.clamp(Ddem, max=0.15), Ddem)
         grabbed = grabbed | saut
         Iact = (Iact & ~ends) | onset
+        # v7 E1: at the onset of an insurgency in an autocratic actor, each autocratic partner j (not itself executing a
+        # depopulation programme) sends forces with P = p_col x affinity: the intact tie or alignment j -> a, or a_aff
+        # between autocracies without one. Democracies do not send forces. Help lasts as long as the insurgency
+        if al_any:
+            aff = torch.maximum(torch.maximum(Al.transpose(1, 2), Aln.transpose(1, 2)), P["a_aff"][:, None, None])  # [n, a, j]
+            okj = (free & ~exec_on)[:, None, :] & free[:, :, None] & ~eyeA
+            uh = rnd5(A, A)
+            newh = onset[:, :, None] & okj & (uh < P["p_col"][:, None, None] * aff) & P["col_on"][:, None, None]
+            help_ = (help_ & Iact[:, :, None]) | newh
+            n_help += newh.any(-1)
         n_ins += onset; t_ins1 = torch.where(onset & torch.isinf(t_ins1), t, t_ins1)
         # ---- mortality and losses
         # audit fix: 'choice' holds INTERNAL codes here (1 = rentier, 3 = warehouse). The old lines used legacy codes
@@ -1767,6 +1813,9 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
         r_att = torch.where(loop & P["wh_mort_on"][:, None], P["m_d"][:, None] * dep * 0.65 * fstate * (1 + 0.5 * DF) * hg, 0.0) \
             + torch.where(Iact, P["ins_mort"][:, None], 0.0)
         r_neg = torch.where(decided & (choice == I_NEG), -float(np.log(0.9)) / P["Tn"][:, None], 0.0)
+        # v7 E2: once the abstract passive channel is available, neglect is carried out through it (e_pas x the rate)
+        pas_av = P["pas_on"][:, None] & (L[:, None] >= thr_pas) if thr_pas is not None else torch.zeros_like(free)
+        r_neg = r_neg * torch.where(pas_av, P["e_pas"][:, None], 1.0)
         wd = P["war_deaths_on"][:, None]
         r_war = torch.where(war & wd, P["w_mort"][:, None] * (1 + 0.5 * auth.float()), 0.0)
         alive = 1 - loss
@@ -1777,6 +1826,7 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
         # Abstract hazards only. Targeted survivors = alive minus the untargeted share (1 - tgt).
         if thr_means is None:
             thr_means = L_m3 + P["dL_means"] + rn()          # A8: capability level (doublings) at which a means is available
+            thr_pas = (thr_means + P["dL_pas"])[:, None]      # v7 E2
         ue = rnd(A, 4)
         stopped = exec_on & success
         choice = torch.where(stopped, torch.where(P["f8_sq"][:, None], I_SQ, I_WH), choice)
@@ -1877,6 +1927,7 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
             d_xb = d_xb + torch.where(ret, P["f_nx"][:, None].double() * torch.clamp(base_xb - d_xb, min=0), 0.0)
             d_ret = torch.where(hit_b, P["f_nx"][:, None].double() * base_xb, 0.0)             # retaliation on aggressor
             inflicted = inflicted + (oh.double() * (d_xb * POP_.double())[..., None]).sum(1) / POP_.double()
+        lc_pas += torch.where(pas_av, d_neg, 0.0)
         lc_att += d_att; lc_neg += d_neg; lc_act += d_lcp + d_x + d_eng; lc_war += d_war + d_ret; lc_col += d_col
         lc_xb += d_xb
         loss_wh += torch.where(chW, d_att, 0.0)
@@ -1933,6 +1984,17 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
             brk = ((Al + Al.transpose(1, 2)) > 0) & ((ev & (ua < P["p_al_reg"][:, None, None])) | (ub < 1 - torch.exp(-h_al * DT)))
             t_al_brk = torch.where(brk & torch.isinf(t_al_brk), t, t_al_brk)
             Al = torch.where(brk, 0.0, Al)
+            Aln = torch.where(brk, 0.0, Aln)
+            # v7 E3: two autocracies without a tie form one at h_form a year (strength U(0.1, 0.4), both directions),
+            # unless either is executing a depopulation programme or one is campaigning against the other
+            tied = (Al + Al.transpose(1, 2)) > 0
+            fa = free & ~exec_on
+            camp = (xb_by[:, :, None] == torch.arange(A, device=dev)[None, None]) & xb_on[:, :, None]
+            canf = fa[:, :, None] & fa[:, None, :] & ~eyeA & ~tied & ~camp & ~camp.transpose(1, 2) & P["form_on"][:, None, None]
+            uf = sym_u(rnd5(A, A)); sf = sym_u(rnd5(A, A))
+            form = canf & (uf < 1 - torch.exp(-P["h_form"][:, None, None] * DT))
+            Al = torch.where(form, 0.1 + 0.3 * torch.clamp(sf, 0, 1), Al)
+            n_al_form += form.sum((1, 2)).float() / 2
         # B2: a breakdown, a narrow grab or an insurgent victory installs a new coalition (21 members; a narrow grab
         # 5-9, the inner-circle size); the would-be leader starts with a share p_pers_bd of human-network control;
         # personalist status is then S_L >= 0.5 (Svolik's established autocracy), not a random draw or a fixed hazard
@@ -1997,7 +2059,7 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
                 allyF = torch.einsum("ndc,nd->nc", Al, wM)                     # sum_d Al[d, c] wM[d]: d backs c
                 Mco = Mk[:, None, :] + allyF[:, None, :] - Al * wM[:, :, None]
                 Mr_c = Mco / (Mco + Mk[:, :, None])
-                fac_c = torch.where(eyeA, 0.0, torch.clamp(2 * Mr_c, max=1.0)) * (1 - P["shield"][:, None, None] * Al.transpose(1, 2))
+                fac_c = torch.where(eyeA, 0.0, torch.clamp(2 * Mr_c, max=1.0)) * (1 - P["shield"][:, None, None] * torch.maximum(Al, Aln).transpose(1, 2))
                 enf = torch.where(P["al_on"][:, None], (fac_c * (omega * willing)[:, None, :]).sum(-1), enf)
             rival = torch.clamp(2 * torch.where(eyeA, 0.0, Mr).max(-1).values, max=1.0)       # comparable rival exists
             pi = E0t[:, None] * torch.where(b3, enf, press) * (0.3 + 0.7 * torch.clamp(imp_dep / 0.2, 0, 1))
@@ -2139,6 +2201,11 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
                  - theta_i[..., None] * latk[:, None, None, :] * lat[:, :, None, None]
                  - pik[:, :, None, :] * pi[:, :, None, None] + LANDK * land[:, :, None, None]
                  - mXk[..., None] * mwtK[:, None, None, :] - mXn[..., None] * mwtN[:, None, None, :] - sw_[:, :, None, :])
+            # v7 E2: through the passive channel, neglect carries m_pas x its moral cost and avoids a share deny of its
+            # outside pressure (deniability)
+            pasA = pas_av.expand(N, A)
+            U[..., I_NEG] -= torch.where(pasA, (P["m_pas"] - 1)[:, None], 0.0)[..., None] * P["kappa_N"][:, None, None] * mXn
+            U[..., I_NEG] += torch.where(pasA, P["deny"][:, None] * PIK[I_NEG] * instk * pi, 0.0)[..., None]
             U[..., 1] = torch.where(rent_ok[:, None, None], U[..., 1], -1e9)
             U[..., I_SQ] = torch.where(P["f8_sq"][:, None, None], U[..., I_SQ], -1e9)
             # ---- BRAKE 2: anticipated self-targeting. Each exposed non-leader member of a B2 autocracy discounts
@@ -2319,6 +2386,7 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
                 brk_x = brk_x | brk_x.transpose(1, 2)
                 t_al_brk = torch.where(brk_x & torch.isinf(t_al_brk), t, t_al_brk)
                 Al = torch.where(brk_x, 0.0, Al)
+                Aln = torch.where(brk_x, 0.0, Aln)
             t_exec = torch.where(okX, t, t_exec)
             tot = torch.where(okX, tot0, tot)
             tgt = torch.where(okX, torch.where(tot0, 1 - rem.float(), P["f0"][:, None].expand(N, A)), tgt)
@@ -2401,7 +2469,7 @@ def _sim_chunk(p, N, dev, seed, block=None, records=True):
                # compute feedback (diagnostics; 0 / NaN when cf_on is off) and leader-vs-leader dominance (always)
                E_close=E_close, E_2040=E_2040, E_end=Ecf, Ep_end=Epf, n_cf_gate=n_cf_gate, t_domUS=t_domUS, t_domCN=t_domCN,
                # v7: alliances (first break time per pair; tie strength at the end) and institutions of the leader
-               t_al_brk=t_al_brk, Al_end=Al, inst_ldr=P["inst"].gather(-1, ldr[..., None])[..., 0],
+               t_al_brk=t_al_brk, Al_end=Al, n_help=n_help, n_al_form=n_al_form, lc_pas=lc_pas, inst_ldr=P["inst"].gather(-1, ldr[..., None])[..., 0],
                inst_share_end=torch.stack([((P["inst"] == k) & act).sum(-1).float() for k in range(3)], -1))
     out = {k: v.cpu().numpy() for k, v in out.items()}
     out["tm"] = {k: v.cpu().numpy() for k, v in tm.items()}
@@ -2822,6 +2890,8 @@ def v7_diag(o, p):
                        P_near_total_mostly_by_foreign_campaign=r((nt[:, a] & forn[:, a]).mean()),
                        P_attacked_by_foreign_campaign=r(xb[:, a].mean()),
                        P_autocratic_2075=r(o["free_end"][:, a].mean()),
+                       P_foreign_help_against_uprising_ever=r((o["n_help"][:, a] > 0).mean()),
+                       passive_channel_share_of_deliberate_deaths=r(o["lc_pas"][:, a].sum() / max(1e-12, dl[:, a].sum())),
                        leader_institution_share_2075=dict(zip(["state", "military", "owners"],
                                                              [r(((o["inst_ldr"][:, a] == k) & o["free_end"][:, a]).mean()) for k in range(3)])))
     agg = {}
@@ -2839,6 +2909,8 @@ def v7_diag(o, p):
     pair = (AL0 + AL0.T) > 0
     return dict(per_actor=per, aggressor_to_target=agg, alliance_ties=ties,
                 share_of_2026_ties_broken_by_2075=r((brk & pair[None]).sum() / max(1, pair.sum() * brk.shape[0])),
+                new_autocratic_ties_formed_mean=r(o["n_al_form"].mean()),
+                US_ties_2075_mean={ACTORS[b]: r(o["Al_end"][:, US, b].mean()) for b in range(A_N) if AL0[US, b] > 0 or b == RU},
                 world_population_near_total_share_expected=r((nt * POP[None]).sum(1).mean() / POP.sum()),
                 note="P_near_total_mostly_by_foreign_campaign: near-total deliberate loss where cross-actor campaigns (B5) caused more than half of the deliberate deaths")
 

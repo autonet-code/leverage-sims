@@ -166,7 +166,10 @@ PERS0 = {CN: (5.0, 5.0), RU: (7.5, 2.5), GULF: (7.0, 3.0)}
 # ---- wars. Dyads (a, b, base hazard per year at 2026 conflict intensity) [J]. The v6 US-China pair hazard w_pair
 # (median 0.007) is split into a direct US-China war and a China-Taiwan war that the US may join through its tie.
 WAR_DYADS = [(US, CN, 0.003), (CN, TW, 0.006), (RU, EEU, 0.010), (IN, RSA, 0.020), (IN, CN, 0.004),
-             (KR, SEA, 0.003), (CN, JP, 0.002), (CN, SEA, 0.004), (GULF, RMENA, 0.008)]
+             (KR, SEA, 0.003), (CN, JP, 0.002), (CN, SEA, 0.004), (GULF, RMENA, 0.008),
+             # v7 round 2: a former patron as a threat (2026: refusal to rule out force over Greenland, 50% tariffs on
+             # Canada). Very small war hazards [J]
+             (US, WEU, 0.0005), (US, CANZ, 0.0005)]
 # remaining regional or civil war hazard multiplier on w_row (v6: x0.5 Europe, x1 Russia_MENA, x0.8 South Asia, x0.6
 # Global South) [J]
 WROW_M = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.3, 0.1, 0.05, 0.5, 0.5, 1.0, 0.3, 0.8, 0.5, 0.4, 1.0])
@@ -226,3 +229,14 @@ TRAIT_W = np.array([
     [1.0, 0.0, 0.0, 0.0, -0.3, 0.0, 0.0],   # feels exposed to purges (Brake 2)
     [0.0, 1.0, 0.0, 0.3, 0.0, 0.0, 0.0],    # strength of human network (who leads)
     [0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.7]])   # susceptibility to a depopulation ideology
+
+
+# ---- v7 round 2: the US as of October 2026 (fact-checked 2026-10-16: January threats over Greenland, settled by the
+# September security deal; global 10-15% duties on allies and 50% on Canada; 5,000 troops leaving Germany and a review of
+# cuts of up to 40,000; Korea exercises skipped in August; Russian diesel licensed in October). The US commitment to
+# defend each actor below is DRAWN per run, U(lo, hi), in place of the AL0 value [J]
+US_TIE_DRAW = {WEU: (0.10, 0.35), EEU: (0.10, 0.35), UK: (0.10, 0.35), CANZ: (0.10, 0.35),
+               JP: (0.35, 0.60), KR: (0.35, 0.60)}
+# political alignment without a defence commitment: shields the partner from one's outside pressure (enforcement, B3)
+# and eases trade in robot inputs, but no defence, no war joining. ALIGN_DRAW[(a, b)] = U(lo, hi) for both directions [J]
+ALIGN_DRAW = {(US, RU): (0.10, 0.40)}

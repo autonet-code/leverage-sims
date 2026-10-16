@@ -76,6 +76,12 @@ Trait mapping (sign of each drive's weight):
 4. **Ideology baseline.** Re-elicited from Jev with fixed wording and three paraphrases (needs the Jev server at 127.0.0.1:9117).
 5. **Variants.** `rudolf_best` (provision costs x 0.1, no revolt or sabotage threat once security is automated), `rudolf_best_latent_off`, `latent_off`, `land_old`, `alliances_off`, `drives_off`, `institutions_off`, `six_blocs` (v6 actors for comparison).
 
+## E. Round 2 additions (agreed 2026-10-16)
+
+1. **Authoritarian collaboration against uprisings (E1).** When an insurgency starts in an autocratic actor, each autocratic partner that is not itself executing a depopulation programme sends forces with probability `p_col` x affinity (the intact tie or alignment, or `a_aff` between autocracies without one). Help lasts as long as the insurgency. Helpers' force relative to the actor's own (`hs`, capped at 1) cuts the insurgents' success hazard by `k_help x hs`, and removes the same share of the defection check (F3), because foreign forces do not defect with the actor's own. Democracies do not send forces. The cost to the helper's own defences is not modeled. Anchors: Hungary 1956, Czechoslovakia 1968, Bahrain 2011, Syria 2015, Kazakhstan 2022 (von Soest 2015; Tansey 2016). Variant `collab_off`.
+2. **A passive, deniable channel (E2).** Abstract only: no mechanism is modeled or described. Once capability passes `dL_pas` doublings before the A8 threshold, neglect is carried out through it: death rate x `e_pas` (median 3), moral cost x `m_pas` (1 to 1.5), and a share `deny` (0.3 to 0.8) of neglect's outside pressure is avoided. Its deaths stay in the neglect channel and are also reported separately. Variant `passive_off`.
+3. **The US as of October 2026 (E3).** Fact-checked 2026-10-16: threats over Greenland in January (settled by the September security deal), global duties of 10 to 15% on allies and 50% on Canada, 5,000 troops leaving Germany and a review of cuts of up to 40,000, Korea exercises skipped in August, Russian diesel licensed in October. US commitments are drawn per run: Western EU, Eastern EU, UK, CANZ U(0.10, 0.35); Japan, South Korea U(0.35, 0.60). A US-Russia political alignment U(0.10, 0.40) shields each from the other's outside pressure and eases trade, without defence. Ties never strengthen again after a US return to democracy. Two autocracies without a tie form one at `h_form` U(0.2%, 1%) a year (strength 0.1 to 0.4). Small war hazards US-Western EU and US-CANZ, 0.05% a year each. A coercion channel short of war is not modeled. Variant `us_2026_old` (AL0 values, no alignment, no formation).
+
 ## Sign-off list (plain language)
 
 Everything below is in the code on branch `v7-actors` and has passed small test runs. Nothing has been run at full size.
@@ -102,8 +108,14 @@ Everything below is in the code on branch `v7-actors` and has passed small test 
 
 **9. Unrest speeds up the ideology.** By 1.5 to 3 times during an active insurgency (Harff 2003), and the uptake rate scales with the ruling group's average susceptibility.
 
-**10. Ideology baseline.** Pending: the Jev elicitation needs the Jev server running at 127.0.0.1:9117. Until then the v6 rate stays (about 4.5% per nine years after closure).
+**10. Ideology baseline.** Pending: the Jev elicitation needs the Jev server running at 127.0.0.1:9117. The first full runs (2026-10-16) use the v6 rate (about 4.5% per nine years after closure).
 
 **11. Variants reported alongside the main result.** v6 mechanics on 17 actors, alliances off, latent threat off, old land term, unrest effect off, drives off, institutions off, Rudolf's best case with and without the latent threat.
+
+**12. Authoritarian collaboration.** Autocratic partners help put down uprisings in autocracies (30 to 80% per unit tie strength, a weaker 5 to 20% affinity without a tie). The help lowers the insurgents' chance of success and gets around the defection check, because foreign forces don't refuse orders.
+
+**13. A passive, deniable channel.** Abstract, with no mechanism: once available, neglect kills about three times as fast, costs its rulers up to 1.5 times neglect's moral cost, and avoids much of the outside pressure.
+
+**14. The US as it is today.** Its commitments to Europe and Canada are drawn from 0.10 to 0.35, to Japan and Korea from 0.35 to 0.60, with a US-Russia alignment (no defence) and new ties forming among autocracies. Damage isn't undone by a later democratic government.
 
 **First small-sample readings (256 draws, not results):** the US-or-China near-total figure stays close to v6, about 0.39. Smaller actors are now often lost to another actor's campaign, mostly China's; alliances cut that noticeably (Taiwan 0.61 to 0.50, CANZ 0.50 to 0.39). About 80% of 2026 ties break by 2075.
