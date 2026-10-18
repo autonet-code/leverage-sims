@@ -10,29 +10,27 @@
 
 Throughout history, rulers have needed large numbers of people: to work, to pay taxes and to enforce orders. That need is what made them bargain with, feed and fear their populations. If AI and robots can do nearly all productive and military work, the need may disappear. This paper asks what protects people once it does.
 
-We built a game-theoretic Monte Carlo simulation of six world blocs from 2026 to 2075. It tracks:
+We built a game-theoretic Monte Carlo simulation of seventeen world actors from 2026 to 2075. It tracks:
 - AI capability and robot build-out;
 - the loss of the public's economic and military leverage;
 - the erosion of democracy;
-- purges inside ruling groups;
+- purges inside ruling groups, and the state, military and business interests their members come from;
+- alliances, including today's realignment of the United States away from Europe;
 - the choices those groups make once their populations are no longer needed.
 
 It draws on historical base rates and includes four restraints on rulers found by a search of the historical record with rules fixed in advance. We cross-checked it against a pre-specified elicitation from a judgment model.
 
 Like war games and the scenario side of climate research, the model cannot predict when events will happen. It can compare futures and show which assumptions drive them. We report it that way.
 
-**Main findings:**
-1. **Losing leverage removes the public's protection, and nothing structural replaces it.** By 2075 the US or China public is disempowered in 94% of runs, counting plain autocracy, and stripped of rights or worse in 73%.
-2. **The outcome then rests on a few people.** Once the public has no leverage, what decides whether rulers escalate to mass killing is their own restraint, incentives and internal politics, which no data measure.
-3. **The result does not hinge on how closure is reached.** Building a dedicated automated loop instead of converting the existing economy brought closure about 2.5 years earlier but left the risk of mass killing almost unchanged. Faster AI progress does raise the risk.
-4. **One intervention changes the incentives.** An economic network outside state and corporate control that pays its output to households makes it almost free for rulers to keep people alive. If it carries 50% of US-bloc economic activity by the early 2030s, the risk of near-total depopulation falls by more than a quarter, and by about half for the period to 2050. Arriving in 2040 loses about 40% of that effect.
+**Main findings, in the order they unfold:**
+1. **Democracy erodes before work disappears.** In the US, democracy breaks down in 83% of runs by 2050, most of it in the decade around closure. A fifth of runs see it already by 2030.
+2. **People stop being needed in the early-to-mid 2030s.** The leading bloc's core supply chain runs on less than 20% of its 2026 human labor by a median year of 2034.
+3. **Rights go within a few years.** The US or China public loses its rights in about 80% of runs, mostly in the first five years after closure: 68% of runs by 2040. In 2075 it is still stripped of rights in 74%, and disempowered, counting plain autocracy, in 94%. No ruling group chooses killing first; the first choices are to keep the status quo, serve the public, or warehouse people.
+4. **The outcome then rests on a few people.** Once the public has no leverage, what decides whether rulers escalate to mass killing is their own restraint, incentives and internal politics, which no data measure.
+5. **Killing follows by escalation, mostly from the 2040s.** A deliberate loss of 10% or more of the US or China population reaches 23% by 2040, 37% by 2050 and 50% by 2075. A loss of 99.9% or more (roughly 8 billion people to 8 million) reaches 27% by 2050 and 42% by 2075 for the US or China, and 8% for the world.
+6. **One intervention changes the incentives.** An economic network outside state and corporate control that pays its output to households makes it almost free for rulers to keep people alive. If it carries 50% of US-bloc economic activity by the early 2030s, the risk of near-total depopulation falls by about half for the period to 2050 and by more than a quarter by 2075. Arriving in 2040 loses about 40% of that effect.
 
-**Where the assumptions lead.** The results hold under seventeen stated assumptions: eleven that define the scenario and six that ground ruling-group behavior in evidence. Under them:
-- people stop being needed in the leading bloc by a median year of 2034;
-- the probability of a deliberate loss of 10% or more of the US or China bloc's population by 2075 is about 0.44;
-- the probability that such a loss reaches 99.9% or more (roughly 8 billion people to 8 million) is about 0.38 for the US or China bloc and 0.09 for the world.
-
-The near-total level rests on one assumption: that rulers who have started killing fear the survivors and finish the job. Without it, no run passes 99.9%. These probabilities are far above published expert and superforecaster estimates. The model's rate of lethal policy within 15 years of closure is also 1.7 to 2.4 times the judgment model's. They show where the assumptions lead, not a forecast.
+**Where the assumptions lead.** The results hold under the stated assumptions in Section 4: those that define the scenario and those that ground ruling-group behavior in evidence. The near-total level rests on one of them: that rulers who have started killing fear the survivors and finish the job. Without it, no run passes 99.9%. These probabilities are far above published expert and superforecaster estimates. The model's rate of lethal policy within 15 years of closure is also 2.4 to 3.2 times the judgment model's. They show where the assumptions lead, not a forecast.
 
 ---
 
@@ -40,29 +38,36 @@ The near-total level rests on one assumption: that rulers who have started killi
 
 *All findings below are model results under the assumptions in Section 4. The comparisons (what changes the outcome, and by how much) are more robust than the absolute probabilities and dates.*
 
-1. **People lose their leverage in the early-to-mid 2030s.**
-   - We call the point where a bloc's core supply chain needs less than 20% of its 2026 human labor **closure**. The first bloc reaches it in a median year of 2034.0 (10th to 90th percentile 2032.0 to 2039.25, among runs where closure occurs).
-   - Democracy erodes as leverage goes. In the US bloc, democracy breaks down by 2040 in 63% of runs. Across all blocs, only 26% of first post-closure decisions are taken while the deciding bloc is still a democracy.
-2. **No ruling group chooses depopulation first. It arises through escalation.**
-   - First choices after closure are to keep the status quo, to serve the public, or to **warehouse** people (minimal provision and no role in the economy).
-   - Under unrest and fear of the survivors, 36% of warehousing regimes later escalate to killing.
-3. **Near-total depopulation has a probability of more than one in three.** The probability of a deliberate loss of 99.9% or more is:
-   - 0.378 for the US or China bloc by 2075;
-   - 0.223 by 2050;
-   - 0.607 for at least one of six blocs.
+*The findings are in the order the events unfold.*
 
-   Without the threat-elimination assumption (A11), no run reaches 99.9%. A deliberate loss of 10% or more stays at a little more than two in five (0.44).
-4. **Loss of standing is nearly universal.** By 2075, the US or China public is stripped of rights or worse in 73% of runs, and disempowered, counting plain autocracy, in 94%. Prolonged disempowerment is a catastrophe in its own right, not only a step toward mass killing.
+1. **Democracy erodes before work disappears.**
+   - In the US bloc, democracy breaks down in 0.83 of runs by 2050 and 0.97 by 2075, most of it in the decade around closure (0.19 by 2030, 0.46 by 2035, 0.63 by 2040).
+   - Across all actors, only 0.37 of first post-closure decisions are taken while the deciding actor is still a democracy.
+2. **People lose their leverage in the early-to-mid 2030s.**
+   - We call the point where an actor's core supply chain needs less than 20% of its 2026 human labor **closure**. The first actor reaches it in a median year of 2034.0 (10th to 90th percentile 2032.0 to 2039.5), in 0.89 of runs.
+   - Building a dedicated automated loop instead of converting the existing economy no longer changes when closure comes, but it raises the risk of near-total depopulation of the US or China from 0.34 to 0.42.
+3. **Rights go within a few years of closure.**
+   - The US or China public loses its rights in 0.80 of runs by 2075, mostly in the first five years after closure: 0.29 by 2035 and 0.68 by 2040 (median year 2036, two years after the median closure). In 2075 it is still stripped of rights in 0.74, and disempowered, counting plain autocracy, in 0.94 (Appendix E; results/v7_rights_timeline.json).
+   - Prolonged disempowerment is a catastrophe in its own right, not only a step toward mass killing.
+4. **No ruling group chooses depopulation first. It arises through escalation.**
+   - First choices after closure are to keep the status quo, to serve the public, or to **warehouse** people (minimal provision and no role in the economy). Autocracies choose the status quo in 0.52 of first decisions, warehousing in 0.32 and service in 0.16. Democracies choose service in 0.75 and warehousing in 0.22.
+   - Under unrest and fear of the survivors, 0.37 of warehousing regimes later escalate to killing.
 5. **The outcome hinges on a few people.**
-   - By 2075, the leader holds 95% or more of coercive control in 58% of US-or-China runs.
-   - Across plausible parameter values, the middle 95% of estimates runs from 0.02 to 0.95. Given assumptions A4 to A6, which remove the public's leverage, what decides a run is the moral restraint, incentives and purge behavior of the ruling group.
-6. **A parallel economy based on human labor alone does not protect people.**
-   - People trading among themselves outside the automated economy end as a tolerated community in about 0.2% of runs.
+   - By 2075, the leader holds 95% or more of coercive control in 0.63 of US-or-China runs.
+   - Across plausible parameter values, the middle 95% of estimates runs from 0.03 to 0.94. Given assumptions A4 to A6, which remove the public's leverage, what decides a run is the moral restraint, incentives and purge behavior of the ruling group. The two inputs that matter most are how much rulers fear what a surviving population could later become, and their moral cost of ordering mass killing (Section 5.6).
+6. **Killing follows, mostly from the 2040s.**
+   - A deliberate loss of 10% or more of the US or China population reaches 0.23 by 2040, 0.37 by 2050 and 0.50 by 2075. Among runs where it happens, the median year it starts is 2041.5.
+   - A deliberate loss of 99.9% or more reaches 0.05 by 2040, 0.27 by 2050 and 0.42 by 2075 for the US or China, 0.76 for at least one of seventeen actors, and 0.08 for the world.
+   - Without the threat-elimination assumption (A11), no run reaches 99.9%.
+7. **Today's realignment changes little.** Drawing US ties from the 2026 situation (the US drifting from Europe and towards Russia) gives 0.42 for near-total loss of the US or China, against 0.44 with the post-war Western alliance intact. Alliances, foreign help in putting down uprisings, and deniable lethal neglect each move it by about a point or less.
+8. **A parallel economy based on human labor alone does not protect people.**
+   - People trading among themselves outside the automated economy end as a tolerated community in about 0.0007 of runs.
    - After closure, they have nothing the automated side needs.
-7. **An income network independent of the state lowers the risk substantially.**
+9. **An income network independent of the state lowers the risk substantially.**
    - It does so by paying households directly. It needs to be large by the early 2030s.
-   - 20% of economic activity buys about 70% of the effect of 50%, and even 5% helps.
-   - It does not prevent crackdowns or change who controls force, and a probability of about 0.28 remains.
+   - At 50% of US-bloc economic activity by 2032, near-total loss of the US or China falls from 0.27 to 0.13 by 2050 and from 0.42 to 0.30 by 2075. The share of runs where the public is stripped of rights falls from 0.74 to 0.62.
+   - 20% of economic activity buys about 70% of the effect of 50%, and even 5% helps. Arriving in 2040 loses about 40% of the effect.
+   - It does not prevent crackdowns or change who controls force, and a probability of about 0.30 remains.
    - We do not assess whether such adoption is achievable. It is far above historical diffusion rates.
 
 ---

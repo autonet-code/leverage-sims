@@ -1,0 +1,336 @@
+{
+ "N0": 4000,
+ "K": 10,
+ "note": "v7 variance breakdown: which uncertain inputs drive the spread of the headline.\n\nDraws N0 parameter sets from the baseline priors and runs each one K times with independent\nin-simulation randomness, so every draw gets its own probability estimate p_i. The spread of p_i\nacross draws (corrected for the K-path sampling noise) is the parameter spread; the rest is path\nrandomness that no input explains. For each input we report the first-order share of the parameter\nspread (variance of the binned conditional mean), and a shallow tree gives conditional statements.\n\nEnv: M8_FINAL=1 (as the main run), VAR_N0 (default 4000), VAR_K (default 10).\nOutput: results/v7_variance.json\n",
+ "outcomes": {
+  "S5d_UC": {
+   "mean": 0.4963,
+   "share_of_total_variance_from_inputs": 0.525,
+   "per_draw_probability_95pct_range": [
+    0.0,
+    1.0
+   ],
+   "note_range": "raw K-path estimates; includes some sampling noise",
+   "boosted_model_share_of_input_variance_explained": 0.341,
+   "first_order_top": [
+    {
+     "input": "tau_lat",
+     "share": 0.08,
+     "risk_low_bin": 0.405,
+     "risk_high_bin": 0.802
+    },
+    {
+     "input": "moral_med",
+     "share": 0.044,
+     "risk_low_bin": 0.635,
+     "risk_high_bin": 0.318
+    },
+    {
+     "input": "s_sw",
+     "share": 0.036,
+     "risk_low_bin": 0.577,
+     "risk_high_bin": 0.289
+    },
+    {
+     "input": "r_disc",
+     "share": 0.028,
+     "risk_low_bin": 0.578,
+     "risk_high_bin": 0.364
+    },
+    {
+     "input": "Td_auto",
+     "share": 0.027,
+     "risk_low_bin": 0.433,
+     "risk_high_bin": 0.614
+    },
+    {
+     "input": "lagX",
+     "share": 0.019,
+     "risk_low_bin": 0.608,
+     "risk_high_bin": 0.403
+    },
+    {
+     "input": "k_prg",
+     "share": 0.019,
+     "risk_low_bin": 0.359,
+     "risk_high_bin": 0.527
+    },
+    {
+     "input": "alpha_med",
+     "share": 0.016,
+     "risk_low_bin": 0.552,
+     "risk_high_bin": 0.381
+    },
+    {
+     "input": "p_id",
+     "share": 0.013,
+     "risk_low_bin": 0.454,
+     "risk_high_bin": 0.543
+    },
+    {
+     "input": "v0",
+     "share": 0.012,
+     "risk_low_bin": 0.478,
+     "risk_high_bin": 0.62
+    },
+    {
+     "input": "Td_mat",
+     "share": 0.011,
+     "risk_low_bin": 0.452,
+     "risk_high_bin": 0.63
+    },
+    {
+     "input": "k_extp",
+     "share": 0.01,
+     "risk_low_bin": 0.547,
+     "risk_high_bin": 0.45
+    },
+    {
+     "input": "conc_k",
+     "share": 0.007,
+     "risk_low_bin": 0.414,
+     "risk_high_bin": 0.534
+    },
+    {
+     "input": "m_dis",
+     "share": 0.007,
+     "risk_low_bin": 0.43,
+     "risk_high_bin": 0.567
+    },
+    {
+     "input": "Pmax_h",
+     "share": 0.007,
+     "risk_low_bin": 0.523,
+     "risk_high_bin": 0.468
+    },
+    {
+     "input": "c_selfrisk",
+     "share": 0.006,
+     "risk_low_bin": 0.568,
+     "risk_high_bin": 0.453
+    },
+    {
+     "input": "x_thr",
+     "share": 0.006,
+     "risk_low_bin": 0.545,
+     "risk_high_bin": 0.454
+    },
+    {
+     "input": "phi_stigma",
+     "share": 0.005,
+     "risk_low_bin": 0.562,
+     "risk_high_bin": 0.448
+    },
+    {
+     "input": "cn_ppp",
+     "share": 0.005,
+     "risk_low_bin": 0.498,
+     "risk_high_bin": 0.465
+    },
+    {
+     "input": "kc",
+     "share": 0.005,
+     "risk_low_bin": 0.459,
+     "risk_high_bin": 0.478
+    },
+    {
+     "input": "e_pas",
+     "share": 0.005,
+     "risk_low_bin": 0.488,
+     "risk_high_bin": 0.557
+    },
+    {
+     "input": "wf_mult[CN]",
+     "share": 0.005,
+     "risk_low_bin": 0.477,
+     "risk_high_bin": 0.532
+    },
+    {
+     "input": "E0",
+     "share": 0.005,
+     "risk_low_bin": 0.52,
+     "risk_high_bin": 0.507
+    },
+    {
+     "input": "h_beh0",
+     "share": 0.005,
+     "risk_low_bin": 0.485,
+     "risk_high_bin": 0.433
+    },
+    {
+     "input": "mem_zc[US,min]",
+     "share": 0.005,
+     "risk_low_bin": 0.454,
+     "risk_high_bin": 0.51
+    }
+   ],
+   "first_order_sum_all": 0.565,
+   "tree": "|--- tau_lat <= 0.020\n|   |--- moral_med <= 0.356\n|   |   |--- Td_auto <= 0.743\n|   |   |   |--- value: [0.422]\n|   |   |--- Td_auto >  0.743\n|   |   |   |--- value: [0.573]\n|   |--- moral_med >  0.356\n|   |   |--- k_prg <= 0.130\n|   |   |   |--- value: [0.269]\n|   |   |--- k_prg >  0.130\n|   |   |   |--- value: [0.416]\n|--- tau_lat >  0.020\n|   |--- tau_lat <= 0.045\n|   |   |--- moral_med <= 0.464\n|   |   |   |--- value: [0.657]\n|   |   |--- moral_med >  0.464\n|   |   |   |--- value: [0.494]\n|   |--- tau_lat >  0.045\n|   |   |--- value: [0.787]\n"
+  },
+  "NT_UC": {
+   "mean": 0.4307,
+   "share_of_total_variance_from_inputs": 0.491,
+   "per_draw_probability_95pct_range": [
+    0.0,
+    1.0
+   ],
+   "note_range": "raw K-path estimates; includes some sampling noise",
+   "boosted_model_share_of_input_variance_explained": 0.362,
+   "first_order_top": [
+    {
+     "input": "tau_lat",
+     "share": 0.084,
+     "risk_low_bin": 0.335,
+     "risk_high_bin": 0.743
+    },
+    {
+     "input": "moral_med",
+     "share": 0.046,
+     "risk_low_bin": 0.575,
+     "risk_high_bin": 0.263
+    },
+    {
+     "input": "r_disc",
+     "share": 0.038,
+     "risk_low_bin": 0.515,
+     "risk_high_bin": 0.28
+    },
+    {
+     "input": "s_sw",
+     "share": 0.032,
+     "risk_low_bin": 0.515,
+     "risk_high_bin": 0.247
+    },
+    {
+     "input": "lagX",
+     "share": 0.029,
+     "risk_low_bin": 0.552,
+     "risk_high_bin": 0.328
+    },
+    {
+     "input": "Td_auto",
+     "share": 0.023,
+     "risk_low_bin": 0.379,
+     "risk_high_bin": 0.543
+    },
+    {
+     "input": "k_prg",
+     "share": 0.02,
+     "risk_low_bin": 0.307,
+     "risk_high_bin": 0.46
+    },
+    {
+     "input": "alpha_med",
+     "share": 0.019,
+     "risk_low_bin": 0.501,
+     "risk_high_bin": 0.314
+    },
+    {
+     "input": "v0",
+     "share": 0.013,
+     "risk_low_bin": 0.428,
+     "risk_high_bin": 0.561
+    },
+    {
+     "input": "p_id",
+     "share": 0.012,
+     "risk_low_bin": 0.39,
+     "risk_high_bin": 0.477
+    },
+    {
+     "input": "Td_mat",
+     "share": 0.011,
+     "risk_low_bin": 0.403,
+     "risk_high_bin": 0.568
+    },
+    {
+     "input": "k_extp",
+     "share": 0.011,
+     "risk_low_bin": 0.478,
+     "risk_high_bin": 0.384
+    },
+    {
+     "input": "m_dis",
+     "share": 0.01,
+     "risk_low_bin": 0.356,
+     "risk_high_bin": 0.51
+    },
+    {
+     "input": "conc_k",
+     "share": 0.008,
+     "risk_low_bin": 0.371,
+     "risk_high_bin": 0.466
+    },
+    {
+     "input": "phi_stigma",
+     "share": 0.008,
+     "risk_low_bin": 0.511,
+     "risk_high_bin": 0.375
+    },
+    {
+     "input": "x_thr",
+     "share": 0.008,
+     "risk_low_bin": 0.498,
+     "risk_high_bin": 0.39
+    },
+    {
+     "input": "Pmax_h",
+     "share": 0.006,
+     "risk_low_bin": 0.46,
+     "risk_high_bin": 0.404
+    },
+    {
+     "input": "q_ol",
+     "share": 0.006,
+     "risk_low_bin": 0.479,
+     "risk_high_bin": 0.447
+    },
+    {
+     "input": "e_pas",
+     "share": 0.006,
+     "risk_low_bin": 0.426,
+     "risk_high_bin": 0.488
+    },
+    {
+     "input": "mem_zc[US,min]",
+     "share": 0.006,
+     "risk_low_bin": 0.388,
+     "risk_high_bin": 0.451
+    },
+    {
+     "input": "p_heir",
+     "share": 0.005,
+     "risk_low_bin": 0.379,
+     "risk_high_bin": 0.435
+    },
+    {
+     "input": "c_selfrisk",
+     "share": 0.005,
+     "risk_low_bin": 0.497,
+     "risk_high_bin": 0.397
+    },
+    {
+     "input": "E0",
+     "share": 0.005,
+     "risk_low_bin": 0.463,
+     "risk_high_bin": 0.43
+    },
+    {
+     "input": "shifts",
+     "share": 0.005,
+     "risk_low_bin": 0.442,
+     "risk_high_bin": 0.46
+    },
+    {
+     "input": "u_dem[CN]",
+     "share": 0.005,
+     "risk_low_bin": 0.362,
+     "risk_high_bin": 0.409
+    }
+   ],
+   "first_order_sum_all": 0.592,
+   "tree": "|--- tau_lat <= 0.023\n|   |--- moral_med <= 0.358\n|   |   |--- r_disc <= 0.058\n|   |   |   |--- value: [0.544]\n|   |   |--- r_disc >  0.058\n|   |   |   |--- value: [0.386]\n|   |--- moral_med >  0.358\n|   |   |--- k_prg <= 0.130\n|   |   |   |--- value: [0.224]\n|   |   |--- k_prg >  0.130\n|   |   |   |--- value: [0.353]\n|--- tau_lat >  0.023\n|   |--- tau_lat <= 0.045\n|   |   |--- lagX <= 1.595\n|   |   |   |--- value: [0.620]\n|   |   |--- lagX >  1.595\n|   |   |   |--- value: [0.466]\n|   |--- tau_lat >  0.045\n|   |   |--- value: [0.728]\n"
+  }
+ },
+ "runtime_s": 197.8
+}

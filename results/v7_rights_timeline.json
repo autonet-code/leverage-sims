@@ -1,0 +1,48 @@
+{
+ "years": [
+  2030,
+  2032,
+  2035,
+  2038,
+  2040,
+  2045,
+  2050,
+  2060,
+  2075
+ ],
+ "rights_stripped_US_or_China": [
+  0.0,
+  0.01,
+  0.293,
+  0.596,
+  0.676,
+  0.735,
+  0.756,
+  0.779,
+  0.799
+ ],
+ "rights_stripped_US": [
+  0.0,
+  0.005,
+  0.206,
+  0.42,
+  0.472,
+  0.511,
+  0.529,
+  0.556,
+  0.592
+ ],
+ "rights_stripped_China": [
+  0.0,
+  0.009,
+  0.285,
+  0.578,
+  0.655,
+  0.71,
+  0.729,
+  0.748,
+  0.765
+ ],
+ "median_year_if_reached_US_or_China": 2036.0,
+ "note": "m8 layer only (no integrator S4 path); rights stripped = first rentier/warehouse/neglect/depopulate decision, captivity or deliberate S5"
+}
