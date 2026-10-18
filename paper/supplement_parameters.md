@@ -1,6 +1,6 @@
 # Supplement S1: Full parameter list
 
-Generated from the prior dictionaries in `models/m8_v4.py` (PRIORS, and PRIORS_B for the behavioral changes B1 to B6) and `models/m9_lever.py` (LEVER_PRIORS to LEVER_PRIORS4). The "Basis" column is the source note from the code, shortened. Evidence labels follow the code: A/measured, B/strong analog, C/weak analog, J/judgment, plus older verbal labels (high, medium, low, very low). [M] marks a figure from memory or a secondary compilation that was not re-fetched.
+Generated from the prior dictionaries in `models/m8_v4.py` (PRIORS, and PRIORS_B for the behavioral changes B1 to B6), `models/m8_v7.py` (PRIORS_V7, version 7) and `models/m9_lever.py` (LEVER_PRIORS to LEVER_PRIORS4). The "Basis" column is the source note from the code, shortened. Evidence labels follow the code: A/measured, B/strong analog, C/weak analog, J/judgment, plus older verbal labels (high, medium, low, very low). [M] marks a figure from memory or a secondary compilation that was not re-fetched.
 
 **PRIORS** (198 parameters)
 
@@ -325,3 +325,31 @@ Generated from the prior dictionaries in `models/m8_v4.py` (PRIORS, and PRIORS_B
 | lv_s_acc4 | U(0.2, 0.7) | J | U3: share of displaced people's needs still covered when a regime tries to cut them off; contracts cannot be altered, only conversion and access (exchanges, goods, token value) can be attacked (network premise) |
 | lv_g4 | U(0.02, 0.06) | J | U4: growth of the log relative amortization advantage per coverage-weighted use-year (doubling every 12-35 years; Zipf: library value grows ~log of size; AWM/Voyager reuse gains) |
 | lv_amort | U(0.1, 0.3) | C | U4: cost per covered task relative to solving from scratch (r14b: reusable workflows 10-30%); 1/amort caps the relative advantage |
+
+**PRIORS_V7** (21 parameters, version 7; `models/m8_v7.py`)
+
+| Parameter | Distribution | Evidence | Basis |
+|---|---|---|---|
+| h_al0 | U(0.003, 0.015) | C/J | V7 B: base yearly hazard that an intact alliance tie breaks (most pacts last decades; NATO 77 years) |
+| p_al_reg | U(0.1, 0.4) | C/J | V7 B: P(each tie of an actor breaks) when its regime changes (democratic breakdown, seizure, insurgent victory, redemocratization) |
+| m_al_close | U(1, 3) | J | V7 B: tie-break hazard multiplier once the stronger member has reached closure (it no longer needs allies' bases, workers or industry) |
+| p_al_atroc | U(0.5, 0.9) | J | V7 B: P(each tie breaks) when one member starts executing depopulation and the other does not |
+| k_al_us | U(0, 0.03) | B sign, J size | V7 B / A7: extra yearly break hazard of US ties (withdrawal from 66 international organizations, Jan 2026) |
+| w_def | U(0.4, 0.75) | C | V7 B: P(an intact commitment is honoured when triggered), times tie strength, as the share of the ally's force that counts toward a target's resistance or a coalition's enforcement. Berkemeier & Fuhrmann 2018: defence... |
+| x_ext | U(0.3, 1) | J | V7 B: credibility of extended nuclear deterrence (a nuclear ally's retaliation counts tie x x_ext) |
+| p_join | U(0.5, 1) | J | V7 B: P(an ally joins a dyad war) per unit tie strength |
+| shield | U(0.5, 1) | C/J | V7 B: share of an actor's outside pressure withheld from its own ally, per unit tie strength |
+| r_dr | U(0.3, 0.7) | J | V7 C: coupling of each member trait to its drive score (0 = independent traits as in v6) |
+| tau_lat | lognormal (median 0.01, sd 1) | J | V7 D2: latent threat of keeping a population, output share per year: what the public could become (rebuild leverage, ally with a rival, retake the AI). Not reduced by automated security. Fearon 1995 commitment problem... |
+| k_lr | U(0, 1) | J | V7 D2: rise of the latent threat when a rival of comparable force exists (the public as a rival's ally) |
+| m_unrest | U(1.5, 3) | C | V7 D3: ideology-uptake hazard multiplier during an active insurgency (Harff 2003: upheaval and exclusionary elite ideology) |
+| p_col | U(0.3, 0.8) | C/J | V7 E1: P(an autocratic partner sends forces to help suppress a new insurgency in an autocratic actor), per unit tie (or alignment) strength |
+| a_aff | U(0.05, 0.2) | J | V7 E1: affinity of two autocracies without a tie or alignment, used in place of tie strength for E1 (Russia in Syria and Belarus before any treaty) |
+| k_help | U(0.3, 0.8) | J | V7 E1: reduction of the insurgents' success hazard at full foreign help (helpers' force at least the actor's own) |
+| e_pas | lognormal (median 3, sd 0.5) | J | V7 E2: death-rate multiplier of the passive channel relative to neglect (abstract) |
+| m_pas | U(1, 1.5) | J | V7 E2: moral cost of the passive channel relative to neglect (a bit above neglect, far below ordered killing) |
+| deny | U(0.3, 0.8) | J | V7 E2: share of neglect's outside pressure avoided by deniability |
+| dL_pas | U(-4, 0) | J | V7 E2: capability (horizon doublings) at which the passive channel is available, relative to the A8 means threshold (no later than A8) |
+| h_form | U(0.002, 0.01) | J | V7 E3: yearly hazard that two autocratic actors without a tie form one (Russia-DPRK 2024, Russia-Belarus 2025; ATOP: a few new pacts a year among ~190 states) |
+
+Version 7 also changes one existing prior: p_id becomes an equal mixture of lognormal (median 0.045, sd 0.6) and lognormal (median 0.142, sd 0.6), from the pre-specified Jev elicitation (`results/jev_ideology.json`), and v0 is now a preference that applies only while a depopulation ideology is held.

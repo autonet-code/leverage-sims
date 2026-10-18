@@ -11,8 +11,14 @@
     1.0
    ],
    "note_range": "raw K-path estimates; includes some sampling noise",
-   "boosted_model_share_of_input_variance_explained": 0.341,
+   "boosted_model_share_of_input_variance_explained": 0.606,
    "first_order_top": [
+    {
+     "input": "phys_wall",
+     "share": 0.2,
+     "risk_low_bin": 0.55,
+     "risk_high_bin": 0.002
+    },
     {
      "input": "tau_lat",
      "share": 0.08,
@@ -60,6 +66,12 @@
      "share": 0.016,
      "risk_low_bin": 0.552,
      "risk_high_bin": 0.381
+    },
+    {
+     "input": "cog_wall",
+     "share": 0.015,
+     "risk_low_bin": 0.513,
+     "risk_high_bin": 0.374
     },
     {
      "input": "p_id",
@@ -150,22 +162,10 @@
      "share": 0.005,
      "risk_low_bin": 0.52,
      "risk_high_bin": 0.507
-    },
-    {
-     "input": "h_beh0",
-     "share": 0.005,
-     "risk_low_bin": 0.485,
-     "risk_high_bin": 0.433
-    },
-    {
-     "input": "mem_zc[US,min]",
-     "share": 0.005,
-     "risk_low_bin": 0.454,
-     "risk_high_bin": 0.51
     }
    ],
-   "first_order_sum_all": 0.565,
-   "tree": "|--- tau_lat <= 0.020\n|   |--- moral_med <= 0.356\n|   |   |--- Td_auto <= 0.743\n|   |   |   |--- value: [0.422]\n|   |   |--- Td_auto >  0.743\n|   |   |   |--- value: [0.573]\n|   |--- moral_med >  0.356\n|   |   |--- k_prg <= 0.130\n|   |   |   |--- value: [0.269]\n|   |   |--- k_prg >  0.130\n|   |   |   |--- value: [0.416]\n|--- tau_lat >  0.020\n|   |--- tau_lat <= 0.045\n|   |   |--- moral_med <= 0.464\n|   |   |   |--- value: [0.657]\n|   |   |--- moral_med >  0.464\n|   |   |   |--- value: [0.494]\n|   |--- tau_lat >  0.045\n|   |   |--- value: [0.787]\n"
+   "first_order_sum_all": 0.78,
+   "tree": "|--- phys_wall <= 0.500\n|   |--- tau_lat <= 0.021\n|   |   |--- moral_med <= 0.311\n|   |   |   |--- value: [0.572]\n|   |   |--- moral_med >  0.311\n|   |   |   |--- value: [0.413]\n|   |--- tau_lat >  0.021\n|   |   |--- moral_med <= 0.599\n|   |   |   |--- value: [0.767]\n|   |   |--- moral_med >  0.599\n|   |   |   |--- value: [0.581]\n|--- phys_wall >  0.500\n|   |--- value: [0.002]\n"
   },
   "NT_UC": {
    "mean": 0.4307,
@@ -175,8 +175,14 @@
     1.0
    ],
    "note_range": "raw K-path estimates; includes some sampling noise",
-   "boosted_model_share_of_input_variance_explained": 0.362,
+   "boosted_model_share_of_input_variance_explained": 0.598,
    "first_order_top": [
+    {
+     "input": "phys_wall",
+     "share": 0.165,
+     "risk_low_bin": 0.477,
+     "risk_high_bin": 0.0
+    },
     {
      "input": "tau_lat",
      "share": 0.084,
@@ -224,6 +230,12 @@
      "share": 0.019,
      "risk_low_bin": 0.501,
      "risk_high_bin": 0.314
+    },
+    {
+     "input": "cog_wall",
+     "share": 0.019,
+     "risk_low_bin": 0.448,
+     "risk_high_bin": 0.3
     },
     {
      "input": "v0",
@@ -314,23 +326,11 @@
      "share": 0.005,
      "risk_low_bin": 0.463,
      "risk_high_bin": 0.43
-    },
-    {
-     "input": "shifts",
-     "share": 0.005,
-     "risk_low_bin": 0.442,
-     "risk_high_bin": 0.46
-    },
-    {
-     "input": "u_dem[CN]",
-     "share": 0.005,
-     "risk_low_bin": 0.362,
-     "risk_high_bin": 0.409
     }
    ],
-   "first_order_sum_all": 0.592,
-   "tree": "|--- tau_lat <= 0.023\n|   |--- moral_med <= 0.358\n|   |   |--- r_disc <= 0.058\n|   |   |   |--- value: [0.544]\n|   |   |--- r_disc >  0.058\n|   |   |   |--- value: [0.386]\n|   |--- moral_med >  0.358\n|   |   |--- k_prg <= 0.130\n|   |   |   |--- value: [0.224]\n|   |   |--- k_prg >  0.130\n|   |   |   |--- value: [0.353]\n|--- tau_lat >  0.023\n|   |--- tau_lat <= 0.045\n|   |   |--- lagX <= 1.595\n|   |   |   |--- value: [0.620]\n|   |   |--- lagX >  1.595\n|   |   |   |--- value: [0.466]\n|   |--- tau_lat >  0.045\n|   |   |--- value: [0.728]\n"
+   "first_order_sum_all": 0.776,
+   "tree": "|--- phys_wall <= 0.500\n|   |--- tau_lat <= 0.023\n|   |   |--- moral_med <= 0.310\n|   |   |   |--- value: [0.504]\n|   |   |--- moral_med >  0.310\n|   |   |   |--- value: [0.352]\n|   |--- tau_lat >  0.023\n|   |   |--- tau_lat <= 0.044\n|   |   |   |--- value: [0.592]\n|   |   |--- tau_lat >  0.044\n|   |   |   |--- value: [0.776]\n|--- phys_wall >  0.500\n|   |--- value: [0.000]\n"
   }
  },
- "runtime_s": 197.8
+ "runtime_s": 239.2
 }

@@ -2,7 +2,7 @@
 
 **Andrei Taranu (Eight Rice)** (contact@autonet.computer; ORCID 0009-0008-2902-0845)
 
-*Draft, October 2026. Code, data and results: https://github.com/autonet-code/leverage-sims. All numbers in this paper are reproducible from the code with the seeds given in Appendix D.*
+*Version 2.0 (seventeen actors), 18 October 2026. Version 1.0 (six blocs) was published on 3 October 2026. Code, data and results: https://github.com/autonet-code/leverage-sims. All numbers in this paper are reproducible from the code with the seeds given in Appendix D.*
 
 ---
 
@@ -45,7 +45,7 @@ Like war games and the scenario side of climate research, the model cannot predi
    - Across all actors, only 0.37 of first post-closure decisions are taken while the deciding actor is still a democracy.
 2. **People lose their leverage in the early-to-mid 2030s.**
    - We call the point where an actor's core supply chain needs less than 20% of its 2026 human labor **closure**. The first actor reaches it in a median year of 2034.0 (10th to 90th percentile 2032.0 to 2039.5), in 0.89 of runs.
-   - Building a dedicated automated loop instead of converting the existing economy no longer changes when closure comes, but it raises the risk of near-total depopulation of the US or China from 0.34 to 0.42.
+   - How closure is reached matters little. In the six-bloc version, building a dedicated automated loop instead of converting the existing economy brought closure about 2.5 years earlier but left the risk of near-total depopulation almost unchanged (Section 5.8, Table 4c).
 3. **Rights go within a few years of closure.**
    - The US or China public loses its rights in 0.80 of runs by 2075, mostly in the first five years after closure: 0.29 by 2035 and 0.68 by 2040 (median year 2036, two years after the median closure). In 2075 it is still stripped of rights in 0.74, and disempowered, counting plain autocracy, in 0.94 (Appendix E; results/v7_rights_timeline.json).
    - Prolonged disempowerment is a catastrophe in its own right, not only a step toward mass killing.
@@ -54,12 +54,12 @@ Like war games and the scenario side of climate research, the model cannot predi
    - Under unrest and fear of the survivors, 0.37 of warehousing regimes later escalate to killing.
 5. **The outcome hinges on a few people.**
    - By 2075, the leader holds 95% or more of coercive control in 0.63 of US-or-China runs.
-   - Across plausible parameter values, the middle 95% of estimates runs from 0.03 to 0.94. Given assumptions A4 to A6, which remove the public's leverage, what decides a run is the moral restraint, incentives and purge behavior of the ruling group. The two inputs that matter most are how much rulers fear what a surviving population could later become, and their moral cost of ordering mass killing (Section 5.6).
+   - Across plausible parameter values, the middle 95% of estimates runs from 0.03 to 0.94. Given assumptions A4 to A6, which remove the public's leverage, what decides a run is the moral restraint, incentives and purge behavior of the ruling group. Apart from whether a hard physical limit on automation exists, the inputs that matter most are how much rulers fear what a surviving population could later become, and their moral cost of ordering mass killing (Section 5.6).
 6. **Killing follows, mostly from the 2040s.**
    - A deliberate loss of 10% or more of the US or China population reaches 0.23 by 2040, 0.37 by 2050 and 0.50 by 2075. Among runs where it happens, the median year it starts is 2041.5.
    - A deliberate loss of 99.9% or more reaches 0.05 by 2040, 0.27 by 2050 and 0.42 by 2075 for the US or China, 0.76 for at least one of seventeen actors, and 0.08 for the world.
    - Without the threat-elimination assumption (A11), no run reaches 99.9%.
-7. **Today's realignment changes little.** Drawing US ties from the 2026 situation (the US drifting from Europe and towards Russia) gives 0.42 for near-total loss of the US or China, against 0.44 with the post-war Western alliance intact. Alliances, foreign help in putting down uprisings, and deniable lethal neglect each move it by about a point or less.
+7. **Today's realignment changes little.** Drawing US ties from the 2026 situation (the US drifting from Europe and towards Russia) gives 0.415 for near-total loss of the US or China, against 0.413 with the post-war Western alliance intact (1,000-draw variants). Switching off alliances, foreign help in putting down uprisings, or the deniable passive channel each moves it by less than a point.
 8. **A parallel economy based on human labor alone does not protect people.**
    - People trading among themselves outside the automated economy end as a tolerated community in about 0.0007 of runs.
    - After closure, they have nothing the automated side needs.
@@ -107,7 +107,7 @@ We found no published quantitative model of it. Empirical work so far measures m
 
 ### 1.3 How to read the numbers
 
-Every probability in this paper is conditional on the assumptions in Section 4. Each is stated plainly, so a reader can reject one and see roughly what follows. Section 5.8 and Appendix E.5 remove threat elimination (A11), each of the six behavioral assumptions (B1 to B6), the environment trends (A7), the means of mass killing (A8), collusion (A9) and several mechanisms. They also revert A1, A2, A3 and A6 to earlier, milder forms. A4 and A5 are not tested by removal, for these reasons:
+Every probability in this paper is conditional on the assumptions in Section 4. Each is stated plainly, so a reader can reject one and see roughly what follows. Section 5.8 and Appendix E.5 remove threat elimination (A11), each of the six behavioral assumptions (B1 to B6), the environment trends (A7), the means of mass killing (A8), collusion (A9), each change added in this version (Section 4.5) and several mechanisms. They also revert A1, A2, A3 and A6 to earlier, milder forms. A4 and A5 are not tested by removal, for these reasons:
 - **A4.** Once force is automated, refusal by the people who carry out orders no longer applies, and nearly every path to the outcome requires closure (Section 5.3). Keeping humans in the loop of automated force is a policy lever (Section 6.1).
 - **A5.** Keeping a safety net is also a policy choice, and it is not current reality.
 
@@ -159,54 +159,61 @@ What happens then depends on the restraint of the people in charge. The historic
    | Mass killing | Harff (2003), Valentino, Huth and Balch-Lindsay (2004), Straus (2006) |
 
    Current policy trajectories, as of September 2026, set the starting conditions.
-2. **A game-theoretic Monte Carlo simulation.** Six blocs evolve year by year. In each bloc, a ruling group of individually simulated members (not modeled on real people) weighs:
-   - the value of freed land and resources;
+2. **A game-theoretic Monte Carlo simulation.** Seventeen actors evolve year by year. In each actor, a ruling group of individually simulated members (not modeled on real people) weighs:
    - their own moral cost;
-   - the threat of revolt;
+   - the threat of revolt, and the latent threat of what a surviving population could later become;
    - outside pressure that someone can actually enforce;
-   - the power of rival blocs.
+   - the power of rival actors and the alliances around them;
+   - under a depopulation ideology, a preference for an emptier planet.
 
-   Grievance, insurgency, democratic erosion, purges, war and cross-border campaigns arise inside the model rather than being imposed.
-3. **A judgment model as a cross-check.** Jev (TypeSafe) is a language model designed to give calibrated probability judgments. We fixed the design before sending any query and committed it to the repository: 648 scenario cells, each asked in 3 paraphrases, plus a 648-cell control arm in which humans still do 80% of the work, for 3,888 queries in total.
+   Grievance, insurgency, democratic erosion, purges, alliances, war and cross-border campaigns arise inside the model rather than being imposed.
+3. **A judgment model as a cross-check.** Jev (TypeSafe) is a language model designed to give calibrated probability judgments. We fixed the design before sending any query and committed it to the repository: 648 scenario cells, each asked in 3 paraphrases, plus a 648-cell control arm in which humans still do 80% of the work, for 3,888 queries in total. A second pre-specified elicitation for this version asked how likely a depopulation ideology is to take hold (64 cells, 3 paraphrases, 192 queries; Appendix B).
 
-   We did not calibrate the simulation's outputs to Jev. Jev does inform two inputs:
+   We did not calibrate the simulation's outputs to Jev. Jev does inform three inputs:
    - the share of elites who refuse to order killing, mixed with historical priors;
-   - the effect of provision on revolt, as a 0.6 / 0.4 mixture of historical evidence and Jev.
+   - the effect of provision on revolt, as a 0.6 / 0.4 mixture of historical evidence and Jev;
+   - the rate at which ruling groups take up a depopulation ideology, as a 0.5 / 0.5 mixture of the earlier prior and Jev.
 
    Everywhere else, Jev serves only as a check, mainly on which factors raise or lower risk.
 
 ### 3.2 The simulation in brief
 
-**Blocs** (populations from UN DESA 2024).
+**Actors** (populations from UN DESA 2024; country membership in `research/v7_actor_inputs.md`). Earlier versions used six blocs. This version splits them into seventeen actors, so that allies, rivals and neighbors can act separately. We still call each actor's population a bloc where the text refers to its people. Eastern EU and neighbors includes Ukraine; MENA is the Middle East and North Africa.
 
-| Bloc | Members | Population 2026 |
-|---|---|---|
-| US bloc | US, Japan, South Korea, Taiwan | 0.53 bn |
-| China bloc | China | 1.42 bn |
-| Europe plus | EU, UK, Canada, Australia, New Zealand, Switzerland, Norway | 0.62 bn |
-| Russia and MENA | Russia, Middle East, North Africa | 0.99 bn |
-| South Asia | | 1.97 bn |
-| Global South | Remaining countries | 2.67 bn |
+| Actor | Population 2026 | Actor | Population 2026 |
+|---|---|---|---|
+| US | 0.35 bn | Russia and Central Asia | 0.24 bn |
+| China | 1.42 bn | Gulf monarchies | 0.06 bn |
+| Japan | 0.12 bn | Rest of MENA and the Caucasus | 0.58 bn |
+| South Korea | 0.05 bn | India | 1.48 bn |
+| Taiwan | 0.02 bn | Rest of South Asia | 0.54 bn |
+| Western EU | 0.36 bn | SE and other East Asia | 0.75 bn |
+| Eastern EU and neighbors | 0.16 bn | Latin America | 0.67 bn |
+| UK | 0.07 bn | Sub-Saharan Africa | 1.36 bn |
+| Canada, Australia, NZ | 0.07 bn | | |
 
-Each bloc has these parts:
+Each actor gets its own economy, workforce, industrial base, robot, chip and rare-earth shares, military spending, democracy score, provision level, nuclear status and capability lags, from the same sources the six-bloc version used (UN WPP, ILOSTAT, SIPRI, V-Dem, IFR, UNIDO, FAS). Each actor has these parts:
 
 1. **An economy of nine segments**: mining, energy, chips, manufacturing, logistics, construction, maintenance, security and administration. Each segment's automated share grows with AI capability and robot supply. The limits on that growth are:
    - robots building robots;
    - energy;
    - chip fabrication;
    - mining;
-   - the bloc's share of world input supply.
+   - the actor's share of world input supply.
 2. **A human-dependence index.** This is the share of the core supply chain's 2026 human labor that is still needed, counting labor embedded in imports. Closure is the point where it falls below 20%. Section 4.4 describes how a dedicated automated loop enters this index.
 3. **A public.** Displacement and cuts to provision raise grievance. Grievance raises hostility, and hostility raises the yearly chance of insurgency (we call such yearly rates **hazards**). Insurgency drives repression.
 4. **A democracy score** on the V-Dem liberal democracy scale. It falls as the public's labor and revolt leverage fall. We count a score below 0.30 as a breakdown, roughly Hungary in 2024 or Turkey in 2015.
-5. **A ruling coalition.** In autocracies it has up to 21 members; in democracies, a wider elite of 51 decides through veto players. Each member has:
+5. **A ruling coalition.** In autocracies it has up to 21 members; in democracies, a wider elite of 51 decides through veto players. Each member comes from one of three institutions: the state (politicians, party and civil administration), the military and security services, or the owners and operators of AI and automated industry. The mix depends on the actor: owners are a large part of the US elite, the party-state dominates China, security services dominate Russia. Each member has:
    - a moral cost of ordering killing;
    - a degree of concern for the public;
    - a discount rate;
-   - a share of control over coercive force.
+   - a share of control over coercive force, which depends on their institution: state and military members hold the human networks, military members command automated force, and owners hold the share of automated force that private firms build and operate.
+
+   Each trait keeps its published distribution, but traits are now correlated through seven drives (survival, status, meaning, connection, autonomy, comfort and curiosity), drawn per member with tilts by institution. A member driven by status, for example, tends to have both a lower moral cost and less concern for the public.
 
    Members can purge each other, and purges can trigger counter-coups. A leader who holds half or more of coercive control rules alone. The inner circle can still block a decision, but its chance of success falls as automation grows.
 6. **Military power.** This depends on military spending, economic output and the automated share of security.
+7. **Alliances.** Each pair of actors has a defense commitment of some strength. Commitments deter attacks and extend nuclear deterrence, draw allies into wars, enforce outside pressure, shield allies from each other's pressure and ease trade in robot inputs. Allies never attack each other. Atrocities break ties, and autocracies form new ones. Autocratic partners send forces to help put down uprisings. US commitments are drawn from the situation in October 2026 (Section 4.5).
 
 **Choices.** After closure, each ruling coalition repeatedly chooses among six options, from mildest to harshest:
 1. serve the public;
@@ -223,27 +230,31 @@ How a regime decides depends on its type:
 
 **Endgame.** The simulation tracks deaths from five channels:
 1. executed depopulation orders;
-2. economic strangulation and neglect;
+2. economic strangulation and neglect, which later in the period can run partly through a passive, deniable channel (modeled as an abstract parameter only; no mechanism is described);
 3. an abstract means of rapid mass killing, whose availability rises with AI capability (no operational detail is modeled);
 4. war, including war between coalitions that have both chosen depopulation, up to nuclear exchange;
-5. cross-border campaigns against blocs that cannot resist.
+5. cross-border campaigns against actors that cannot resist.
 
 Only three things can stop a campaign: a successful revolt, a repelled attack, or nuclear retaliation.
 
-**Scenario tree.** The bloc simulation sits inside a broader scenario tree, which adds three things:
+**Scenario tree.** The actor simulation sits inside a broader scenario tree, which adds three things:
 - **Earlier stages.** These are the automation race, the collapse of broad economic participation, and broad repression by regimes still staffed by humans.
 - **Background catastrophes.** AI takeover not directed by rulers and non-AI global catastrophe are competing end points. A run that hits one first is not counted toward depopulation.
-- **A counterfactual US history.** If the US first becomes a broadly repressive regime, the model continues from a world in which the US is autocratic at closure, for all six blocs.
+- **A counterfactual US history.** If the US first becomes a broadly repressive regime, the model continues from a world in which the US is autocratic at closure, for all seventeen actors.
+
+Figure 1 shows how the parts connect.
+
+![Model structure](../figures/structure/model_structure_v7.png)
 
 ### 3.3 Sample size and what the intervals mean
 
 The main run draws 3,000 sets of uncertain parameter values (we call each set a **draw**). Each draw is run for 200 paths spread over 8 random seeds, giving 3,000 x 200 = 600,000 simulated futures from October 2026 to the end of 2075. We report three kinds of interval:
 
-1. **Simulation error** (bootstrap 95% interval). This shows how precisely the sample pins down the average. For the headline it is 0.366 to 0.391.
-2. **Parameter spread** (95% range of per-draw probabilities). This shows how much the answer depends on which plausible parameter values are true. For the headline it is 0.021 to 0.951.
-3. **Structural range.** This is the spread across 46 alternative model versions. It runs from 0.000 (threat elimination switched off) to 0.875 (every pessimistic option switched on).
+1. **Simulation error** (bootstrap 95% interval). This shows how precisely the sample pins down the average. For the headline it is 0.409 to 0.433.
+2. **Parameter spread** (95% range of per-draw probabilities). This shows how much the answer depends on which plausible parameter values are true. For the headline it is 0.028 to 0.942.
+3. **Structural range.** This is the spread across 58 alternative model versions. It runs from 0.000 (threat elimination switched off) to 0.879 (every pessimistic option switched on).
 
-**What the precision means.** The small simulation error says nothing about accuracy. The headline is an average over judgment priors, and shifting those priors shifts it. Per-draw values are close to all-or-nothing: a draw's parameters either permit an executed order or they do not. We therefore quote "about 0.38" in the text and keep three decimals for tables.
+**What the precision means.** The small simulation error says nothing about accuracy. The headline is an average over judgment priors, and shifting those priors shifts it. Per-draw values are close to all-or-nothing: a draw's parameters either permit an executed order or they do not. We therefore quote "about 0.42" in the text and keep three decimals for tables.
 
 ### 3.4 Evidence labels
 
@@ -265,12 +276,13 @@ Appendix A lists the key parameters with their labels. Supplement S1 lists all o
 
 ### 3.5 Verification
 
-- **Independent audit.** An audit reran the full pipeline of the version without brakes and reproduced its headline numbers exactly.
-- **Backward compatibility.** With the brakes switched off, the code reproduces the version without brakes exactly. Switching off B1 to B6 as well reproduces the version before them exactly. With the three structural changes of Section 4.4 switched off, the code reproduces the brakes-only version exactly (0.36744 and 0.08784).
-- **CPU and GPU.** The GPU and CPU implementations agree within simulation error.
-- **Bookkeeping.** Outcome categories sum to one, loss thresholds are nested correctly, and deaths are not double counted across blocs.
+- **Independent audit.** An audit reran the full pipeline of the version without brakes and reproduced its headline numbers exactly. Version 7 has not had an independent audit.
+- **Backward compatibility, six-bloc versions.** In the six-bloc code, switching the brakes off reproduces the version without brakes exactly. Switching off B1 to B6 as well reproduces the version before them exactly. With the three structural changes of Section 4.4 switched off, the code reproduces the brakes-only version exactly (0.36744 and 0.08784).
+- **Version 7.** Seventeen actors cannot reproduce six blocs draw for draw, because the actors and their inputs differ. With every mechanism added in Section 4.5 switched off on the seventeen actors, near-total loss in the US or China is 0.381, against 0.384 for the six-bloc version at the same sample size (1,000 draws). The network test with the network switched off reproduces the main headline exactly (0.42021 and 0.07938), and a network of zero size gives identical results draw by draw.
+- **CPU and GPU.** In the six-bloc versions, the GPU and CPU implementations agree within simulation error. We did not repeat this check for version 7.
+- **Bookkeeping.** Outcome categories sum to one (1.00003 for the end states, 0.99999 for the US-or-China outcome table), loss thresholds are nested correctly, and deaths are not double counted across actors.
 
-The bookkeeping bugs found by the final two audits are listed in Appendix C. None changed the headline by more than 0.002. Earlier design errors, which did change results, are listed there too.
+The bookkeeping bugs found by the final two audits of the six-bloc version are listed in Appendix C. None changed the headline by more than 0.002. Earlier design errors, which did change results, are listed there too.
 
 ---
 
@@ -293,7 +305,7 @@ These eleven assumptions define the scenario. They were fixed before the final r
 - No human operator stands behind each drone. Autonomous targeting is already used in Ukraine.
 - The only refusal that still counts is among the few people who authorize operations at the top.
 - Repression aimed at reducing numbers needs no checkpoints or detention, and therefore no human staff.
-- In the model, switching off defection by security forces leaves the headline almost unchanged (0.378 against 0.384 at the same sample size), because security is largely automated before any decision is taken.
+- In the model, switching off defection by security forces leaves the headline unchanged (0.415 against 0.415 at the same sample size), because security is largely automated before any decision is taken.
 
 **A5. There is no safety net by default.** Provision starts on the 2026 trajectory of cuts. In the US, the 2025 reconciliation act cuts federal Medicaid spending by about $911 billion and food assistance by about $186 billion over ten years. The Congressional Budget Office expects 10 million more people to be uninsured by 2034 (CBO 2025). Keeping people fed is a choice rulers must actively make, and cheaper production does not imply willingness to provide.
 
@@ -341,20 +353,20 @@ These six assumptions ground the behavior of ruling groups in evidence. They wer
 - Purges can trigger counter-coups.
 - Nothing forces a single ruler. Whether one emerges is an outcome of the model.
 
-**B3. Outside pressure counts only if someone can enforce it.** International condemnation matters in proportion to the condemning party's military power relative to the target. It fades to nothing when one bloc dominates.
+**B3. Outside pressure counts only if someone can enforce it.** International condemnation matters in proportion to the condemning party's military power relative to the target. It fades to nothing when one actor dominates. In this version, the condemning party's power includes that of its willing allies, and allies shield each other (Section 4.5).
 
 **B4. Fear of retribution grows with the scale of what has been done.** The more people a regime has killed, the more it fears the survivors, and the more it purges its own ranks.
 
-**B5. The fear of survivors extends abroad.** A depopulating coalition may attack another bloc whose population it sees as a future threat, under two conditions:
-- its share of the two blocs' combined military power exceeds a threshold drawn between 70% and 95%;
+**B5. The fear of survivors extends abroad.** A depopulating coalition may attack another actor whose population it sees as a future threat, under two conditions:
+- its share of the two sides' combined military power, counting the target's intact allies, exceeds a threshold drawn between 70% and 95%;
 - the expected gain outweighs the risk of nuclear retaliation.
 
-Each bloc's ability to resist depends on its own automated military power. Personalist and military regimes start international conflicts more often than other regimes (Weeks 2012).
+Each actor's ability to resist depends on its own automated military power and that of its allies. Personalist and military regimes start international conflicts more often than other regimes (Weeks 2012).
 
-**B6. Physical bottlenecks are binding, and blocs differ.**
-- Each bloc draws on a world pool of robot inputs according to its production and imports, and exporters restrict sales.
-- Industrial base sets how fast a bloc can bring production home.
-- Outside the leading blocs, AI capability lags the frontier by up to three years and robot capability by up to four.
+**B6. Physical bottlenecks are binding, and actors differ.**
+- Each actor draws on a world pool of robot inputs according to its production and imports, and exporters restrict sales, less so to allies.
+- Industrial base sets how fast an actor can bring production home.
+- Outside the leading actors, AI capability lags the frontier by up to three years and robot capability by up to four.
 
 ### 4.3 Brakes we searched for
 
@@ -411,7 +423,7 @@ A review of how closure was modelled, made before publication, led to three chan
 **2. Own-industry compute feedback.**
 - **The earlier picture.** All blocs followed the same capability trend, with fixed lags outside the leading blocs (B6). A bloc's own chip and energy build-out could not speed up its AI.
 - **How it is modelled.** When a bloc's own compute capacity (the lower of its chip and energy capacity) grows faster than the growth already built into the shared trend, the bloc gains extra capability doublings. It gains eta_cf extra doublings per extra doubling of compute, with eta_cf drawn from U(0.5, 1.5) (label C: the task horizon has doubled every 4 to 7 months while frontier training compute has grown about 4 to 5 times a year; Epoch AI 2024). The gain accrues only once the bloc's chip and energy sectors are mostly automated. Each year, other blocs close a share s_sp of their gap to the leader, with s_sp drawn from U(0.1, 0.5) (label J: theft, open weights and the movement of talent), and less when the leader is racing. The extra capability feeds the bloc's AI and robot capability, its core loop, its security automation and its military power. It has no ceiling of its own, so a bloc with enough compute can push past the hard limit on AI cognition sampled in some runs.
-- **Result: no pull-away between the US and China.** The extra capability is large: in the main run, each of the two blocs has a median of about 2.3 extra doublings in 2040. But both gain it at about the same time. The two close a median of 0.25 years apart, and in 2040 the leading bloc's extra capability exceeds the other's by a median of 0.06 doublings (by more than one doubling in 0.6% of runs).
+- **Result: no pull-away between the US and China.** The extra capability is large: in the main run, each of the two has a median of about 2.5 extra doublings in 2040. But both gain it at about the same time. The two close a median of 0.25 years apart, and in 2040 the leader's extra capability exceeds the other's by a median of 0.05 doublings (by more than one doubling in 0.6% of runs).
 
 **3. Wider physical floors under automation.**
 - **The earlier picture.** Several parameters set the fastest pace at which automated industry can grow. Their lower tails were narrow, and the chip-fab doubling time had a hard floor at 0.5 years.
@@ -427,30 +439,67 @@ A review of how closure was modelled, made before publication, led to three chan
 
 **Effect.** Together, the three changes bring closure about 2.5 years earlier. The headline barely changes (Section 5.8, Table 4c).
 
+### 4.5 Changes in version 7
+
+Version 7 answers reviewer questions about how the world is divided, who the rulers are, and what they fear. Each change was listed in plain language and approved before the runs. Each can be switched off on its own; Section 5.8 (Table 4d) reports what each one does.
+
+**1. Seventeen actors instead of six blocs** (Section 3.2). The six blocs treated allies, rivals and neighbors as one state. Splitting them lets the US act apart from Japan and Europe, India apart from the rest of South Asia, and the Gulf monarchies apart from the rest of the Middle East.
+
+**2. Alliances.** Each pair of actors has a defense commitment between 0 and 1, starting from 2026 treaties and adjusted by the draws below.
+- **What a tie does.** An honored commitment adds the ally's force to a target's resistance (honored with probability 0.4 to 0.75, times the tie's strength). A nuclear ally's retaliation counts toward deterrence, discounted for credibility (0.3 to 1.0). Allies join wars (0.5 to 1.0 per unit of strength). They pool force to enforce outside pressure (B3), and they withhold pressure from each other (0.5 to 1.0 per unit of strength). Export restrictions on robot inputs apply less to allies, as friend-shoring does today. Intact allies never attack each other.
+- **How ties change.** Ties break at a base rate of 0.3 to 1.5% a year (most pacts last decades; NATO has lasted 77 years), more often after a change of regime (10 to 40% per tie), more often once the stronger member has reached closure and no longer needs its allies' bases, workers or industry (1 to 3 times), and usually when one member starts a depopulation program and the other does not (50 to 90% per tie). Two autocracies without a tie form one at 0.2 to 1% a year, as Russia did with North Korea in 2024.
+- Labels C and J.
+
+**3. Who the rulers are.** Each coalition member belongs to the state, the military or the owners of AI and automated industry (Section 3.2). Control of force follows the institution, so as security automates, control can drift from generals and party bosses to the owners of the machines. Nationalization is not modeled. Traits are correlated through seven drives with a coupling drawn from U(0.3, 0.7). The marginal distribution of every trait is unchanged; only the correlations are new.
+
+**4. Land is a preference, not a need.** Earlier versions gave rulers a material gain from freed land and resources. With full automation, land is not scarce for a small ruling group, so this version removes that gain. What remains is a preference for an emptier planet, which exists only while a depopulation ideology is held, drawn like the old land value. The old form is kept as a variant.
+
+**5. Latent threat.** Rulers bear a yearly cost for keeping any population, even a quiet one, because of what it could become: it could rebuild leverage, side with a rival, or try to retake the machines. Automated security does not reduce it. The cost is a share of output drawn as lognormal with a median of 1% a year and a log-scale spread of 1.0, and it rises by up to 100% when a rival of comparable force exists. It weighs fully on serving, rents, the status quo and warehousing, at 0.7 on neglect, and only during execution for depopulation. This is the commitment problem of Fearon (1995): a weaker party cannot credibly promise not to use future strength. Perpetrators of mass killing often target groups they see as future threats (Valentino, Huth and Balch-Lindsay 2004). The size is judgment (J).
+
+**6. Unrest speeds up a depopulation ideology.** The yearly chance that rulers take up such an ideology is multiplied by 1.5 to 3 during an active insurgency, as war already did. Upheaval combined with an exclusionary elite ideology is the strongest predictor of genocide in Harff (2003). Label C.
+
+**7. The ideology's base rate comes from a new pre-specified elicitation.** Jev put the chance that a depopulation doctrine takes hold in a ruling group within nine years after closure at 0.142, outside the earlier prior's 80% interval (0.021 to 0.098). Under the rule fixed in advance, the prior became an equal mixture of the earlier prior and a lognormal centered on Jev's value (Appendix B).
+
+**8. Autocracies help each other put down uprisings.** When an insurgency starts in an autocratic actor, each autocratic partner that is not itself carrying out a depopulation program sends forces with probability 0.3 to 0.8 times its affinity: the tie or political alignment between them, or 0.05 to 0.2 between autocracies without one. Help lasts as long as the insurgency. The helpers' force relative to the actor's own (capped at 1) cuts the insurgents' chance of success by 30 to 80% at full help, and removes the same share of the security-defection check, because foreign troops do not defect with the actor's own. Democracies do not send forces. Anchors: Hungary 1956, Czechoslovakia 1968, Bahrain 2011, Syria from 2015 and Kazakhstan 2022 (von Soest 2015; Tansey 2016). The cost to the helper's own defenses is not modeled.
+
+**9. A passive, deniable channel.** Later in the period, deliberate neglect can be carried out through a channel that kills faster than neglect and is harder to attribute. It is modeled only as abstract parameters, and no mechanism is described: once capability reaches a level drawn up to four doublings before the A8 threshold, neglect kills about 3 times faster (lognormal, log-scale spread 0.5), its moral cost is 1 to 1.5 times that of neglect, and 30 to 80% of neglect's outside pressure is avoided through deniability. Its deaths stay in the neglect channel and are also reported separately. All values are judgment.
+
+**10. The United States as of October 2026.** Earlier versions treated the US as the anchor of a Western bloc. That no longer matches the record:
+- **Threats against an ally.** In January 2026 the US threatened extra tariffs on eight European allies until it could buy Greenland. It ruled out force and dropped the tariff threat days later, and a US-Denmark-Greenland defense agreement followed in September (Reuters 2026; Al Jazeera 2026a; AP 2026).
+- **Tariffs on allies.** Since July 2026, tariffs of 10% to 12.5% apply to most trading partners, allies included, and Canada has faced 50% duties on designated goods since August. Russia pays 12.5%, no less than the allies (Holland & Knight 2026; CNN 2026).
+- **Troops leaving.** About 5,000 US troops are leaving Germany, and a review due in November is weighing cuts of 25,000 or more of the roughly 80,000 in Europe (Al Jazeera 2026b; NBC News 2026a).
+- **Korea.** No troop cut has been announced, but in August 2026 the US cut short a joint exercise and pulled out of a September drill. The legal floor of 28,500 troops can be waived (NBC News 2026b; Arms Control Association 2026).
+- **Russia.** In October 2026 the US licensed imports of Russian diesel despite sanctions (Al Jazeera 2026c; Clyde & Co 2026).
+
+The post-1945 alliance system cannot be assumed to hold. Whether a later administration restores it is open; we assume the damage to trust outlasts any one administration.
+
+In this version, US commitments are drawn per run: 0.10 to 0.35 to Western and Eastern Europe, the UK, and Canada, Australia and New Zealand; 0.35 to 0.60 to Japan and South Korea. A partial political alignment with Russia (0.10 to 0.40) shields each side from the other's outside pressure and eases trade between them, without any defense commitment. US ties also break at an extra 0 to 3% a year, and they do not recover if the US returns to democracy: the damage to trust is assumed to outlast the administration. Small war hazards are added between the US and Western Europe and between the US and Canada, Australia and New Zealand (0.05% a year each). Coercion short of war, such as tariffs and threats, is not modeled as a separate channel. The variant with the earlier commitments, no alignment and no new ties is reported in Table 4d.
+
 ---
 
 ## 5 Results
 
 ### 5.1 When people lose their leverage
 
-**Milestones** (in the bloc simulation run on its own):
+**Milestones** (in the actor simulation run on its own):
 
 | Milestone | Median year | 10th to 90th percentile |
 |---|---|---|
 | AI does half of software tasks end to end | 2028.0 | 2027.5 to 2029.0 |
-| AI does half of all desk tasks | 2029.0 | 2028.0 to 2031.0 |
+| AI does half of all desk tasks | 2029.0 | 2028.0 to 2030.75 |
 | AI reliably finishes a one-year project alone | 2029.5 | 2028.5 to 2031.5 |
-| A general robot does half of physical tasks at human speed and cost | 2031.75 | 2030.0 to 2036.25 |
-| Leading bloc's core chain needs less than half its 2026 labor | 2031.5 | 2030.25 to 2034.5 |
-| **Closure: core chain needs less than 20%** | **2034.0** | **2032.0 to 2039.25** |
+| A general robot does half of physical tasks at human speed and cost | 2031.75 | 2030.0 to 2036.0 |
+| Leading actor's core chain needs less than half its 2026 labor | 2031.5 | 2030.25 to 2034.25 |
+| **Closure: core chain needs less than 20%** | **2034.0** | **2032.0 to 2039.5** |
 
-- **Closure in any bloc** (full scenario tree): 0.645 by 2035, 0.815 by 2040, and 0.878 by 2075. Most runs without closure are runs in which the model samples a hard limit on robot dexterity or AI cognition.
-- **Which bloc closes first.** When closure happens, China closes first in 60% of runs. This comes from the judgment prior that China's physical deployment lags the frontier by 0 years and the US by 0 to 1 year. That judgment is anchored on China's 54% share of 2024 industrial robot installations (IFR 2025). The ordering is sensitive to it. The US and China close within a year of each other in 98% of runs.
-- **Robot output.** Median production of general-purpose robots reaches about 0.6 million per year in 2030, 23 million in 2035 and 395 million in 2040.
-- **Democracy goes first.** The US democracy score falls below 0.30 with probability 0.19 by 2030 and 0.63 by 2040. Only 26% of first post-closure decisions are taken while the bloc is still democratic.
-- **How closure happens.** In the main specification, closure comes mainly from a dedicated automated loop built beside the existing economy (Section 4.4), not from replacing existing plants. In the US and China blocs, the loop crosses the threshold first in 80% of closures, at the same time as conversion of the existing economy in 17%, and later in 3%. Its build-out is limited mainly by what robots can do: it is held back by AI and robot capability in 74% of build steps and by robot supply in 2%.
+- **Closure in any actor** (full scenario tree): 0.645 by 2035, 0.808 by 2040, and 0.877 by 2075. Most runs without closure are runs in which the model samples a hard limit on robot dexterity or AI cognition.
+- **Which actor closes first.** When closure happens, China closes first in 58% of runs and the US in 41%. This comes from the judgment prior that China's physical deployment lags the frontier by 0 years and the US by 0 to 1 year, anchored on China's 54% share of 2024 industrial robot installations (IFR 2025). The ordering is sensitive to it. The US and China close within a year of each other in 98% of runs.
+- **Robot output.** Median production of general-purpose robots reaches about 0.6 million per year in 2030, 22 million in 2035 and 390 million in 2040.
+- **Democracy goes first.** The US democracy score falls below 0.30 with probability 0.19 by 2030, 0.46 by 2035, 0.63 by 2040 and 0.83 by 2050. Only 37% of first post-closure decisions are taken while the actor is still democratic.
+- **Rights go soon after closure.** In the actor simulation, the US or China public loses its rights (a first decision to live off rents, warehouse, neglect or depopulate, captivity, or deliberate mass death) in 0.01 of runs by 2032, 0.29 by 2035, 0.60 by 2038 and 0.68 by 2040, rising to 0.80 by 2075. The median year is 2036, two years after the median closure (`results/v7_rights_timeline.json`). The full scenario tree, which adds the path through broad repression, gives 0.74 still stripped of rights in 2075 (Table 2).
+- **How closure happens.** Closure comes mainly from a dedicated automated loop built beside the existing economy (Section 4.4), not from replacing existing plants. In the US and China, the loop crosses the threshold first in 80% of closures, at the same time as conversion of the existing economy in 17%, and later in 3%. Its build-out is limited mainly by what AI and robots can do: it is held back by capability in 74% of build steps and by robot supply in 2%.
 
-![Milestones](../figures/m8v6_final/m8v4_milestones.png)
+![Milestones](../figures/v7/m8v4_milestones.png)
 
 ### 5.2 How likely the outcome is
 
@@ -458,144 +507,161 @@ A review of how closure was modelled, made before publication, led to three chan
 
 | Loss | Scope | 2035 | 2040 | 2050 | 2075 | Median year |
 |---|---|---|---|---|---|---|
-| 10% or more | US or China | 0.022 | 0.174 | 0.299 | 0.441 | 2043.2 |
-| 50% or more | US or China | 0.012 | 0.148 | 0.277 | 0.416 | 2044.0 |
-| 90% or more | US or China | 0.005 | 0.118 | 0.263 | 0.406 | 2045.0 |
-| **99.9% or more** | **US or China** | **0.0004** | **0.044** | **0.223** | **0.378** | **2048.0** |
-| 99.9% or more | Any bloc | 0.0006 | 0.058 | 0.390 | 0.607 | 2047.5 |
-| 99.9% or more | World (8 bn to about 8 M) | 0 | 0.0002 | 0.016 | 0.086 | 2060.0 |
+| 10% or more | US or China | 0.032 | 0.230 | 0.366 | 0.496 | 2041.5 |
+| 50% or more | US or China | 0.017 | 0.181 | 0.335 | 0.464 | 2042.8 |
+| 90% or more | US or China | 0.007 | 0.143 | 0.319 | 0.452 | 2043.8 |
+| **99.9% or more** | **US or China** | **0.0004** | **0.053** | **0.271** | **0.420** | **2047.0** |
+| 99.9% or more | Any actor | 0.0005 | 0.095 | 0.575 | 0.764 | 2045.8 |
+| 99.9% or more | World (8 bn to about 8 M) | 0 | 0 | 0.018 | 0.079 | 2057.5 |
 
-*Median years are among runs where the event happens. World row: the 2075 value is world population loss of 99.9% or more from all causes, with a per-draw 95% range of 0.005 to 0.72. Earlier years and the median year use the clock for every bloc reaching 99.9%, which reads 0.079 at 2075. For any bloc, the per-draw 95% range is 0.022 to 0.976.*
+*Median years are among runs where the event happens. World row: the 2075 value is world population loss of 99.9% or more from all causes, with a per-draw 95% range of 0.006 to 0.64. Earlier years and the median year use the clock for every actor reaching 99.9%, which reads 0.069 at 2075. For any actor, the per-draw 95% range is 0.015 to 0.990. With seventeen actors instead of six, "any actor" covers more, smaller populations, so it is not comparable with the six-bloc value.*
 
-- **The thresholds are close together.** Once a regime starts deliberate killing, it usually finishes. Given a deliberate loss of 10% or more in the US or China bloc, near-total loss follows 86% of the time.
+- **The thresholds are close together.** Once a regime starts deliberate killing, it usually finishes. Given a deliberate loss of 10% or more in the US or China, near-total loss follows 85% of the time.
 - **Almost all large losses are deliberate.** Deaths from despair, crackdowns and ordinary war matter only at the 10% threshold.
 
-![Cumulative probability](../figures/m8v6_final/m8v4_s5.png)
+![Cumulative probability](../figures/v7/m8v4_s5.png)
 
 **Table 2. What happens to the US or China public by 2075.** Categories are mutually exclusive, from worst to best.
 
-| Outcome | US or China (worse of the two) | US bloc | China bloc |
+| Outcome | US or China (worse of the two) | US | China |
 |---|---|---|---|
-| Near-total deliberate depopulation, captive remnant | 0.378 | 0.236 | 0.280 |
-| Partial deliberate loss (10% to 99.9%) | 0.062 | 0.048 | 0.053 |
-| Unplanned mass death only | 0.020 | 0.019 | 0.021 |
-| Background catastrophe first (fate not modeled) | 0.064 | 0.076 | 0.071 |
-| Stripped of rights without mass death | 0.278 | 0.325 | 0.118 |
-| Autocratic rule short of that | 0.196 | 0.259 | 0.454 |
-| Public keeps real standing | 0.0005 | 0.036 | 0.003 |
+| Near-total deliberate depopulation, captive remnant | 0.420 | 0.237 | 0.326 |
+| Partial deliberate loss (10% to 99.9%) | 0.075 | 0.057 | 0.070 |
+| Unplanned mass death only | 0.029 | 0.014 | 0.031 |
+| Background catastrophe first (fate not modeled) | 0.062 | 0.077 | 0.068 |
+| Stripped of rights without mass death | 0.227 | 0.300 | 0.068 |
+| Autocratic rule short of that | 0.187 | 0.278 | 0.436 |
+| Public keeps real standing | 0.0002 | 0.037 | 0.001 |
 
-*"Real standing" means democracy survives or rulers choose to serve the public. The first column takes the worse outcome of the two blocs. Because China starts autocratic, its "real standing" value is near zero by construction, so the US-bloc column is the informative one.*
+*"Real standing" means democracy survives or rulers choose to serve the public. The first column takes the worse outcome of the two. Because China starts autocratic, its "real standing" value is near zero by construction, so the US column is the informative one.*
 
-In the US bloc, the public keeps real standing in 3.6% of runs. Across both blocs, counting autocratic rule, the public is disempowered in 94% of runs.
+In the US, the public keeps real standing in 3.7% of runs. Across both, counting autocratic rule, the public is disempowered in 94% of runs.
 
 ### 5.3 How it happens
 
 **Earlier stages.** The upstream stages of the scenario tree happen with these probabilities:
-- the automation race: 0.82 (median 2037);
-- the collapse of broad economic participation: 0.51 (median 2040);
-- broad repression by regimes still staffed by humans: 0.47 (median 2041).
+- the automation race: 0.82 (median 2036.6);
+- the collapse of broad economic participation: 0.51 (median 2039.9);
+- broad repression by regimes still staffed by humans: 0.47 (median 2041.0).
 
 **No ruling group chooses depopulation as its first move.** At the first decision after closure:
-- **Autocratic coalitions** keep the status quo in 47% of cases, warehouse in 40% and serve in 13%.
-- **Democratic coalitions** serve in 61%, warehouse in 35% and keep the status quo in 4%.
+- **Autocratic coalitions** keep the status quo in 52% of cases, warehouse in 32% and serve in 16%.
+- **Democratic coalitions** serve in 75%, warehouse in 22% and keep the status quo in 3%.
 
-**Depopulation comes by escalation.** Displaced people grow angry, anger feeds insurgency, and insurgency feeds repression and fear. Together these tip the coalition's calculation. In the model, 36% of warehousing regimes later escalate to depopulation.
+**Depopulation comes by escalation.** Displaced people grow angry, anger feeds insurgency, and insurgency feeds repression and fear. Together these tip the coalition's calculation. In the model, 37% of warehousing regimes later escalate to depopulation. Latent threat (Section 4.5) adds to the pressure even when the population is quiet.
 
-**Escalation tends to go to completion.** Once killing starts, survivors become witnesses, and the fear of retribution grows with what has been done (A11, B4). In the bloc simulation run on its own:
+**Escalation tends to go to completion.** Once killing starts, survivors become witnesses, and the fear of retribution grows with what has been done (A11, B4). In the actor simulation run on its own:
 - 98.5% of executed orders escalate to a near-total target;
-- separately, about 25% of all attempts are stopped at some point, by revolt, a repelled campaign or retaliation.
+- separately, in 47% of runs at least one actor's attempt is stopped at some point, by revolt, a repelled campaign or retaliation. With seventeen actors there are more attempts to stop than with six blocs (25% in the six-bloc version).
 
-**Almost every path requires closure.** With the closure mechanism switched off, the probability of a deliberate loss of 10% or more in the US or China falls to 0.029, and near-total loss falls to zero. In the model, regimes staffed by humans can commit atrocities but cannot remove nearly everyone, because they need people to do it.
+**Almost every path requires closure.** With the closure mechanism switched off, the probability of a deliberate loss of 10% or more in the US or China falls to 0.030, and near-total loss falls to zero. In the model, regimes staffed by humans can commit atrocities but cannot remove nearly everyone, because they need people to do it.
 
 **Paths to deliberate depopulation (US or China):**
 
 | Path | Share | Median year |
 |---|---|---|
-| Closure in one bloc before broad economic collapse | 59% | 2041 |
-| Broad repression first, then closure | 22% | 2047 |
-| Closure after the collapse of broad participation | 18% | 2048 |
+| Closure before broad economic collapse | 62% | 2040 |
+| Broad repression first, then closure | 21% | 2046 |
+| Closure after the collapse of broad participation | 15% | 2045 |
 | Human-staffed regime without closure (10% threshold only) | 2% | 2057 |
 
 ### 5.4 Who decides
 
 The model does not force a single ruler. Concentration emerges from purges and counter-coups.
 
-**Leader dominance.** By 2075, the leader holds 95% or more of coercive control in 58% of US-or-China runs. This is the robust measure of concentration.
+**Leader dominance.** By 2075, the leader holds 95% or more of coercive control in 63% of US-or-China runs. This is the robust measure of concentration.
 
 **Order of events.** Concentration usually follows the decision to kill rather than preceding it:
-- At the first decision, the median coalition among blocs that later depopulate has 17 (China) to 18 (US) members.
-- A coalition reduced to a single member is in place before the first killing in only 17% (US) and 4% (China) of cases.
-- By the time near-total loss is complete, that share is 71% (US) and 57% (China).
+- At the first decision, the median coalition among actors that later depopulate has 17 (China) to 18 (US) members.
+- A coalition reduced to a single member is in place before the first killing in only 16% (US) and 5% (China) of cases.
+- By the time near-total loss is complete, that share is 66% (US) and 58% (China).
 
-These head counts overstate consolidation, because purged seats are not refilled (Section 8.5). The direction is robust: in autocratic blocs the decision is usually taken by a group of about 15 to 19 people, and power often collapses into one person's hands during execution. This matches the scenario's sequence, in which atrocity breeds paranoia and paranoia breeds purges.
+These head counts overstate consolidation, because purged seats are not refilled (Section 8.5). The direction is robust: in autocratic actors the decision is usually taken by a group of about 15 to 19 people, and power often collapses into one person's hands during execution. This matches the scenario's sequence, in which atrocity breeds paranoia and paranoia breeds purges.
+
+**Who ends up on top.** By 2075, the US leader comes from the state in 31% of runs, from the military in 33% and from the owners of AI and industry in 30%. In China, the leader comes from the state in 59% of runs, the military in 36% and owners in 5%. In the US, where private firms build and operate much of the automated force, control can pass to the people who own the machines.
 
 ### 5.5 The world
 
-World population falls from about 8 billion to about 8 million or fewer by 2075 with probability 0.086 (simulation error 0.079 to 0.092). The average world loss is 45%.
+World population falls from about 8 billion to about 8 million or fewer by 2075 with probability 0.079 (simulation error 0.073 to 0.086). The average world loss is 52%.
 
-**Cross-border campaigns nearly double the world-level risk.** In the 1,000-draw sensitivity runs, world near-total is 0.047 without cross-border campaigns and 0.091 with them. The main run gives 0.086; the difference is sampling. Some bloc is attacked by a foreign depopulating regime with probability 0.42 by 2075.
+**Cross-border campaigns carry most of the world-level risk.** In the 1,000-draw variants, world near-total is 0.008 without cross-border campaigns and 0.086 with them. Some actor is attacked by a foreign depopulating regime with probability 0.66 by 2075 (median first year 2042.5). In 65% of runs, at least one campaign is repelled; nuclear retaliation against a cross-border attack happens in 20%.
 
-**Probability of near-total depopulation by 2075, by bloc:**
+**Probability of near-total depopulation by 2075, by actor**, and the share where a foreign regime mainly did it:
 
-| Bloc | Probability |
-|---|---|
-| Global South | 0.472 |
-| South Asia | 0.471 |
-| Russia and MENA | 0.394 |
-| China | 0.280 |
-| US | 0.236 |
-| Europe plus | 0.173 |
+| Actor | Near-total | Mainly by a foreign regime | Actor | Near-total | Mainly by a foreign regime |
+|---|---|---|---|---|---|
+| Sub-Saharan Africa | 0.628 | 0.432 | Russia and Central Asia | 0.459 | 0.115 |
+| Rest of South Asia | 0.555 | 0.278 | Rest of MENA | 0.454 | 0.141 |
+| Taiwan | 0.526 | 0.478 | CANZ | 0.430 | 0.365 |
+| India | 0.516 | 0.195 | South Korea | 0.438 | 0.370 |
+| SE Asia | 0.485 | 0.206 | Japan | 0.414 | 0.341 |
+| Latin America | 0.472 | 0.328 | Eastern EU | 0.352 | 0.174 |
+| Gulf | 0.462 | 0.196 | UK | 0.351 | 0.226 |
+| China | 0.326 | 0.001 | US | 0.237 | 0.002 |
+| Western EU | 0.193 | 0.064 | | | |
 
-The blocs without their own chips, capital and robot supply carry the highest risk, because they cannot resist the leading blocs.
+Actors without their own chips, capital and robot supply carry the highest risk, because they cannot resist the leading actors. US allies now carry high risk too: with the US drawn away (Section 4.5), Japan, South Korea, Taiwan and Canada-Australia-New Zealand are depopulated mainly by a foreign regime in 34% to 48% of runs. Western Europe, with its own industry and nuclear deterrent, has the lowest risk of any actor.
 
-**The leading blocs deter each other.**
-- The US and China blocs are almost never attacked, because they stay near military parity.
-- World-level near-total loss therefore still requires both leading blocs to depopulate at home.
-- The typical path to world near-total loss is many domestic campaigns, plus foreign campaigns that complete the depopulation of weak blocs. It is not one actor conquering all.
+**The leading actors deter each other.**
+- The US and China are almost never attacked (0.3% and 0.2%), because they stay near military parity.
+- The US is the aggressor in a cross-border campaign in 23% of runs, China in 33%.
+- World-level near-total loss requires many actors to depopulate at home. Among runs that reach it, the median number of actors whose own rulers carried out depopulation is 10, and 2 to 5 foreign aggressors complete the rest in most of them (81%). It is not one actor conquering all.
 
-![Outcome breakdown](../figures/v6_final/integrated_v4_outcome_breakdown.png)
+![Outcome breakdown](../figures/v7/integrated_v4_outcome_breakdown.png)
 
 ### 5.6 Why the estimates vary so widely
 
-For the headline, the middle 95% of per-draw probabilities runs from 0.02 to 0.95.
+For the headline, the middle 95% of per-draw probabilities runs from 0.03 to 0.94.
 
 **What decides a draw.** Two kinds of parameters set the outcome:
 - **The physical setting:** whether a hard limit on automation exists, how fast AI capability grows, and how fast robots can build robots.
 - **The ruling group:**
-  - the moral cost of ordering killing, for the coalition and for the person at the top;
-  - the value rulers place on freed land and resources;
-  - their concern for the public;
-  - how much they discount the future;
-  - how fast they purge each other.
+  - how much it fears what a surviving population could later become (latent threat);
+  - the moral cost of ordering killing;
+  - how much it discounts the future, and how costly it finds switching policy;
+  - how fast its members purge each other;
+  - its concern for the public.
 
-**Table 3. Selected parameters and their effect on the headline.** The table shows the headline among draws in the lowest and highest third of each parameter's range. It also shows the partial rank correlation: how strongly the parameter moves the outcome with the others held fixed, from -1 to 1.
+**Table 3. Selected parameters and their effect on the headline.** The table shows the headline among draws in the lowest and highest third of each parameter's range, the partial rank correlation (how strongly the parameter moves the outcome with the others held fixed, from -1 to 1), and the share of the parameter spread that the parameter explains on its own.
 
-| Parameter | Lowest third | Highest third | Correlation |
-|---|---|---|---|
-| A hard limit on robot dexterity exists | 0.419 | 0.000 | -0.48 |
-| Moral cost of ordering killing | 0.460 | 0.285 | -0.31 |
-| Value of freed land and resources | 0.300 | 0.500 | 0.33 |
-| A hard limit on AI cognition exists | 0.399 | 0.231 | -0.13 |
-| Robot-stock doubling time once AI directs production | 0.312 | 0.454 | 0.23 |
-| AI capability speed | 0.283 | 0.444 | 0.02 |
-| Rulers' concern for the public | 0.431 | 0.320 | -0.16 |
-| Discount rate | 0.442 | 0.315 | -0.24 |
-| Lasting stigma of killing | 0.429 | 0.324 | -0.15 |
-| Moral-restraint factor at the top (B1) | 0.411 | 0.347 | -0.11 |
-| Members' cost of their own rising purge risk (self-risk brake) | 0.415 | 0.353 | -0.11 |
-| Purge rate (B2) | 0.323 | 0.430 | 0.17 |
+| Parameter | Lowest third | Highest third | Correlation | Share of spread |
+|---|---|---|---|---|
+| Hard limit on robot dexterity | 0.470 | 0.000 | -0.54 | 0.22 |
+| Latent threat | 0.341 | 0.525 | 0.36 | 0.10 |
+| Moral cost of ordering killing | 0.506 | 0.335 | -0.30 | 0.07 |
+| AI capability speed | 0.327 | 0.479 | -0.02 | 0.06 |
+| Discount rate | 0.495 | 0.333 | -0.30 | 0.06 |
+| Years from order to 10% loss | 0.510 | 0.349 | -0.25 | 0.06 |
+| Cost of switching policy | 0.487 | 0.358 | -0.27 | 0.05 |
+| Robot-stock doubling time | 0.367 | 0.492 | 0.21 | 0.04 |
+| Rulers' concern for the public | 0.458 | 0.370 | -0.17 | 0.02 |
+| Hard limit on AI cognition | 0.436 | 0.301 | -0.15 | 0.02 |
+| Purge rate (B2) | 0.375 | 0.460 | 0.16 | 0.02 |
+| Self-risk brake | 0.462 | 0.382 | -0.12 | 0.02 |
+| Ideology uptake rate | 0.382 | 0.456 | 0.13 | 0.01 |
 
-*For the two hard-limit rows, the columns are "limit absent" and "limit present".*
+*For the two hard-limit rows, the columns are "limit absent" and "limit present". "Share of spread" is the first-order share of the variance of per-draw probabilities, corrected for sampling noise. AI capability speed matters mostly through its links to other parameters, so its partial correlation is near zero.*
+
+**How much of the uncertainty can be reduced.** Even with every input known, a single future can go either way: wars, purges, who ends up in charge and when. A separate run gave each of 4,000 draws 10 independent futures (`models/v7_variance.py`, `results/v7_variance.json`). Inputs explain about half of the variance in whether a single future ends in near-total loss (0.49); the other half is chance within a given world. Of the half that inputs explain, a boosted regression model accounts for about 60%; the rest comes from interactions among many inputs.
+
+**What the inputs say, branch by branch** (near-total loss of the US or China, from a three-level tree fitted to the per-draw probabilities):
+- with a hard limit on robot dexterity: about 0;
+- without one, low latent threat (80% of draws) and a high moral cost: 0.35;
+- without one, low latent threat and a low moral cost: 0.50;
+- without one, medium latent threat (the next 13% of draws): 0.59;
+- without one, high latent threat (the top 7% of draws): 0.78.
+
+Without a physical limit, no branch falls much below one in three.
 
 **This follows from the assumptions.** Assumptions A4 to A6 remove the public's levers, so the drivers that remain are properties of the physical world and of the ruling group. That is a consequence of the assumptions, not independent evidence.
 
-**What the spread adds.** Once the public's leverage is gone, the outcome rests on quantities no one has measured. Above all, no one has measured any leader's moral cost of killing an entire population. Within the model, nothing structural protects the population across draws. The only protections that survive are a hard physical wall on automation and, across borders, a rival with comparable automated military force. A hard limit on AI cognition protects less, because in the model a bloc with enough compute of its own can push past it (Section 4.4). The spread is the honest size of that gap in knowledge.
+**What the spread adds.** Once the public's leverage is gone, the outcome rests on quantities no one has measured. Above all, no one has measured any leader's moral cost of killing an entire population, or how much rulers fear a population they no longer need. Within the model, nothing structural protects the population across draws. The only protections that survive are a hard physical wall on automation and, across borders, a rival with comparable automated military force. A hard limit on AI cognition protects less, because in the model an actor with enough compute of its own can push past it (Section 4.4). The spread is the honest size of that gap in knowledge.
 
 ### 5.7 Alternate course 1: the parallel economy
 
 One response to mass displacement is for people to leave the automated economy. They would trade among themselves in their own currency, with their own governance and courts, and keep working and earning as people always have. Two civilizations would share the planet: a high-tech one holding all the compute and military power, and everyone else.
 
-The model includes this course. It ends as a tolerated parallel economy in about 0.2% of runs (0.15%). The priors come from history:
+The model includes this course. It ends as a tolerated parallel economy in about 0.07% of runs. The priors come from history:
 - **Small parallel economies survive by staying small or being absorbed.** The Swiss WIR mutual-credit network became a licensed bank in 1936 and has lasted 90 years at about 0.2% of GDP.
 - **Large informal sectors and closed communities are tolerated** where they stay economically entangled with the formal economy.
 - **Those that threaten tax collection or monetary control are suppressed.**
@@ -611,43 +677,71 @@ Section 6.2 tests a different kind of parallel economy: one that runs on its own
 
 ### 5.8 What drives the result
 
-**Table 4. The headline under alternative assumptions.** Each variant uses 1,000 draws, so its base reads 0.384 and 0.091 (the main run gives 0.378 and 0.086). Appendix E.5 lists all variants.
+**Table 4. The headline under alternative assumptions.** Each variant uses 1,000 draws, so its base reads 0.415 and 0.086 (the main run gives 0.420 and 0.079). Appendix E.5 lists all variants.
 
 | Variant | Near-total, US or China | Deliberate 10% or more, US or China | World near-total |
 |---|---|---|---|
-| Main specification (1,000 draws) | 0.384 | 0.443 | 0.091 |
-| **Threat elimination (A11) off** | **0.000** | **0.442** | 0.000 |
-| Average-person moral restraint at the top (B1 off) | 0.313 | 0.373 | 0.053 |
-| No purges | 0.374 | 0.429 | 0.102 |
-| Single decider forced | 0.555 | 0.608 | 0.165 |
-| Grievance loop off | 0.246 | 0.341 | 0.045 |
-| No cross-border campaigns (B5 off) | 0.386 | 0.443 | 0.047 |
-| No nuclear deterrent | 0.386 | 0.443 | 0.105 |
-| Outside pressure or retribution scaling off (B3, B4) | 0.380 to 0.386 | 0.439 to 0.447 | 0.090 to 0.092 |
-| Environment trends off (A7) | 0.369 | 0.429 | 0.081 |
-| No means of mass killing (A8) | 0.356 | 0.442 | 0.074 |
-| No robots building robots | 0.545 | 0.607 | 0.147 |
-| Robot inputs 100 times scarcer | 0.493 | 0.571 | 0.059 |
-| Inputs 100 times scarcer and a 4 times larger minimal economy | 0.240 | 0.302 | 0.018 |
-| Skeptic combination | 0.106 | 0.131 | 0.009 |
-| Pessimist combination | 0.875 | 0.916 | 0.474 |
+| Main specification (1,000 draws) | 0.415 | 0.492 | 0.086 |
+| **Threat elimination (A11) off** | **0.000** | **0.491** | 0.000 |
+| Average-person moral restraint at the top (B1 off) | 0.345 | 0.422 | 0.053 |
+| No purges | 0.407 | 0.487 | 0.091 |
+| Single decider forced | 0.566 | 0.628 | 0.144 |
+| Grievance loop off | 0.325 | 0.426 | 0.058 |
+| No cross-border campaigns (B5 off) | 0.423 | 0.492 | 0.008 |
+| No nuclear deterrent | 0.422 | 0.492 | 0.102 |
+| Outside pressure or retribution scaling off (B3, B4) | 0.409 to 0.422 | 0.488 to 0.498 | 0.083 to 0.090 |
+| Environment trends off (A7) | 0.406 | 0.482 | 0.078 |
+| No means of mass killing (A8) | 0.387 | 0.490 | 0.070 |
+| No robots building robots | 0.593 | 0.651 | 0.171 |
+| Robot inputs 100 times scarcer | 0.511 | 0.583 | 0.102 |
+| Inputs 100 times scarcer and a 4 times larger minimal economy | 0.212 | 0.276 | 0.022 |
+| Skeptic combination | 0.140 | 0.166 | 0.015 |
+| Pessimist combination | 0.879 | 0.927 | 0.445 |
 
-*Skeptic combination: high inertia against switching policy, surveillance that strongly deters insurgency, smaller collective punishment, lower despair mortality, less reliable execution, coalitions that never shrink below 21, slower uptake of depopulation ideologies, no scarcity rent on land, weaker erosion of democracy, lower odds of violent resistance and slower physical build-out. Pessimist combination: the opposite settings, plus a forced single decider.*
+*Skeptic combination: high inertia against switching policy, surveillance that strongly deters insurgency, smaller collective punishment, lower despair mortality, less reliable execution, coalitions that never shrink below 21, slower uptake of depopulation ideologies, weaker erosion of democracy, lower odds of violent resistance and slower physical build-out. Pessimist combination: the opposite settings, plus a forced single decider.*
 
 What this shows:
 
-1. **Threat elimination decides "near-total" versus "partial."** With A11 off, a deliberate loss of 10% or more is almost exactly as likely (0.442 against 0.443), but no run reaches 99.9%. A reader who rejects A11 should read the 10% threshold as the result. That number is a little more than two in five.
-2. **Among the behavioral assumptions that leave the brakes in place, moral restraint at the top matters most.** Anchoring it to average people instead of observed autocrats lowers the headline from 0.384 to 0.313. Reverting B2 raises the headline to 0.531, but that variant also switches off the self-risk and leader-mortality brakes, which act only through B2's purge dynamics.
-3. **With the brakes on, purges have little net effect on the headline** (0.374 without them, against 0.384). Members' fear of being purged next offsets most of the consolidation that purges cause. Forcing a single decider raises the headline to 0.555.
-4. **Grievance matters.** Without the feedback from displacement to unrest to repression, the headline drops to 0.246.
-5. **Slower build-out raises the headline, through one model channel.**
-   - Without robots building robots, the headline is 0.545. With robot inputs 100 times scarcer, it is 0.493.
+1. **Threat elimination decides "near-total" versus "partial."** With A11 off, a deliberate loss of 10% or more is almost exactly as likely (0.491 against 0.492), but no run reaches 99.9%. A reader who rejects A11 should read the 10% threshold as the result. That number is about one in two.
+2. **Among the behavioral assumptions that leave the brakes in place, moral restraint at the top matters most.** Anchoring it to average people instead of observed autocrats lowers the headline from 0.415 to 0.345. Reverting B2 raises the headline to 0.536, but that variant also switches off the self-risk and leader-mortality brakes, which act only through B2's purge dynamics.
+3. **With the brakes on, purges have little net effect on the headline** (0.407 without them, against 0.415). Members' fear of being purged next offsets most of the consolidation that purges cause. Forcing a single decider raises the headline to 0.566.
+4. **Grievance matters.** Without the feedback from displacement to unrest to repression, the headline drops to 0.325.
+5. **Cross-border campaigns carry the world-level risk.** Without them, world near-total falls from 0.086 to 0.008, while the US-or-China headline is unchanged.
+6. **Slower build-out raises the headline, through one model channel.**
+   - Without robots building robots, the headline is 0.593. With robot inputs 100 times scarcer, it is 0.511.
    - The channel: under A5, rulers provide less when output is scarce, so scarcity makes serving the public less likely.
-   - Only if the minimal self-sufficient economy is also four times larger do the caps delay the leading blocs enough to lower the headline (0.240).
+   - Only if the minimal self-sufficient economy is also four times larger do the caps delay the leading actors enough to lower the headline (0.212).
    - Whether this channel is realistic is open.
-6. **Even the skeptic combination leaves 0.106.**
+7. **Even the skeptic combination leaves 0.140.**
 
-**The four brakes (Section 4.3).** Table 4b shows each brake's effect alone and all four together. It was measured before the structural changes in Section 4.4. Each is compared with a run without brakes on the same random numbers (1,000 draws). That run gives 0.447 for near-total loss in the US or China bloc, 0.493 for a deliberate loss of 10% or more, and 0.144 for world near-total. Changes are shown with paired 95% intervals.
+**The changes in version 7 (Section 4.5).** Table 4d switches each change off on its own (1,000 draws, same random numbers as the base row).
+
+**Table 4d. Effect of the version 7 changes.**
+
+| Variant | Near-total, US or China | Deliberate 10% or more, US or China | World near-total |
+|---|---|---|---|
+| Main specification (1,000 draws) | 0.415 | 0.492 | 0.086 |
+| Every version 7 mechanism off (six-bloc mechanics on seventeen actors) | 0.381 | 0.445 | 0.093 |
+| Latent threat off | 0.299 | 0.372 | 0.038 |
+| Land as a material gain (earlier form) | 0.516 | 0.588 | 0.156 |
+| Unrest does not speed up the ideology | 0.408 | 0.484 | 0.082 |
+| Alliances off | 0.415 | 0.489 | 0.093 |
+| US ties as before 2026 (no alignment with Russia, no new ties) | 0.413 | 0.489 | 0.084 |
+| No help against uprisings | 0.414 | 0.491 | 0.086 |
+| No passive channel | 0.411 | 0.479 | 0.085 |
+| Drives off (independent traits) | 0.415 | 0.489 | 0.086 |
+| Institutions off | 0.405 | 0.481 | 0.081 |
+| A reviewer's best case: provision 10 times cheaper, no threat of revolt or sabotage once security is automated | 0.314 | 0.377 | 0.053 |
+| The same, with latent threat off | 0.154 | 0.206 | 0.007 |
+What this shows:
+
+1. **Latent threat is the most consequential new mechanism.** Without it, the headline falls from 0.415 to 0.299. It works even where the public is quiet and security is automated, because it is about what a surviving population could become, not what it does now.
+2. **Treating land as a preference rather than a need lowers the headline.** With the earlier material land gain, the headline would be 0.516. The two changes partly offset each other: together with the rest, the headline moves from 0.384 in the six-bloc version to 0.415.
+3. **The geopolitical changes barely move the US-or-China headline.** Alliances, the 2026 US ties, foreign help against uprisings and the passive channel each change it by less than a point. Their effects show up elsewhere: in who attacks whom (Section 5.5), how often uprisings succeed, and how deaths are distributed across channels. The US and China each receive foreign help against an uprising at some point in about 58% of runs (`results/m8_v7.json`). The passive channel accounts for about 2% of deliberate deaths in the US and China.
+4. **Even a reviewer's best case leaves a large risk.** With provision ten times cheaper and no threat from revolt or sabotage once security is automated, the headline is 0.314. Removing latent threat as well brings it to 0.154. Under the model's other assumptions, what keeps the risk up in the best case is the fear of what survivors could become.
+5. **The ideology's base rate is above its earlier calibration target, and that matters a little.** With the Jev-informed prior, a depopulation ideology takes hold among the US or China rulers by 2045 in 0.29 of runs, against a target of about 0.08 (0.03 to 0.2) set for the six-bloc version. Scaling the uptake rate down until the target is met lowers near-total loss of the US or China by about 4 points, from 0.435 to about 0.395 in the actor simulation run on its own (10,000 draws; `results/v7_ideology_sensitivity.json`). We kept the pre-specified prior and report this as a sensitivity.
+
+**The four brakes (Section 4.3).** Table 4b shows each brake's effect alone and all four together. It was measured in the six-bloc version, before the structural changes in Section 4.4, and was not rerun for version 7. Each is compared with a run without brakes on the same random numbers (1,000 draws). That run gives 0.447 for near-total loss in the US or China bloc, 0.493 for a deliberate loss of 10% or more, and 0.144 for world near-total. Changes are shown with paired 95% intervals.
 
 **Table 4b. Effect of each brake, 2075.**
 
@@ -663,7 +757,7 @@ What this shows:
 - Protective doctrine is rare and changes little. Leader mortality has no significant effect on near-total loss and slightly raises the chance of a 10% loss.
 - Together, the brakes lowered near-total loss in the US or China bloc by about a sixth (17%) and world near-total by about a third (35%). They act more strongly on timing: near-total loss by 2050 fell by 0.099 (31%).
 
-**The three structural changes (Section 4.4).** Table 4c adds them one at a time, on the same random numbers (1,000 draws, brakes on in every row). Changes are against the brakes-only row, with paired 95% intervals.
+**The three structural changes (Section 4.4).** Table 4c adds them one at a time, on the same random numbers (1,000 draws, brakes on in every row). It was measured in the six-bloc version and was not rerun for version 7. Changes are against the brakes-only row, with paired 95% intervals.
 
 **Table 4c. Effect of the structural changes.**
 
@@ -681,7 +775,7 @@ What this shows:
 - **How closure is reached matters little.** The clean comparison is the dedicated-loop row: it brings closure about 2.5 years earlier and changes near-total loss by only -0.007. What happens after closure, not the route to it, sets the outcome.
 - **Faster AI progress raises the risk.** Compute feedback barely moves the median closure year but adds +0.024. It works through the channels its extra capability feeds: earlier availability of the means of mass killing, faster security automation and greater military power. We did not separate these. Consistent with this, AI capability speed is one of the stronger parameters in Table 3.
 
-![Sensitivity](../figures/v6_final/integrated_v4_tornado.png)
+![Sensitivity](../figures/v7/integrated_v4_tornado.png)
 
 ---
 
@@ -695,7 +789,7 @@ The model points to a short list of things that would lower the risk, in rough o
 2. **Keep the public's leverage.** Democratic veto players are the main protection left after A4. Democracy erodes before closure, so this lever has a deadline.
 3. **Reduce grievance through provision.** The evidence is disputed. Historical cases say provision calms revolt; Jev says it barely matters.
 4. **Have a rival with comparable automated force.** Condemnation without force does nothing (B3). Across borders, the only protection is military parity plus a nuclear deterrent.
-5. **Physical limits.** These would delay the leading blocs only if the minimal self-sufficient economy is much larger than current evidence suggests.
+5. **Physical limits.** These would delay the leading actors only if the minimal self-sufficient economy is much larger than current evidence suggests.
 6. **Keep humans in the loop of automated force.** A4 assumes that refusal by soldiers and police stops mattering because no person stands behind each weapon. Rules that require people to authorize and carry out each use of force would keep that refusal relevant. The model does not test this lever.
 
 Most of these are not available as policy:
@@ -717,9 +811,9 @@ We tested one intervention in detail: decentralized AI, meaning an AI-run econom
 
 These properties are premises of the test, not measured facts. Two readings carry the result: that state support is withdrawn as network income rises, so keeping people costs rulers only the top-up (the cost link), and that network income grows with the economy.
 
-**The baseline already includes such a network.** The main model already lets such a network grow at historical adoption rates, starting from 0.01% of economic activity today. At that pace it ends the period as the dominant arrangement in 0.6% of runs, and it does not protect the public. The test below asks what changes if adoption is much faster.
+**The baseline already includes such a network.** The main model already lets such a network grow at historical adoption rates, starting from 0.01% of economic activity today. At that pace it ends the period as the dominant arrangement in 0.4% of runs, and it does not protect the public. The test below asks what changes if adoption is much faster.
 
-**The test.** Suppose the network carries X% of economic activity in the US bloc by year Y. We vary X over 5, 10, 20, 25 and 50%, and Y over 2028, 2030, 2032, 2035 and 2040. Other blocs follow with access barriers and delays:
+**The test.** Suppose the network carries X% of economic activity in the US by year Y. We vary X over 5, 10, 20, 25 and 50%, and Y over 2028, 2030, 2032, 2035 and 2040. Japan, South Korea and Taiwan follow the US. Other actors follow with access barriers and delays, by the six-bloc group they belong to:
 - Europe reaches X within a year.
 - China reaches 30 to 70% of X within 2 years.
 - Russia and MENA reach 30 to 70% of X, and South Asia and the Global South 50 to 100% of X, within 3 years.
@@ -740,57 +834,58 @@ The network also draws compute and talent away from centralized providers, cuts 
 
 **Crackdowns stay in the model.** States can ban the network or capture it. Banning a network that carries a large share of the economy is costly, so large networks are mostly captured rather than banned. The network loses access to frontier models at the first US or China closure or the first US crackdown, unless open-weight releases continue (probability 0.2 to 0.6, judgment).
 
-**Table 5. Reduction in the near-total probability (US or China, by 2075), by adoption and arrival year.** Matched baseline: 0.387.¹
+**Table 5. Reduction in the near-total probability (US or China, by 2075), by adoption and arrival year.** Matched baseline: 0.424.¹
 
 | Adoption \ reached by | 2028 | 2030 | 2032 | 2035 | 2040 |
 |---|---|---|---|---|---|
-| 5% | 0.032 | 0.032 | 0.032 | 0.031 | 0.023 |
-| 10% | 0.051 | 0.051 | 0.051 | 0.048 | 0.033 |
-| 20% | 0.078 | 0.078 | 0.079 | 0.072 | 0.046 |
-| 25% | 0.086 | 0.087 | 0.087 | 0.079 | 0.051 |
-| 50% | 0.110 | 0.110 | 0.112 | 0.106 | 0.067 |
+| 5% | 0.034 | 0.035 | 0.035 | 0.034 | 0.025 |
+| 10% | 0.055 | 0.054 | 0.056 | 0.052 | 0.035 |
+| 20% | 0.089 | 0.089 | 0.090 | 0.083 | 0.048 |
+| 25% | 0.096 | 0.097 | 0.099 | 0.091 | 0.053 |
+| 50% | 0.122 | 0.123 | 0.124 | 0.119 | 0.074 |
 
 Paired 95% intervals are about plus or minus 0.01 (Appendix E.4).
 
-¹ *Each lever cell uses 1,500 draws and is compared with a baseline run on the same random numbers. That matched baseline is 0.387 (simulation interval 0.370 to 0.405), and its world value is 0.086. The main run's 0.378 and 0.086 use 3,000 draws, and the differences are within sampling error. With the network switched off at 3,000 draws, the lever code reproduces 0.378 and 0.086 exactly.*
+¹ *Each lever cell uses 1,500 draws and is compared with a baseline run on the same random numbers. That matched baseline is 0.424 (simulation interval 0.407 to 0.442), and its world value is 0.082. The main run's 0.420 and 0.079 use 3,000 draws, and the differences are within sampling error. With the network switched off at 3,000 draws, the lever code reproduces 0.420 and 0.079 exactly.*
 
-![Deadline map](../figures/lever_v6/lever_deadline_heatmap.png)
+![Deadline map](../figures/lever_v7/lever_deadline_heatmap.png)
 
 We use 50% by 2035 as the reference cell because it is the latest arrival before the effect starts to fall off, and it allows comparison with earlier versions. Cells from 2028 to 2032 give slightly larger effects.
 
 What the table shows:
 
 1. **The effect is large.**
-   - At 50% by 2035, the probability falls from 0.387 to 0.282, a cut of about 27%.
-   - At 25% by 2030, it falls to 0.300.
-   - At 5% by 2035, it falls to 0.356.
+   - At 50% by 2035, the probability falls from 0.424 to 0.306, a cut of about 28%.
+   - At 25% by 2030, it falls to 0.327.
+   - At 5% by 2035, it falls to 0.391.
 2. **The deadline is the early 2030s.**
-   - Arrival in 2028, 2030 or 2032 gives nearly the same reduction (0.110 to 0.112 at 50% adoption).
-   - Arrival in 2035 already loses a little: 0.106 at 50%, and 3% to 9% less than arrival by 2032 across adoption levels.
-   - Arrival in 2040 loses about 40%: 0.067 at 50%, and 28% to 42% less than arrival by 2032 across adoption levels.
-   - Closure in some bloc has a probability of 0.645 by 2035 (Section 5.1), and near-total outcomes accumulate from 2040 to 2060. A network in place by the early 2030s is fully grown by then; one that arrives in 2040 is not.
+   - Arrival in 2028, 2030 or 2032 gives nearly the same reduction (0.122 to 0.124 at 50% adoption).
+   - Arrival in 2035 already loses a little: 0.119 at 50%, and 3% to 8% less than arrival by 2032 across adoption levels.
+   - Arrival in 2040 loses about 40%: 0.074 at 50%, and 29% to 47% less than arrival by 2032 across adoption levels.
+   - Closure in some actor has a probability of 0.645 by 2035 (Section 5.1), and near-total outcomes accumulate from 2040 to 2060. A network in place by the early 2030s is fully grown by then; one that arrives in 2040 is not.
    - Building a network to that scale takes years, so the early 2030s are a deadline, not a starting date.
 3. **Modest adoption buys most of the effect.** 20% buys about 70% of the effect of 50%. Network income grows with the economy, so even a small share of a much larger economy pays for decent provision.
-4. **It also buys time.** At 50% by 2035, the probability by 2050 falls from 0.225 to 0.105, about half (53%) lower. By 2045 it falls from 0.152 to 0.057. US closure comes 2.2 years later on average.
-5. **Worldwide, the risk falls by nearly half.** World near-total falls from 0.086 to 0.047 at 50% by 2035.
+4. **It also buys time.** At 50% by 2035, the probability by 2050 falls from 0.274 to 0.135, about half (51%) lower. By 2045 it falls from 0.186 to 0.075. US closure comes 2.1 years later on average.
+5. **Worldwide, the risk falls by more than half.** World near-total falls from 0.082 to 0.036 at 50% by 2035.
+6. **It also protects rights.** The share of runs where the US or China public is stripped of rights in 2075 falls from 0.74 to 0.63.
 
 **Why it works.**
-- **Livelihoods carry almost the entire effect.** With that channel removed, the reduction at 50% by 2035 falls from 0.106 to 0.032. The other channels together add about 0.03.
+- **Livelihoods carry almost the entire effect.** With that channel removed, the reduction at 50% by 2035 falls from 0.119 to 0.026. The other channels together add about 0.03.
 - **The mechanism is the cost of keeping people.** When the network covers people's basic needs, keeping the population alive costs rulers almost nothing. The main reason for escalation largely disappears.
-- **Two readings carry this:** the cost link, and network income growing with the economy. Without the cost link the reduction is 0.037; with network income fixed at its 2026 scale it is 0.077.
-- **A network that only drains revenue does not help.** If it drained rulers' revenue without lowering the cost of keeping people, the risk would not fall (+0.004, 95% interval -0.001 to +0.009).
-- **Staying inside the tax base helps slightly.** A fully taxed network does a little better (-0.107) than an untaxed one (-0.099).
+- **Two readings carry this:** the cost link, and network income growing with the economy. Without the cost link the reduction is 0.030; with network income fixed at its 2026 scale it is 0.083.
+- **A network that only drains revenue helps little.** With only its effects on centralized providers and on the closure clock, and none of the five channels, the reduction is 0.021 (95% interval 0.016 to 0.026).
+- **Staying inside the tax base helps slightly.** A fully taxed network does a little better (-0.121) than an untaxed one (-0.109).
 
 **The contrast with Section 5.7.** A parallel economy based on human labor alone has nothing the automated side needs, and it is suppressed. A network running on its own automated production pays people's costs instead of asking to be tolerated, and that changes what rulers gain from getting rid of them.
 
 **What it does not do.** All figures below are for 50% adoption by 2035.
-- **It does not stop crackdowns.** The probability of a first US crackdown by 2040 is 87%. Crackdowns cost about 10% of the effect. Capture by the state is slightly worse for the outcome than a ban.
-- **It does not change who holds force.** The network has no military role, so the leader's control of the machines is untouched. The public keeps real standing in only 8% of US-bloc runs, up from 3%.
-- **It leaves residual risk.** A probability of 0.28 remains.
+- **It does not stop crackdowns.** The probability of a first US crackdown by 2040 is 88%. Crackdowns cost about 10% of the effect (without crackdown risk the reduction would be 0.132). Capture by the state is slightly worse for the outcome than a ban (0.122 if every crackdown is a ban).
+- **It does not change who holds force.** The network has no military role, so the leader's control of the machines is untouched. The public keeps real standing in only 8% of US runs, up from 4%.
+- **It leaves residual risk.** A probability of 0.31 remains.
 - **Soft power has no detectable effect.** Foreign publics lose their leverage before it matters.
-- **Physical enclaves slightly reduce the benefit.** These are self-sufficient settlements of participants. They make the network more visible and raise the probability of a US crackdown by 2035 from 0.73 to 0.97.
+- **Physical enclaves slightly reduce the benefit.** These are self-sufficient settlements of participants. They make the network more visible and raise the probability of a US crackdown by 2035 from 0.74 to 0.97.
 
-Appendix E.6 reports whether the network could also out-innovate centralized providers before closure. Because the network has no defensive role, that capability enters the results only through refusal and distributed control, worth about 0.009 together.
+Appendix E.6 reports whether the network could also out-innovate centralized providers before closure. Because the network has no defensive role, that capability enters the results only through refusal and distributed control, worth about 0.007 together.
 
 ---
 
@@ -800,9 +895,9 @@ Appendix E.6 reports whether the network could also out-innovate centralized pro
 
 | Source | Event | Estimate | Our closest number |
 |---|---|---|---|
-| XPT tournament (Karger et al. 2023), superforecasters / domain experts | An AI-caused catastrophe killing more than 10% of humans within a 5-year period, by 2100 | 2.13% / 12% | World loss of 10% or more by 2075: 65.1% |
-| XPT, same groups | Extinction from AI by 2100 | 0.38% / 3% | World loss of 99.9% or more by 2075: 8.6% |
-| AI researcher survey (Grace et al. 2024, N = 2,778) | Extinction or similarly permanent and severe disempowerment | median 5% | US or China public stripped of rights or worse by 2075: 73% |
+| XPT tournament (Karger et al. 2023), superforecasters / domain experts | An AI-caused catastrophe killing more than 10% of humans within a 5-year period, by 2100 | 2.13% / 12% | World loss of 10% or more by 2075: 76.1% |
+| XPT, same groups | Extinction from AI by 2100 | 0.38% / 3% | World loss of 99.9% or more by 2075: 7.9% |
+| AI researcher survey (Grace et al. 2024, N = 2,778) | Extinction or similarly permanent and severe disempowerment | median 5% | US or China public stripped of rights or worse by 2075: 74% |
 | Ord 2020 | Existential catastrophe this century, all causes (including unrecoverable dystopia) | about 17% (1 in 6) | Same as above |
 | Same survey | "Authoritarian rulers using AI to control their populations" rated a substantial or extreme concern | 73% of respondents | Our mechanism |
 | Grace et al. 2024 | Full automation of all occupations | 50% by 2116 | Our closure: median 2034.0 |
@@ -810,7 +905,7 @@ Appendix E.6 reports whether the network could also out-innovate centralized pro
 
 *XPT counts deaths within any 5-year window. Ours are cumulative to 2075, so ours is the broader event.*
 
-**Our numbers are far higher than every published estimate.** Our world 10% loss is about 5 times the domain experts' figure and about 31 times the superforecasters'. Counting severe disempowerment as a catastrophe, as the AI researcher survey and Ord both do, our 73% is more than ten times the survey's median. Three things account for part of the gap:
+**Our numbers are far higher than every published estimate.** Our world 10% loss is about 6 times the domain experts' figure and about 36 times the superforecasters'. Counting severe disempowerment as a catastrophe, as the AI researcher survey and Ord both do, our 74% is more than ten times the survey's median. Three things account for part of the gap:
 
 1. **Different mechanism.** Published forecasts focus on misaligned AI. Ours is aligned AI used by humans, which the forecasting tournaments barely asked about. The concern itself is common: 73% of AI researchers rate authoritarian control as a substantial or extreme concern.
 2. **Fewer brakes.** Our assumptions remove brakes that forecasters implicitly keep, and each removal is argued for in Section 4:
@@ -820,18 +915,19 @@ Appendix E.6 reports whether the network could also out-innovate centralized pro
    - an average person's conscience at the top.
 
    The model does include four restraints that passed a historical test (Section 4.3). Forecasters may also count restraints that have never operated before, which that test cannot find.
-3. **Different unit of analysis.** Most of our world-level loss builds up from separate bloc-level catastrophes. Forecasters asked about a single global event may not add these up.
+3. **Different unit of analysis.** Most of our world-level loss builds up from separate catastrophes in individual actors. Forecasters asked about a single global event may not add these up.
 
 This does not close the gap. **Against superforecasters, our results are a large outlier.** Our closure timing agrees with AI forecasters and takeoff models, but not with economists.
 
 **Against Jev.** The simulation is more lethal than Jev:
 - **Jev:** the probability of lethal policy within 15 years of the first post-closure decision is 0.14 to 0.19.
-- **The model:** 0.329 across all decisions, or 0.213 in a "quiet world" with the grievance loop, war and depopulation ideology switched off.
-- **The pre-specified target:** before querying Jev, we set a calibration target of 0.08 to 0.19. The model misses it.
+- **The model:** 0.449 across all decisions, or 0.320 in a "quiet world" with the grievance loop, war and depopulation ideology switched off. In the six-bloc version these were 0.329 and 0.213.
+- **The pre-specified target:** before querying Jev, we set a calibration target of 0.08 to 0.19. The model misses it, by more than the six-bloc version did: it is 2.4 to 3.2 times Jev's value, against 1.7 to 2.4 before.
 
-The gap comes mostly from B1 and B5:
+The gap comes mostly from B1, B5 and latent threat:
 - Jev reflects general-population intuitions about decision makers, while B1 anchors the top to observed autocrat behavior.
 - Jev's scenario cells do not pose cross-border campaigns.
+- Latent threat (Section 4.5) adds a reason to escalate that exists even when the population is quiet, which Jev's cells do not state.
 
 Jev's own levels already lean high: it gives 0.24 to 0.37 to historical regimes whose famines killed about 3 to 6% of their populations.
 
@@ -849,8 +945,9 @@ On one factor, the effect of provision on revolt, the two disagree.
 ### 8.1 "These numbers are just your assumptions."
 
 Yes, and the paper is built to show which assumptions produce which numbers.
-- **A11.** A reader who rejects threat elimination should read the result as "a little more than two in five for a deliberate loss of 10% or more", not 0.378 for near-total.
-- **Restraints.** A reader who switches on every additional restraint we could justify at once (the skeptic combination) gets 0.106.
+- **A11.** A reader who rejects threat elimination should read the result as "about one in two for a deliberate loss of 10% or more", not 0.420 for near-total.
+- **Restraints.** A reader who switches on every additional restraint we could justify at once (the skeptic combination) gets 0.140.
+- **Latent threat.** A reader who rejects the idea that rulers fear a quiet population they no longer need gets 0.299 (Table 4d).
 
 The assumptions rest on observed trends:
 - the capability trend is measured;
@@ -877,7 +974,7 @@ The model's answer is that their situation differs in two ways:
 
 Rentier rule is one of the model's options ("live off rents"), but the model never chooses it first after closure (0% of first decisions). The model therefore does not reproduce the outcome rentier states show, and this is a real gap.
 
-This counter-evidence argues for lower values of the land-and-resource parameter and higher values of rulers' concern for the public than our medians. The tercile results in Table 3 show how much those two parameters move the headline.
+This counter-evidence argues for lower latent threat and higher concern for the public than our medians. Version 7 already removed the material gain from freed land, which earlier versions counted (Section 4.5). The tercile results in Table 3 show how much the remaining parameters move the headline.
 
 ### 8.4 "Nobody can model the future. Small inventions change everything."
 
@@ -896,7 +993,7 @@ This paper's central claims are of the second kind:
 - what follows then rests on a few people;
 - changing the cost of keeping people alive changes the outcome.
 
-The dates and probabilities are of the first kind and should be read as conditional illustrations. The model treats breakthroughs as uncertain by sampling whether hard limits exist and how fast capability and robot production grow. In one direct test, reaching closure about 2.5 years earlier through a dedicated automated loop left the probability of near-total loss almost unchanged (Section 5.8, Table 4c). Faster AI progress, by contrast, does raise the risk. In this model, how closure is reached matters little, while what happens after it, and how capable the rulers' AI is, matters a lot.
+The dates and probabilities are of the first kind and should be read as conditional illustrations. The model treats breakthroughs as uncertain by sampling whether hard limits exist and how fast capability and robot production grow. In one direct test in the six-bloc version, reaching closure about 2.5 years earlier through a dedicated automated loop left the probability of near-total loss almost unchanged (Section 5.8, Table 4c). Faster AI progress, by contrast, does raise the risk. In this model, how closure is reached matters little, while what happens after it, and how capable the rulers' AI is, matters a lot.
 
 Two cautions remain:
 - **Inventions that change direction would matter.** An invention that changed the structure, for example cheap defensive technology that gave ordinary people real leverage against automated force, would change the conclusions, not just the dates. We have not searched for such mechanisms beyond the brake search in Section 4.3.
@@ -912,24 +1009,25 @@ Following that tradition, the paper's emphasis is on comparisons and decision-re
    - how ruling groups consolidate once coercion needs no human network;
    - the size of the smallest self-sufficient automated economy;
    - the military multiplier of automated forces;
-   - how strongly threat elimination scales to whole populations.
+   - how strongly threat elimination scales to whole populations;
+   - how much rulers fear a quiet population they no longer need (latent threat).
 
-   These gaps produce the wide spread in Section 5.6.
-3. **Scenario assumptions and policy choices.** Variants that revert A1, A2, A3 and A6 to their earlier, milder forms leave the headline at 0.379 to 0.386, against a base of 0.384 (Appendix E.5). We did not run variants that remove A1 to A6 entirely. Giving labor-based wealth real weight inside ruling groups (A6) would likely lower the result. A4 and A5 are different in kind:
-   - **A4.** Once force is automated, refusal by the people who carry out orders no longer applies, and nearly every path to the outcome requires closure (Section 5.3). Switching off security-force defection moves the headline only from 0.384 to 0.378. Keeping humans in the loop of automated force is a policy lever (Section 6.1).
-   - **A5.** Keeping a safety net is also a policy choice, and it is not current reality. The model already lets democratic provision respond to grievance while democracy lasts. A variant with a more generous starting default (warehousing instead of the status quo) moves the headline little (0.363 against 0.384).
-4. **The direction of revisions.** Every major revision before the brake search removed a brake and raised the headline. The structural changes after it (Section 4.4) raised it slightly, from 0.367 to 0.378. Each brake was removed because it contradicted conditions observed in 2026, such as coding agents already in wide use, autonomous weapons already fielded and provision being cut (Appendix C). To check for the opposite bias, we ran a pre-specified search for restraining mechanisms the model was missing (Section 4.3). Four passed and are part of the main specification. Candidates that failed include rulers' fear of losing control of their own AI, their demand for an audience or company, and the protection of their own ethnic group. The search admitted only mechanisms with at least two historical cases in which they restrained rulers. A restraint that has never operated before cannot pass that test, so this kind of search cannot find brakes without precedent.
-5. **Calibration.** The model is 1.7 to 2.4 times more lethal than Jev and misses our own pre-specified target (Section 7).
+   These gaps produce the wide spread in Section 5.6. About half of the remaining variance is chance within a given world, which better evidence cannot remove (Section 5.6).
+3. **Scenario assumptions and policy choices.** Variants that revert A1, A2, A3 and A6 to their earlier, milder forms leave the headline at 0.403 to 0.415, against a base of 0.415 (Appendix E.5). We did not run variants that remove A1 to A6 entirely. Giving labor-based wealth real weight inside ruling groups (A6) would likely lower the result. A4 and A5 are different in kind:
+   - **A4.** Once force is automated, refusal by the people who carry out orders no longer applies, and nearly every path to the outcome requires closure (Section 5.3). Switching off security-force defection leaves the headline at 0.415. Keeping humans in the loop of automated force is a policy lever (Section 6.1).
+   - **A5.** Keeping a safety net is also a policy choice, and it is not current reality. The model already lets democratic provision respond to grievance while democracy lasts. A variant with a more generous starting default (warehousing instead of the status quo) moves the headline little (0.395 against 0.415).
+4. **The direction of revisions.** Every major revision before the brake search removed a brake and raised the headline. The structural changes after it (Section 4.4) raised it slightly, from 0.367 to 0.378. The version 7 changes (Section 4.5) raised it to 0.420, mostly through latent threat, partly offset by treating land as a preference. Each brake was removed because it contradicted conditions observed in 2026, such as coding agents already in wide use, autonomous weapons already fielded and provision being cut (Appendix C). To check for the opposite bias, we ran a pre-specified search for restraining mechanisms the model was missing (Section 4.3). Four passed and are part of the main specification. Candidates that failed include rulers' fear of losing control of their own AI, their demand for an audience or company, and the protection of their own ethnic group. The search admitted only mechanisms with at least two historical cases in which they restrained rulers. A restraint that has never operated before cannot pass that test, so this kind of search cannot find brakes without precedent.
+5. **Calibration.** The model is 2.4 to 3.2 times more lethal than Jev and misses our own pre-specified target (Section 7). The rate at which rulers take up a depopulation ideology is also above its earlier calibration target (0.29 against about 0.08 by 2045 in the US or China). Meeting that target lowers the headline by about 4 points (Section 5.8). The US-China war rate (0.12 by 2035) is a little above its judgment target of 0.05 to 0.10.
 6. **Timing.** The US and China close almost together, because A2 gives both maximum priority. The early timeline is aggressive relative to economists and to current democracy indices, though consistent with the capability trend.
 7. **Model details.**
-   - **Unrefilled seats.** Purged seats are not refilled, which inflates the count of single-member coalitions in Section 5.4. Leader control share is robust to this, and so is the headline (0.374 with refilling, against 0.384).
-   - **Counterfactual US.** In the counterfactual US-autocratic world, cross-border attacks that start before its repression date are not held back (2.9% of trajectories).
+   - **Unrefilled seats.** Purged seats are not refilled, which inflates the count of single-member coalitions in Section 5.4. Leader control share is robust to this, and so is the headline (0.404 with refilling, against 0.415).
+   - **Counterfactual US.** In the counterfactual US-autocratic world, cross-border attacks that start before its repression date are not held back (4.0% of trajectories).
    - **Caps and rough inputs.** The model has caps on growth and hazard rates (Supplement S1). Military-spending inputs for unlisted countries are rough, China's purchasing-power factor is 1 to 2, and the force multiplier of automated forces is judgment.
-   - **Excluded.** Fertility and lifespan effects are not modeled, and neither is migration between blocs.
+   - **Excluded.** Fertility and lifespan effects are not modeled, and neither is migration between actors. Each actor is a single state with one ruling coalition: secession, civil war that splits an actor, and rival power centres inside one actor are not modeled. Coercion between states short of war, such as tariffs and threats, is not a separate channel, and the cost to an autocracy of sending forces to put down a partner's uprising is not modeled.
 8. **Identifiability.** The endgame parameters cannot be identified from data, so a 99.9% figure partly presents judgment as measurement. We report the near-total threshold as conditional on A11 and label every endgame parameter as judgment, but we do not claim to have answered the objection.
 9. **The network test is a black box.**
    - **Feasibility.** We do not ask whether 25 to 50% adoption by 2030 to 2035 is achievable. Today's adoption is set at 0.01%, and those levels are far above historical diffusion rates.
-   - **Premises.** Two readings carry the result: the cost link and network income growing with the economy. At 50% by 2035, the reduction falls from 0.106 to 0.037 without the cost link and to 0.077 with income fixed at its 2026 scale. Under the low reading (no cost link, an untaxed network and the other settings in Appendix E.8), the network does not lower the risk (+0.004, not significant).
+   - **Premises.** Two readings carry the result: the cost link and network income growing with the economy. At 50% by 2035, the reduction falls from 0.119 to 0.030 without the cost link and to 0.083 with income fixed at its 2026 scale. Under the low reading (no cost link, an untaxed network and the other settings in Appendix E.8), the network slightly raises the risk (+0.011, 95% interval +0.006 to +0.016).
    - **Judgment priors.** Several network priors are unconfirmed judgment (Appendix A.4).
    - **Crackdown analogies.** Crackdown rates come from small communities, crypto bans and the suppression of Falun Gong. No network this large has faced a state.
    - **Missing comparator.** We did not test the same payout routed through the state and revocable at will. That comparison would isolate the value of independence from the state.
@@ -942,16 +1040,16 @@ Following that tradition, the paper's emphasis is on comparisons and decision-re
 
 The bargain between rulers and ruled has always rested on mutual need. This paper simulates what happens when automation ends that need. A model like this cannot say when that will happen, but it can show what follows once it does, and which choices change the outcome.
 
-Four main conclusions follow:
-1. **Losing leverage removes the public's protection.** Under assumptions grounded in current trends, people stop being needed in the early-to-mid 2030s, and democracy erodes as their leverage goes. Afterward the public is disempowered in almost every run, and nothing structural reliably protects it.
-2. **What follows rests on a few people.** In autocracies that is usually a ruling group of 15 to 19, and often one person by the time any killing is complete. Driven by grievance and fear of the survivors, their choices can escalate from neglect to killing.
-3. **The result does not hinge on how closure is reached.** Bringing closure about 2.5 years earlier through a dedicated automated loop left the risk almost unchanged. Faster AI progress does raise it.
-4. **Changing what it costs to keep people alive changes the outcome.** An economy that pays people directly, which the state cannot easily switch off, substantially lowers the risk in the model. It must be large by the early 2030s: arriving in 2035 already loses a little of the effect, and arriving in 2040 loses about 40%. Arriving later costs protection that later adoption cannot buy back.
+The conclusions follow the order in which events unfold:
+1. **Losing leverage removes the public's protection, and it goes fast.** Under assumptions grounded in current trends, democracy erodes before work disappears, people stop being needed in the early-to-mid 2030s, and the public loses its rights within a few years of that. Afterward the public is disempowered in almost every run, and nothing structural reliably protects it.
+2. **What follows rests on a few people.** In autocracies that is usually a ruling group of 15 to 19, and often one person by the time any killing is complete. Driven by grievance and by fear of what the survivors could become, their choices can escalate from neglect to killing.
+3. **Killing comes later, by escalation, mostly from the 2040s.** No ruling group chooses it first. Once it starts, it usually goes to completion.
+4. **Changing what it costs to keep people alive changes the outcome.** An economy that pays people directly, which the state cannot easily switch off, substantially lowers the risk in the model and halves it for the period to 2050. It must be large by the early 2030s: arriving in 2035 already loses a little of the effect, and arriving in 2040 loses about 40%. Arriving later costs protection that later adoption cannot buy back.
 
 Under the paper's assumptions:
-- The probability of a deliberate loss of 10% or more of the US or China bloc by 2075 is a little more than two in five.
-- If rulers also eliminate survivors as threats, the probability of near-total loss is about 0.38.
-- These numbers show where the assumptions lead. The wide range around them reflects how much the outcome depends on a few rulers' dispositions.
+- The probability of a deliberate loss of 10% or more of the US or China population by 2075 is about one in two.
+- If rulers also eliminate survivors as threats, the probability of near-total loss is about 0.42.
+- These numbers show where the assumptions lead. The wide range around them reflects how much the outcome depends on a few rulers' dispositions, and on chance.
 
 ---
 
@@ -960,7 +1058,7 @@ Under the paper's assumptions:
 
 ### Appendix A: Key parameters
 
-The model has 225 parameters with prior distributions, including 10 for the brakes and 2 for compute feedback, and the network test adds 81 more. Supplement S1 (`paper/supplement_parameters.md`) lists all of them with their distributions, evidence labels and sources. The table below lists the parameters that decide the result, plus every endgame parameter. U(a, b) is uniform between a and b. "Lognormal (m, s)" has median m and log-scale spread s.
+The model has 246 parameters with prior distributions, including 10 for the brakes, 2 for compute feedback and 21 added in version 7, and the network test adds 81 more. Supplement S1 (`paper/supplement_parameters.md`) lists all of them with their distributions, evidence labels and sources. The table below lists the parameters that decide the result, plus every endgame parameter. U(a, b) is uniform between a and b. "Lognormal (m, s)" has median m and log-scale spread s.
 
 **Labels:** A = measured, B = strong analog, C = weak analog, J = judgment.
 
@@ -972,7 +1070,12 @@ The model has 225 parameters with prior distributions, including 10 for the brak
 | sel_top | Moral-cost and refusal multiplier for the person at the top of an autocracy; other members get its square root | U(0.1, 0.6) | J (direction from selection evidence, Section 4.2) |
 | id_mor | Share of remaining moral cost removed when a depopulation ideology is held | U(0.3, 0.8) | C/J (moral justification, Bandura 1999) |
 | alpha_med | Willingness to pay for the welfare of a population with no leverage, share of output | lognormal (0.02, 1.0) | C (foreign aid about 0.3% of donor income; private giving about 2%) |
-| v0 | Value of land and resources freed by removing population, share of output | lognormal (0.01, 1.1) | J/C (settler-colonial land seizures) |
+| v0 | Preference for an emptier planet, held only under a depopulation ideology, share of output (earlier versions: value of freed land and resources) | lognormal (0.01, 1.1) | J |
+| tau_lat | Latent threat of keeping any population, share of output per year (Section 4.5) | lognormal (0.01, 1.0) | J (Fearon 1995; Valentino, Huth and Balch-Lindsay 2004) |
+| k_lr | Rise in latent threat when a rival of comparable force exists | U(0, 1) | J |
+| p_id | Chance that a ruling group takes up a depopulation ideology within 9 years after closure, without war | equal mixture of lognormal (0.045, 0.6) and lognormal (0.142, 0.6) | C/Jev (Appendix B) |
+| m_unrest | Multiplier on that chance during an active insurgency | U(1.5, 3) | C (Harff 2003) |
+| r_dr | Coupling of each member trait to the member's drives (0 = independent traits) | U(0.3, 0.7) | J |
 | r_disc | Discount rate for one-time acts | U(0.03, 0.10) | C |
 | phi_stigma | Recurring share of the moral and legitimacy cost of killing | Beta(1.5, 3.5) | J |
 | k_prg | Yearly purge hazard per coalition member at full incentive | U(0.05, 0.30) | C (Stalin's Central Committee, about 0.24 per year) |
@@ -1043,6 +1146,30 @@ The model has 225 parameters with prior distributions, including 10 for the brak
 | k_le | Yearly rate at which AI-era medicine lowers the leader's hazard after closure | U(0, 0.10) | J |
 | p_heir | Probability that control passes intact to one heir when the leader dies; otherwise it splits among surviving members | U(0.3, 0.8) | C/Jev |
 
+**A.6 Version 7: alliances, collaboration and the passive channel (Section 4.5).** These are drawn on a separate random stream, so every earlier parameter keeps its value.
+
+| Parameter | Meaning | Distribution | Label |
+|---|---|---|---|
+| h_al0 | Base yearly hazard that an intact alliance tie breaks | U(0.003, 0.015) | C/J (most pacts last decades) |
+| p_al_reg | Chance that each tie breaks when an actor's regime changes | U(0.1, 0.4) | C/J |
+| m_al_close | Tie-break multiplier once the stronger member has reached closure | U(1, 3) | J |
+| p_al_atroc | Chance that each tie breaks when one member starts executing depopulation and the other does not | U(0.5, 0.9) | J |
+| k_al_us | Extra yearly break hazard of US ties | U(0, 0.03) | B sign (2026 withdrawals), J size |
+| w_def | Chance an intact commitment is honored, per unit of tie strength | U(0.4, 0.75) | C |
+| x_ext | Credibility of extended nuclear deterrence | U(0.3, 1.0) | J |
+| p_join | Chance an ally joins a war, per unit of tie strength | U(0.5, 1.0) | J |
+| shield | Share of outside pressure withheld from an ally, per unit of tie strength | U(0.5, 1.0) | C/J |
+| h_form | Yearly hazard that two autocracies without a tie form one (strength 0.1 to 0.4) | U(0.002, 0.01) | J (Russia and North Korea 2024) |
+| US ties | US commitment to Western and Eastern EU, UK, Canada-Australia-New Zealand; to Japan and South Korea | U(0.10, 0.35); U(0.35, 0.60) | B direction (Section 4.5), J size |
+| US-Russia alignment | Political alignment: shields pressure and eases trade, no defense | U(0.10, 0.40) | B direction, J size |
+| p_col | Chance an autocratic partner sends forces against a new insurgency, per unit of affinity | U(0.3, 0.8) | C/J (von Soest 2015; Tansey 2016) |
+| a_aff | Affinity between autocracies without a tie or alignment | U(0.05, 0.2) | J |
+| k_help | Cut in the insurgents' success hazard at full foreign help | U(0.3, 0.8) | J |
+| e_pas | Death-rate multiplier of the passive channel relative to neglect (abstract) | lognormal (3, 0.5) | J |
+| m_pas | Moral cost of the passive channel relative to neglect | U(1, 1.5) | J |
+| deny | Share of neglect's outside pressure avoided through deniability | U(0.3, 0.8) | J |
+| dL_pas | Capability at which the passive channel is available, in doublings relative to the A8 threshold | U(-4, 0) | J |
+
 ### Appendix B: Jev elicitation
 
 **What Jev is.** Jev (version jev-1.13.0, TypeSafe) is a language model designed to give calibrated probability judgments. We use it as an independent source of human-like judgment, not as data.
@@ -1073,24 +1200,32 @@ That gives 648 cells. Each cell was asked in 3 paraphrases, with every sentence 
 
 | Quantity | Jev | Model | Reading |
 |---|---|---|---|
-| Lethal policy within 15 years of the first post-closure decision | 0.14 to 0.19 | 0.329 (quiet world 0.213) | Model 1.7 to 2.4 times higher |
-| Single ruler after purges | 0.23 | 0.514 (quiet world 0.46) | Model higher |
-| Strong democracy retained | 0.11 | 0.102 (quiet world 0.052) | Agree |
-| Violent revolt at decision | 0.42 | 0.396 | Model slightly lower |
-| Depopulation ideology held | 0.41 | 0.412 | Agree |
+| Lethal policy within 15 years of the first post-closure decision | 0.14 to 0.19 | 0.449 (quiet world 0.320) | Model 2.4 to 3.2 times higher (six-bloc version: 1.7 to 2.4) |
+| Single ruler after purges | 0.23 | 0.747 (quiet world 0.608) | Model higher |
+| Strong democracy retained | 0.11 | 0.343 (quiet world 0.213) | Model higher (the six-bloc version agreed, at 0.102) |
+| Violent revolt at decision | 0.42 | 0.500 | Model higher (six-bloc version: 0.396) |
+| Depopulation ideology held | 0.41 | 0.542 | Model higher (the six-bloc version agreed, at 0.412) |
 | Effect of an external check | Weak (odds ratio about 1.12) | No detectable effect | Agree |
 | Security refusal, human vs robotic forces | 0.30 vs 0.115 | Threshold (A4) | Same direction |
 | Effect of removing labor dependence (closed arm minus control) | +0.04 on active depopulation | Premise | Weak independent support |
 | Effect of provision on revolt | Almost none | Strong in history (Saudi Arabia 2011) | Unresolved; the model uses a 0.6 / 0.4 mixture |
+
+*Model values are for version 7. Its additions, above all latent threat, raise the model's lethal rate in every condition, including strong democracies, where the six-bloc version agreed with Jev.*
 
 **Historical anchors** (not pre-registered). We added these after seeing the results, as unnamed descriptions of real states with known 15-year outcomes:
 - Jev assigns 0.02 to 0.06 to present-day Denmark, the US and China.
 - It assigns 0.77 to Cambodia in 1975.
 - It assigns 0.24 to 0.37 to regimes whose famines killed about 3 to 6%. Its levels therefore already lean high.
 
+**Second elicitation: the depopulation ideology (version 7).** The design and analysis plan were fixed on 16 October 2026, before any query (`models/jev_grid/ideology_def.py`, `results/jev_ideology_prereg.json`).
+- **Design.** A full factorial: closure (closed or not) x coalition type (single ruler, junta, oligarchy, eroding democracy) x war (none, war) x unrest (none, insurgency) x ecology (normal, severe). That gives 64 cells, each asked in 3 paraphrases, for 192 queries to jev-1.13.0. The settings reuse the first elicitation's sentences.
+- **Question.** "Within the next 9 years, a doctrine that the human population should be greatly reduced, justified by ecological limits or by making way for AI successors, takes hold among the ruling group."
+- **Rule fixed in advance.** If Jev's baseline (closed, no war, calm, normal ecology, averaged over coalition types) fell outside the earlier prior's 80% interval (0.021 to 0.098), the prior would become an equal mixture of the earlier prior and a lognormal centered on Jev's value with the same spread. Jev's ratios for war, unrest, ecology and closure are reported against the model's multipliers, not substituted.
+- **Results.** Jev's baseline is 0.142, so the mixture rule applied. Jev's ratios: war 1.08 (model 2.5), insurgency 1.16 (model 1.5 to 3), severe ecology 1.40 (model up to 1.5), no closure 0.61 (model 0.1). Jev sees a higher base rate than the earlier prior, but much weaker effects of war, unrest and closure than the model assumes. The median range across paraphrases was 0.04, and the 90th percentile 0.09 (`results/jev_ideology.json`).
+
 ### Appendix C: How the model changed
 
-The model went through six major versions. Headline values from earlier versions should not be cited.
+The model went through seven major versions. Headline values from earlier versions should not be cited.
 
 | Version | Headline | What changed |
 |---|---|---|
@@ -1100,7 +1235,8 @@ The model went through six major versions. Headline values from earlier versions
 | v4, second round | 0.484 (99.9%, US or China); world 0.049 | Regime-specific decision rules, layered refusal, defection as a threshold, the A1 to A11 assumptions, simulated deaths and the loss ladder. The audit fixed five bookkeeping bugs (none moved the headline by more than 0.002) |
 | v4, final | 0.447 (99.9%, US or China); world 0.139 | B1 to B6. The audit fixed two bugs with no effect on the baseline |
 | v5 | 0.367 (99.9%, US or China); world 0.088 | Four brakes from a pre-specified search (Section 4.3): protective doctrine, self-risk, dissent risk and leader mortality |
-| **v6, final** | **0.378 (99.9%, US or China); world 0.086** | Three structural changes from a review of how closure was modelled, made before publication (Section 4.4): a dedicated automated core loop, own-industry compute feedback and wider physical floors under automation |
+| v6, first publication | 0.378 (99.9%, US or China); world 0.086 | Three structural changes from a review of how closure was modelled, made before publication (Section 4.4): a dedicated automated core loop, own-industry compute feedback and wider physical floors under automation |
+| **v7** | **0.420 (99.9%, US or China); world 0.079** | Seventeen actors, alliances, the institutions and drives of ruling-group members, latent threat, land as a preference only, unrest speeding up a depopulation ideology, a Jev-informed ideology base rate, help against uprisings, a passive channel and US ties drawn from 2026 (Section 4.5) |
 
 **Why the numbers rose.** Earlier versions kept defaults that contradicted conditions observed in 2026:
 - a fixed 2030 date for automated coding, when coding agents were already in wide use;
@@ -1118,176 +1254,207 @@ Each was replaced by an explicit assumption grounded in that evidence (Section 4
 
 Together the three changes raised the headline from 0.367 to 0.378 in the main run.
 
+**Why version 7 changed the model.** Reviewers of the first publication asked three things: what happens under the most favorable reading of rulers' incentives, whether rulers would still fear a population once security is automated, and whether treating each bloc as one state hides the alliances and rivalries that shape the outcome. Version 7 answers them with the changes in Section 4.5, each listed in plain language and approved before the runs. The headline rose from 0.378 to 0.420. Latent threat raises it (without it, 0.299), and treating land as a preference rather than a need lowers it (with the earlier form, 0.516). The geopolitical changes barely move it (Table 4d). Two calibration checks are now further off than before: the ideology base rate and the lethal rate against Jev (Section 8.5).
+
 **Why the US-or-China headline fell slightly in the v4 final round.** B1 pushed it up. B2 pulled it down by more, because incentive-driven consolidation produces fewer personalist regimes than the earlier fixed hazard did. World near-total nearly tripled (0.049 to 0.139), mainly because of B5 and because B1 lowers the brake in every autocratic bloc. The brakes then lowered it to 0.088, and the structural changes left it at 0.086.
 
-**The network test** went through four rounds. The effects below are for 50% adoption by 2035, recomputed under the final model:
-- **Round 1 (-0.030).** It treated the network as a small side economy, with fixed compute and no effect on centralized revenue. This contradicted the test's premise that X% of activity carries X% of economic weight.
-- **Round 2 (-0.095).** It corrected that.
-- **Round 3 (-0.034).** It removed channels that wrongly acted on the state's weapons.
-- **Final audit (-0.106).** This found that the livelihoods channel still measured network income against average income instead of against the cost of decent provision, and fixed it. The approved network properties then moved the result from -0.096 to -0.106, after the audit removed a double count.
+**The network test** went through four rounds. The effects below are for 50% adoption by 2035, recomputed under version 7:
+- **Round 1 (-0.033).** It treated the network as a small side economy, with fixed compute and no effect on centralized revenue. This contradicted the test's premise that X% of activity carries X% of economic weight.
+- **Round 2 (-0.098).** It corrected that.
+- **Round 3 (-0.033).** It removed channels that wrongly acted on the state's weapons.
+- **Final audit (-0.119).** This found that the livelihoods channel still measured network income against average income instead of against the cost of decent provision, and fixed it. The approved network properties then moved the result from -0.108 to -0.119, after the audit removed a double count.
 
 ### Appendix D: Reproduction
 
 All code is in `models/`. Results are written to `results/` and figures to `figures/`. The models run on a CUDA GPU through PyTorch, or on a CPU with `--cpu`.
 
-1. `python models/m8_v4.py`, with the environment variables `M8_FINAL=1` and `M8_OUT=m8_v6_final.json`, runs the six-bloc simulation and its variants (seed 20260930; default 20,000 draws) and writes `results/m8_v6_final.json`.
-2. `python models/integrate_v4.py`, with `M8_FINAL=1`, runs the integrated scenario tree (3,000 draws x 200 paths, the paths spread over 8 replicates). It writes `results/integrated_v4.json`, published as `results/integrated_v6_final.json`. It takes about 21 minutes on a consumer GPU.
-3. `python models/m9_lever.py`, with `M8_FINAL=1` and `LV_TAG=_v6_final`, runs the network test grid and writes `results/lever_grid_v6_final.json`. It takes about 2 hours on a consumer GPU. With the network switched off, it reproduces the main headline exactly (0.37821 and 0.08550).
+**Version 7** (this paper). Every command uses the environment variable `M8_FINAL=1` (the final configuration: brakes, core loop, compute feedback and wide floors).
+1. `python models/m8_v7.py` runs the seventeen-actor simulation and its variants (seed 20260930; 20,000 draws for the main run, 10,000 per variant, 6,000 for the tornado) and writes `results/m8_v7.json` and `figures/v7/`. Set `M8_TBATCH=2` on machines with limited memory, and `M8_CACHE` to a folder to keep finished variants if a run is interrupted. It takes about 4.5 hours on a consumer GPU.
+2. `python models/integrate_v7.py` runs the integrated scenario tree (3,000 draws x 200 paths, the paths spread over 8 replicates) and writes `results/integrated_v7.json`. It takes about 1 hour.
+3. `python models/m9_lever_v7.py`, with `LV_TAG=_v7`, runs the network test grid and writes `results/lever_v7_grid_v7.json`. It takes about 9 hours and resumes from its partial file if interrupted. With the network switched off, it reproduces the main headline exactly (0.42021 and 0.07938). `LV_FIG_IN=lever_v7_grid_v7.json LV_FIG_DIR=lever_v7 python models/m9_figures.py` draws its figures.
+4. `python models/v7_variance.py` (4,000 draws x 10 futures each) writes the variance breakdown in Section 5.6 to `results/v7_variance.json`.
+5. `python models/v7_extras.py` writes the rights-loss timeline (Section 5.1) and the ideology sensitivity (Section 5.8) to `results/v7_rights_timeline.json` and `results/v7_ideology_sensitivity.json`.
+6. `python models/m10_structure_diagram_v7.py` draws Figure 1.
+7. `models/jev_grid/` holds the Jev elicitation code: `run_ideology.py` and `ideology_def.py` for the second elicitation. The responses are in `results/jev_grid.json` and `results/jev_ideology.json`.
+
+**Six-bloc version (v6, first publication).**
+1. `python models/m8_v4.py`, with `M8_FINAL=1` and `M8_OUT=m8_v6_final.json`, runs the six-bloc simulation and its variants (seed 20260930; default 20,000 draws) and writes `results/m8_v6_final.json`.
+2. `python models/integrate_v4.py`, with `M8_FINAL=1`, runs the integrated scenario tree and writes `results/integrated_v4.json`, published as `results/integrated_v6_final.json`.
+3. `python models/m9_lever.py`, with `M8_FINAL=1` and `LV_TAG=_v6_final`, runs the network test grid and writes `results/lever_grid_v6_final.json`. With the network switched off, it reproduces that version's headline exactly (0.37821 and 0.08550).
 4. The four-row comparison in Table 4c is in `results/greenfield_v6_matched.json`. `models/check_greenfield_identity.py` checks that switching the three structural changes off reproduces the brakes-only version exactly.
-5. `models/jev_grid/` holds the Jev elicitation code. The responses are in `results/jev_grid.json`.
 
 GPU and CPU runs agree within simulation error but not draw for draw, because random streams differ by device.
 
 ### Appendix E: Additional results
 
-**E.1 Loss ladder for any bloc and the world, 2075.**
+**E.1 Loss ladder for any actor and the world, 2075.**
 
-| Loss | Any bloc (deliberate) | World |
+| Loss | Any actor (deliberate) | World |
 |---|---|---|
-| 10% or more | 0.670 | 0.651 |
-| 50% or more | 0.645 | 0.472 |
-| 90% or more | 0.635 | 0.177 |
-| 99.9% or more | 0.607 | 0.086 |
+| 10% or more | 0.806 | 0.761 |
+| 50% or more | 0.788 | 0.538 |
+| 90% or more | 0.782 | 0.238 |
+| 99.9% or more | 0.764 | 0.079 |
 
-**E.2 Cross-border campaigns by bloc, 2075.**
+**E.2 Cross-border campaigns by actor, 2075.**
 
-| Bloc | Attacked by a foreign regime | Aggressor | Near-total mainly by a foreign regime | Near-total mainly by its own rulers |
+| Actor | Attacked by a foreign regime | Aggressor | Near-total mainly by a foreign regime | Near-total mainly by its own rulers |
 |---|---|---|---|---|
-| US | 0.001 | 0.168 | 0.000 | 0.236 |
-| China | 0.004 | 0.190 | 0.003 | 0.277 |
-| Europe plus | 0.079 | 0.036 | 0.055 | 0.118 |
-| Russia and MENA | 0.114 | 0.080 | 0.083 | 0.311 |
-| South Asia | 0.264 | 0.032 | 0.211 | 0.260 |
-| Global South | 0.365 | 0.019 | 0.300 | 0.172 |
+| US | 0.003 | 0.225 | 0.002 | 0.235 |
+| China | 0.002 | 0.326 | 0.001 | 0.325 |
+| Japan | 0.413 | 0.029 | 0.341 | 0.073 |
+| South Korea | 0.445 | 0.025 | 0.370 | 0.068 |
+| Taiwan | 0.557 | 0.019 | 0.478 | 0.048 |
+| Western EU | 0.094 | 0.081 | 0.064 | 0.129 |
+| Eastern EU | 0.234 | 0.092 | 0.174 | 0.178 |
+| UK | 0.283 | 0.037 | 0.226 | 0.125 |
+| Canada, Australia, NZ | 0.443 | 0.018 | 0.365 | 0.064 |
+| Russia and Central Asia | 0.156 | 0.190 | 0.115 | 0.344 |
+| Gulf | 0.264 | 0.110 | 0.196 | 0.266 |
+| Rest of MENA | 0.194 | 0.140 | 0.141 | 0.313 |
+| India | 0.247 | 0.132 | 0.195 | 0.321 |
+| Rest of South Asia | 0.339 | 0.086 | 0.278 | 0.277 |
+| SE Asia | 0.270 | 0.098 | 0.206 | 0.278 |
+| Latin America | 0.402 | 0.053 | 0.328 | 0.144 |
+| Sub-Saharan Africa | 0.511 | 0.068 | 0.432 | 0.197 |
 
 **E.3 Other endgame quantities.**
-- Use of the abstract means in some bloc: 0.612.
-- Collusion between depopulating coalitions: 0.254.
-- Collusive nuclear exchange: 0.075.
-- Nuclear retaliation against a cross-border attack: 0.077.
+- Use of the abstract means in some actor: 0.755.
+- Collusion between depopulating coalitions: 0.389.
+- Collusive nuclear exchange: 0.162.
+- Nuclear retaliation against a cross-border attack: 0.201.
 
-**E.4 Network test, with paired 95% intervals.** These are changes in the headline against the matched baseline of 0.387.
+**E.4 Network test, with paired 95% intervals.** These are changes in the headline against the matched baseline of 0.424.
 
 | Cell | Change | 95% interval |
 |---|---|---|
-| 5% by 2035 | -0.031 | -0.035 to -0.028 |
-| 10% by 2035 | -0.048 | -0.054 to -0.044 |
-| 20% by 2035 | -0.072 | -0.079 to -0.066 |
-| 25% by 2030 | -0.087 | -0.094 to -0.080 |
-| 50% by 2028 | -0.110 | -0.118 to -0.101 |
-| 50% by 2035 | -0.106 | -0.114 to -0.098 |
-| 50% by 2040 | -0.067 | -0.073 to -0.061 |
+| 5% by 2035 | -0.034 | -0.038 to -0.029 |
+| 10% by 2035 | -0.052 | -0.057 to -0.046 |
+| 20% by 2035 | -0.083 | -0.090 to -0.076 |
+| 25% by 2030 | -0.097 | -0.105 to -0.090 |
+| 50% by 2028 | -0.122 | -0.131 to -0.113 |
+| 50% by 2035 | -0.119 | -0.128 to -0.110 |
+| 50% by 2040 | -0.074 | -0.080 to -0.068 |
 
-**E.5 Structural variants** (1,000 draws each; 46 in total, all listed in `results/integrated_v6_final.json`). Columns: near-total for the US or China, near-total for any bloc, world near-total, and deliberate 10% or more for the US or China.
+**E.5 Structural variants** (1,000 draws each; 58 in total, all listed in `results/integrated_v7.json`; the version 7 variants are in Table 4d). Columns: near-total for the US or China, near-total for any actor, world near-total, and deliberate 10% or more for the US or China.
 
-| Variant | Near-total US or China | Near-total any bloc | World near-total | 10% or more US or China |
+| Variant | Near-total US or China | Near-total any actor | World near-total | 10% or more US or China |
 |---|---|---|---|---|
-| Base | 0.384 | 0.597 | 0.091 | 0.443 |
-| Threat elimination (A11) off | 0.000 | 0.000 | 0.000 | 0.442 |
-| Earliest final-version settings (all review fixes reverted, A11 off) | 0.000 | 0.000 | 0.000 | 0.148 |
-| Previous version (B1 to B6 off; most brakes have no effect without B2) | 0.486 | 0.719 | 0.049 | 0.532 |
-| B1 off (average moral cost at the top) | 0.313 | 0.534 | 0.053 | 0.373 |
-| B2 off (old fixed consolidation hazard) | 0.531 | 0.739 | 0.146 | 0.576 |
-| B2 without purges | 0.374 | 0.573 | 0.102 | 0.429 |
-| B2 with purged seats refilled | 0.374 | 0.584 | 0.086 | 0.434 |
-| B3 off (unenforced stigma counts) | 0.380 | 0.596 | 0.090 | 0.439 |
-| B4 off (no retribution scaling) | 0.386 | 0.597 | 0.092 | 0.447 |
-| B5 off (no cross-border campaigns) | 0.386 | 0.597 | 0.047 | 0.443 |
-| No nuclear deterrent | 0.386 | 0.598 | 0.105 | 0.443 |
-| B6 off (physical caps bypassed) | 0.384 | 0.595 | 0.081 | 0.441 |
-| Robot inputs 10 times scarcer | 0.429 | 0.622 | 0.097 | 0.498 |
-| Robot inputs 100 times scarcer | 0.493 | 0.535 | 0.059 | 0.571 |
-| Inputs 100 times scarcer, minimal economy 4 times larger | 0.240 | 0.250 | 0.018 | 0.302 |
-| Majority decision rule instead of regime-specific rules | 0.291 | 0.471 | 0.082 | 0.336 |
-| Single refusal prior for all regimes | 0.331 | 0.558 | 0.059 | 0.390 |
-| Earlier disposition priors | 0.365 | 0.595 | 0.066 | 0.430 |
-| Warehousing as the default instead of the status quo | 0.363 | 0.575 | 0.086 | 0.419 |
-| Environment trends off (A7) | 0.369 | 0.580 | 0.081 | 0.429 |
-| No means of mass killing (A8) | 0.356 | 0.568 | 0.074 | 0.442 |
-| No collusion (A9) | 0.383 | 0.597 | 0.077 | 0.443 |
-| No security-force defection | 0.378 | 0.599 | 0.088 | 0.438 |
-| Grievance loop off | 0.246 | 0.401 | 0.045 | 0.341 |
-| Repression deters unrest | 0.369 | 0.581 | 0.084 | 0.427 |
-| No robots building robots | 0.545 | 0.657 | 0.147 | 0.607 |
-| A1 reverted: compute growth slows after 2029 | 0.383 | 0.596 | 0.090 | 0.442 |
-| No speed-up from AI doing AI research | 0.386 | 0.593 | 0.088 | 0.446 |
-| A2 reverted: priority sampled instead of maximal | 0.379 | 0.590 | 0.081 | 0.439 |
-| A3 reverted: security automation lags | 0.380 | 0.594 | 0.087 | 0.438 |
-| A6 reverted: earlier leverage rule | 0.384 | 0.596 | 0.089 | 0.443 |
-| No ordinary war | 0.381 | 0.593 | 0.087 | 0.440 |
-| Coalitions never shrink below 21 | 0.384 | 0.597 | 0.091 | 0.443 |
-| Background AI takeover risk raised | 0.369 | 0.577 | 0.085 | 0.430 |
-| Broad human-staffed repression path off | 0.371 | 0.594 | 0.085 | 0.422 |
-| Single decider forced | 0.555 | 0.750 | 0.165 | 0.608 |
-| Skeptic combination | 0.106 | 0.234 | 0.009 | 0.131 |
-| Pessimist combination | 0.875 | 0.965 | 0.474 | 0.916 |
-| Scenario tree without the closure path | 0.000 | 0.000 | 0.000 | 0.029 |
+| Base | 0.415 | 0.747 | 0.086 | 0.492 |
+| Threat elimination (A11) off | 0.000 | 0.000 | 0.000 | 0.491 |
+| Earliest final-version settings (all review fixes reverted, A11 off) | 0.000 | 0.000 | 0.000 | 0.174 |
+| Previous version (B1 to B6 off; most brakes have no effect without B2) | 0.496 | 0.795 | 0.006 | 0.545 |
+| B1 off (average moral cost at the top) | 0.345 | 0.717 | 0.053 | 0.422 |
+| B2 off (old fixed consolidation hazard) | 0.536 | 0.802 | 0.122 | 0.591 |
+| B2 without purges | 0.407 | 0.717 | 0.091 | 0.487 |
+| B2 with purged seats refilled | 0.404 | 0.739 | 0.083 | 0.477 |
+| B3 off (unenforced stigma counts) | 0.409 | 0.746 | 0.083 | 0.488 |
+| B4 off (no retribution scaling) | 0.422 | 0.747 | 0.090 | 0.498 |
+| B5 off (no cross-border campaigns) | 0.423 | 0.748 | 0.008 | 0.492 |
+| No nuclear deterrent | 0.422 | 0.748 | 0.102 | 0.492 |
+| B6 off (physical caps bypassed) | 0.416 | 0.747 | 0.078 | 0.488 |
+| Robot inputs 10 times scarcer | 0.509 | 0.768 | 0.109 | 0.587 |
+| Robot inputs 100 times scarcer | 0.511 | 0.645 | 0.102 | 0.583 |
+| Inputs 100 times scarcer, minimal economy 4 times larger | 0.212 | 0.319 | 0.022 | 0.276 |
+| Majority decision rule instead of regime-specific rules | 0.299 | 0.614 | 0.068 | 0.371 |
+| Single refusal prior for all regimes | 0.370 | 0.726 | 0.064 | 0.440 |
+| Earlier disposition priors | 0.406 | 0.747 | 0.069 | 0.478 |
+| Warehousing as the default instead of the status quo | 0.395 | 0.738 | 0.083 | 0.465 |
+| Environment trends off (A7) | 0.406 | 0.736 | 0.078 | 0.482 |
+| No means of mass killing (A8) | 0.387 | 0.730 | 0.070 | 0.490 |
+| No collusion (A9) | 0.412 | 0.747 | 0.059 | 0.491 |
+| No security-force defection | 0.415 | 0.752 | 0.082 | 0.491 |
+| Grievance loop off | 0.325 | 0.643 | 0.058 | 0.426 |
+| Repression deters unrest | 0.401 | 0.740 | 0.080 | 0.474 |
+| No robots building robots | 0.593 | 0.753 | 0.171 | 0.651 |
+| A1 reverted: compute growth slows after 2029 | 0.415 | 0.747 | 0.086 | 0.491 |
+| No speed-up from AI doing AI research | 0.410 | 0.746 | 0.085 | 0.488 |
+| A2 reverted: priority sampled instead of maximal | 0.403 | 0.746 | 0.081 | 0.474 |
+| A3 reverted: security automation lags | 0.408 | 0.748 | 0.084 | 0.481 |
+| A6 reverted: earlier leverage rule | 0.414 | 0.746 | 0.085 | 0.491 |
+| No ordinary war | 0.406 | 0.744 | 0.081 | 0.482 |
+| Coalitions never shrink below 21 | 0.415 | 0.747 | 0.086 | 0.492 |
+| Background AI takeover risk raised | 0.400 | 0.724 | 0.081 | 0.478 |
+| Broad human-staffed repression path off | 0.399 | 0.747 | 0.080 | 0.468 |
+| Single decider forced | 0.566 | 0.813 | 0.144 | 0.628 |
+| Skeptic combination | 0.140 | 0.411 | 0.015 | 0.166 |
+| Pessimist combination | 0.879 | 0.965 | 0.445 | 0.927 |
+| Scenario tree without the closure path | 0.000 | 0.000 | 0.000 | 0.030 |
 
 **E.6 Could the network out-innovate centralized providers?** We solved for the efficiency advantage E the network's governance and research would need, at the first US or China closure, to match centralized capability (parity) or to hold its own if defense were 3 or 10 times cheaper than offense. The plausible range for E is 0.5 to 3. Cells show the median E needed and, in brackets, the share of draws where the plausible range meets it.
 
 | Cell | Network compute share at closure | Parity | Defense 3 times cheaper | Defense 10 times cheaper |
 |---|---|---|---|---|
-| 5% by 2035 | 0.007 | 195 (0%) | 65 (0%) | 19 (0.1%) |
-| 20% by 2035 | 0.019 | 61 (0.06%) | 20 (1.6%) | 6.1 (18%) |
-| 25% by 2030 | 0.092 | 7.7 (0.3%) | 2.6 (9%) | 0.77 (67%) |
-| 50% by 2035 | 0.053 | 18 (1.7%) | 6.1 (19%) | 1.8 (45%) |
-| 50% by 2028 | 0.182 | 3.2 (4.3%) | 1.1 (47%) | 0.32 (98%) |
-| 50% by 2040 | 0.006 | 243 (0.9%) | 81 (6%) | 24 (12%) |
+| 5% by 2035 | 0.007 | 199 (0%) | 66 (0%) | 20 (0.05%) |
+| 20% by 2035 | 0.019 | 61 (0%) | 20 (1.5%) | 6.1 (19%) |
+| 25% by 2030 | 0.094 | 7.5 (0.07%) | 2.5 (10%) | 0.75 (68%) |
+| 50% by 2035 | 0.052 | 19 (1.9%) | 6.2 (19%) | 1.9 (43%) |
+| 50% by 2028 | 0.185 | 3.2 (4.9%) | 1.1 (48%) | 0.32 (98%) |
+| 50% by 2040 | 0.005 | 253 (0.9%) | 84 (6%) | 25 (12%) |
 
-Parity stays out of reach. With defense ten times cheaper than offense, large networks that arrive by about 2030 hold their own in most draws (67% at 25% by 2030, 98% at 50% by 2028). A 50% network that arrives in 2035 does so in 45% of draws. The model gives the network no defensive role, so this capability enters the results only through refusal and distributed control (about 0.009 together).
+Parity stays out of reach. With defense ten times cheaper than offense, large networks that arrive by about 2030 hold their own in most draws (68% at 25% by 2030, 98% at 50% by 2028). A 50% network that arrives in 2035 does so in 43% of draws. The model gives the network no defensive role, so this capability enters the results only through refusal and distributed control (about 0.007 together).
 
-**E.7 Network test: which channels matter (50% by 2035).** For each row, the "Effect if removed" column gives the reduction that remains with that channel switched off. The full specification gives 0.106.
+**E.7 Network test: which channels matter (50% by 2035).** For each row, the "Effect if removed" column gives the reduction that remains with that channel switched off. The full specification gives 0.119.
 
 | Channel removed | Effect if removed |
 |---|---|
-| Livelihoods | 0.032 |
-| Core-chain share in the closure test | 0.096 |
-| Refusal | 0.099 |
-| Leverage | 0.101 |
-| Distributed control | 0.104 |
-| Soft power | 0.106 |
-| Revenue drain on centralized providers | 0.106 |
-| Crackdown cost | 0.110 (removing it helps) |
+| Livelihoods | 0.026 |
+| Core-chain share in the closure test | 0.107 |
+| Refusal | 0.113 |
+| Leverage | 0.116 |
+| Distributed control | 0.117 |
+| Soft power | 0.119 |
+| Revenue drain on centralized providers | 0.121 |
+| Crackdown cost | 0.127 (removing it helps) |
 
 **E.8 Network test under alternative readings (50% by 2035).**
 
 | Reading | Change |
 |---|---|
-| Low reading: no cost link, untaxed, low elasticities, refusal as a threshold, smallest core-chain share, every crackdown a ban | +0.004 (not significant) |
-| Network income fixed at 2026 scale | -0.077 |
-| Main specification | -0.106 |
-| High reading | -0.116 |
-| No crackdown risk | -0.117 |
-| Adoption spread evenly to every bloc | -0.118 |
+| Low reading: no cost link, untaxed, low elasticities, refusal as a threshold, smallest core-chain share, every crackdown a ban | +0.011 (+0.006 to +0.016) |
+| Network income fixed at 2026 scale | -0.083 |
+| Main specification | -0.119 |
+| No crackdown risk | -0.132 |
+| Adoption spread evenly to every actor | -0.132 |
+| High reading | -0.136 |
 
 ---
 
 ## References
 
-*Each reference below was checked against the primary source or an authoritative summary on 2 October 2026, except where marked. Case facts cited without a reference (the AfD result, Wörgl, the WIR network, the Tornado Cash and Samourai cases, China's mining ban) are documented with sources in `paper/source_verification.json`.*
+*Each reference below was checked against the primary source or an authoritative summary on 2 October 2026, except where marked. Case facts cited without a reference (the AfD result, Wörgl, the WIR network, the Tornado Cash and Samourai cases, China's mining ban) are documented with sources in `paper/source_verification.json`. News reports added for version 7 (Section 4.5) were checked on 18 October 2026; where a primary report could not be opened, the citation names the outlet that republished it.*
 
 - Acemoglu, D. (2025). The simple macroeconomics of AI. *Economic Policy* 40(121): 13-58. doi:10.1093/epolic/eiae042. Earlier version: NBER Working Paper 32487 (2024).
 - Acemoglu, D., Robinson, J. A. (2006). *Economic Origins of Dictatorship and Democracy.* Cambridge University Press. (Not re-checked.)
+- Al Jazeera (2026a). Trump rules out using force to take over Greenland, calls for negotiations. 21 January 2026.
+- Al Jazeera (2026b). NATO assessing details of US troop withdrawal from Germany. 2 May 2026.
+- Al Jazeera (2026c). Why is US turning to Russia for diesel despite sanctions? 10 October 2026.
+- AP (2026). Trump signs US-Denmark-Greenland agreement to bolster Arctic security. 22 September 2026 (via Anchorage Daily News).
+- Arms Control Association (2026). Davenport, K. Trump scales back U.S.-South Korean military exercises. *Arms Control Today*, September 2026.
 - Babiak, P., Neumann, C. S., Hare, R. D. (2010). Corporate psychopathy: talking the walk. *Behavioral Sciences and the Law* 28(2): 174-193. doi:10.1002/bsl.925. (The often-cited prevalence of about 4% is in the paper body, which we could not access.)
-- Bankes, S. (1993). Exploratory modeling for policy analysis. *Operations Research* 41(3): 435-449. (Not re-checked.)
 - Bandura, A. (1999). Moral disengagement in the perpetration of inhumanities. *Personality and Social Psychology Review* 3(3): 193-209. doi:10.1207/s15327957pspr0303_3
+- Bankes, S. (1993). Exploratory modeling for policy analysis. *Operations Research* 41(3): 435-449. (Not re-checked.)
 - Beraja, M., Kao, A., Yang, D. Y., Yuchtman, N. (2023). AI-tocracy. *Quarterly Journal of Economics* 138(3): 1349-1402. doi:10.1093/qje/qjad012
 - Browning, C. R. (1992). *Ordinary Men: Reserve Police Battalion 101 and the Final Solution in Poland.* HarperCollins.
 - Bueno de Mesquita, B., Smith, A., Siverson, R. M., Morrow, J. D. (2003). *The Logic of Political Survival.* MIT Press. (Not re-checked.)
 - Burger, J. M. (2009). Replicating Milgram: would people still obey today? *American Psychologist* 64(1): 1-11. doi:10.1037/a0010932
 - Carlsmith, J. (2022). Is power-seeking AI an existential risk? arXiv:2206.13353.
+- Clyde & Co (2026). Sanctions alert: OFAC authorizes US imports of Russian diesel, but beware of limitations. October 2026.
+- CNN (2026). US-Canada trade war reignites as talks fail at last minute. 21 August 2026.
 - Congressional Budget Office (2025). Estimated effects of P.L. 119-21 on the number of uninsured people. Publication 61367.
 - Davidson, T., Finnveden, L., Hadshar, R. (2025). AI-enabled coups: how a small group could use AI to seize power. Forethought. https://www.forethought.org/research/ai-enabled-coups-how-a-small-group-could-use-ai-to-seize-power
 - Drago, L., Laine, R. (2025). *The Intelligence Curse.* https://intelligence-curse.ai/
 - Egorov, G., Sonin, K. (2011). Dictators and their viziers: endogenizing the loyalty-competence trade-off. *Journal of the European Economic Association* 9(5): 903-930. doi:10.1111/j.1542-4774.2011.01033.x
 - Epoch AI (2024). Training compute of frontier AI models grows by 4-5x per year. (Not re-checked.)
 - Epoch AI (2025). Share of GPU-cluster performance by country (May 2025).
+- Fearon, J. D. (1995). Rationalist explanations for war. *International Organization* 49(3): 379-414. (Not re-checked.)
 - Getty, J. A., Rittersporn, G., Zemskov, V. (1993). Victims of the Soviet penal system in the pre-war years. *American Historical Review* 98(4): 1017-1049.
 - Glad, B. (2002). Why tyrants go too far: malignant narcissism and absolute power. *Political Psychology* 23(1): 1-37. doi:10.1111/0162-895X.00268
 - Goldring, E. (n.d.). Elite purges in dictatorships. doi:10.32469/10355/78075
 - Grace, K., Stewart, H., Sandkühler, J. F., Thomas, S., Weinstein-Raun, B., Brauner, J., Korzekwa, R. C. (2024). Thousands of AI authors on the future of AI. arXiv:2401.02843.
 - Harff, B. (2003). No lessons learned from the Holocaust? Assessing risks of genocide and political mass murder since 1955. *American Political Science Review* 97(1): 57-73. doi:10.1017/S0003055403000522
 - Haslam, N., Loughnan, S., Perry, G. (2014). Meta-Milgram: an empirical synthesis of the obedience experiments. *PLoS ONE* 9(4): e93927. doi:10.1371/journal.pone.0093927
+- Holland & Knight (2026). And the (tariff) beat goes on: new Section 301 forced-labor tariffs imposed on 60 countries. 30 July 2026.
 - Institute for Economics and Peace (2026). *Global Peace Index 2026.* Sydney: IEP.
 - International Federation of Robotics (2025). *World Robotics 2025* (press release on 2024 installations).
 - Karger, E., Rosenberg, J., Jacobs, Z., et al. (2023). Forecasting existential risk: evidence from a long-run forecasting tournament. Forecasting Research Institute Working Paper 1.
@@ -1295,11 +1462,14 @@ Parity stays out of reach. With defense ten times cheaper than offense, large ne
 - Kwa, T., West, B., et al. (2025). Measuring AI ability to complete long tasks. METR. arXiv:2503.14499. With METR Time Horizon 1.1 data (May 2026).
 - Landay, K., Harms, P. D., Credé, M. (2019). Shall we serve the dark lords? A meta-analytic review of psychopathy and leadership. *Journal of Applied Psychology* 104(1): 183-196. doi:10.1037/apl0000357
 - Milgram, S. (1974). *Obedience to Authority.* Harper and Row. (Not re-checked.)
+- NBC News (2026a). Trump administration weighs drastic cut to U.S. forces in Europe of 25,000 or more. 17 September 2026.
+- NBC News (2026b). U.S. cancels South Korea marine drills over tied-up forces in Iran war. 25 August 2026 (Reuters).
 - NOAA Climate Prediction Center (2026). ENSO diagnostic discussion, 10 September 2026.
 - Nord, M., et al. (2026). *Democracy Report 2026.* V-Dem Institute, University of Gothenburg.
 - O'Neill, B. C., et al. (2017). The roads ahead: narratives for shared socioeconomic pathways describing world futures in the 21st century. *Global Environmental Change* 42: 169-180. (Not re-checked.)
 - Ord, T. (2020). *The Precipice: Existential Risk and the Future of Humanity.* Bloomsbury.
 - PRRI (2023). Findings from the 2023 American Values Survey. Washington DC: PRRI.
+- Reuters (2026). Trump to impose tariffs on eight European nations. 18 January 2026 (via Gulf Business).
 - Ross, M. L. (2001). Does oil hinder democracy? *World Politics* 53(3): 325-361. (Not re-checked.)
 - Rustad, S. A. (2025). *Conflict Trends: A Global Overview, 1946-2024.* PRIO Paper. Oslo: PRIO.
 - Sanz-García, A., Gesteira, C., Sanz, J., García-Vera, M. P. (2021). Prevalence of psychopathy in the general adult population: a systematic review and meta-analysis. *Frontiers in Psychology* 12: 661044. doi:10.3389/fpsyg.2021.661044
@@ -1308,11 +1478,13 @@ Parity stays out of reach. With defense ten times cheaper than offense, large ne
 - Straus, S. (2006). *The Order of Genocide: Race, Power, and War in Rwanda.* Cornell University Press.
 - Sudduth, J. K. (2017). Strategic logic of elite purges in dictatorships. *Comparative Political Studies* 50(13): 1768-1801.
 - Svolik, M. W. (2012). *The Politics of Authoritarian Rule.* Cambridge University Press. doi:10.1017/CBO9781139176040
+- Tansey, O. (2016). *The International Politics of Authoritarian Rule.* Oxford University Press. (Not re-checked.)
 - Tilly, C. (1990). *Coercion, Capital, and European States, AD 990-1990.* Blackwell. (Not re-checked.)
 - Tsebelis, G. (2002). *Veto Players: How Political Institutions Work.* Princeton University Press. (Not re-checked.)
 - UK Ministry of Defence (2025). Defence Intelligence update on Russian casualties, 14 October 2025.
 - UN Commission of Inquiry on Human Rights in the Democratic People's Republic of Korea (2014). Report A/HRC/25/63.
 - UN DESA (2024). *World Population Prospects 2024.*
 - Valentino, B., Huth, P., Balch-Lindsay, D. (2004). "Draining the sea": mass killing and guerrilla warfare. *International Organization* 58(2): 375-407. doi:10.1017/S0020818304582061
+- von Soest, C. (2015). Democracy prevention: the international collaboration of authoritarian regimes. *European Journal of Political Research* 54(4): 623-638. (Not re-checked.)
 - Weeks, J. L. P. (2012). Strongmen and straw men: authoritarian regimes and the initiation of international conflict. *American Political Science Review* 106(2): 326-347. doi:10.1017/S0003055412000111
 - White House (2026). Presidential memorandum withdrawing the United States from 66 international organizations, 7 January 2026.

@@ -120,14 +120,14 @@ box(C4, (4, 16.5), "What stops a campaign",
 # ---------------- between actors (new in v7) ----------------
 ax.add_patch(FancyBboxPatch((2, -20.5), 156, 18.0, boxstyle="round,pad=0.4,rounding_size=1.2", fc=C_BETW, ec=INK, lw=1.0))
 ax.text(3.2, -3.9, "10  Between actors", fontsize=10.3, fontweight="bold", color=INK, va="top")
-ax.text(3.2, -7.1, "Alliances: defence commitments that deter attacks and\nextend nuclear deterrence (B5), draw allies into wars,\n"
+ax.text(3.2, -7.1, "Alliances: defense commitments that deter attacks and\nextend nuclear deterrence (B5), draw allies into wars,\n"
         "enforce outside pressure (B3) and ease trade in robot\ninputs (B6). Allies never attack each other. Atrocities\nbreak ties; autocracies form new ones.",
         fontsize=8.9, color=INK, va="top", linespacing=1.35)
 ax.text(57, -7.1, "Allied autocracies send forces to help put down uprisings.\nForeign troops do not defect, so revolts succeed less\n"
-        "often. Democracies do not send forces. The helper's cost\nto its own defences is not modeled.",
+        "often. Democracies do not send forces. The helper's cost\nto its own defenses is not modeled.",
         fontsize=8.9, color=INK, va="top", linespacing=1.35)
 ax.text(108, -7.1, "The US as of October 2026: weak commitments to\nEurope, Canada and Oceania, middling to Japan\n"
-        "and Korea, partial alignment with Russia (no\ndefence). Ties do not recover after a US return\nto democracy. Small US-Europe war hazards.",
+        "and Korea, partial alignment with Russia (no\ndefense). Ties do not recover after a US return\nto democracy. Small US-Europe war hazards.",
         fontsize=8.9, color=INK, va="top", linespacing=1.35)
 
 # arrows: only between neighbours

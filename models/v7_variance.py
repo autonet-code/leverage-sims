@@ -21,7 +21,7 @@ def features(p, N0):
     X, names = [], []
     for k, v in p.items():
         a = np.asarray(v)
-        if not a.ndim or a.shape[0] != N0 or not np.issubdtype(a.dtype, np.number):
+        if not a.ndim or a.shape[0] != N0 or not (np.issubdtype(a.dtype, np.number) or a.dtype == bool):
             continue
         a = a.astype(float)
         if a.ndim == 1:

@@ -25,7 +25,7 @@ body = '\n'.join(out)
 meta = f'''---
 title: "{title}"
 author: "Andrei Taranu (Eight Rice) (contact@autonet.computer, ORCID 0009-0008-2902-0845)"
-date: "October 2026"
+date: "Version 2.0, 18 October 2026"
 geometry: margin=2.5cm
 fontsize: 10pt
 colorlinks: true
@@ -39,7 +39,7 @@ header-includes:
   - \\renewcommand{{\\arraystretch}}{{1.15}}
 ---
 
-*Code, data and results: <https://github.com/autonet-code/leverage-sims>. All numbers in this paper are reproducible from the code with the seeds given in Appendix D.*
+*Version 2.0 (seventeen actors). Version 1.0 (six blocs) was published on 3 October 2026. Code, data and results: <https://github.com/autonet-code/leverage-sims>. All numbers in this paper are reproducible from the code with the seeds given in Appendix D.*
 
 '''
 build = os.path.join(HERE, 'build')

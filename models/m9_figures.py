@@ -1,4 +1,5 @@
-"""Figures for the decentralized-AI lever test (reads results/lever_grid.json). Run: python models/m9_figures.py"""
+"""Figures for the decentralized-AI lever test (reads results/lever_grid.json). Run: python models/m9_figures.py
+LV_FIG_IN (results file name) and LV_FIG_DIR (subfolder of figures/) redirect input and output."""
 import json
 import os
 
@@ -9,7 +10,8 @@ import numpy as np
 from matplotlib.colors import LinearSegmentedColormap
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RES = os.path.join(ROOT, "results"); FIG = os.path.join(ROOT, "figures")
+RES = os.path.join(ROOT, "results"); FIG = os.path.join(ROOT, "figures", os.environ.get("LV_FIG_DIR", ""))
+os.makedirs(FIG, exist_ok=True)
 INK, INK2, MUTED, SURF = "#0b0b0b", "#52514e", "#898781", "#fcfcfb"
 SER = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4"]
 BLUES = LinearSegmentedColormap.from_list("b", ["#cde2fb", "#86b6ef", "#3987e5", "#1c5cab", "#0d366b"])
@@ -127,7 +129,7 @@ def closure(res):
 
 
 if __name__ == "__main__":
-    p = os.path.join(RES, "lever_grid.json")
+    p = os.path.join(RES, os.environ.get("LV_FIG_IN", "lever_grid.json"))
     if not os.path.exists(p):
         p = os.path.join(RES, "lever_grid_partial.json")
     res = json.load(open(p))

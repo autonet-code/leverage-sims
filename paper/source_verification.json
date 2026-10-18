@@ -430,5 +430,45 @@
   "citation": "Burger, J. M. (2009). Replicating Milgram: Would people still obey today? American Psychologist 64(1): 1-11. doi:10.1037/a0010932",
   "source_url": "https://doi.org/10.1037/a0010932",
   "note": "Commonly reported figures: 70% continued past 150 V in Burger's study vs 82.5% in Milgram's comparable condition. Those are from the paper body and were not checked here."
+ },
+ {
+  "claim": "US threats against European allies over Greenland, January 2026; force ruled out; September 2026 agreement",
+  "verdict": "corrected",
+  "correct_statement": "On 17 January 2026 the US threatened an extra 10% tariff from 1 February, rising to 25% on 1 June, on goods from Denmark, Norway, Sweden, France, Germany, the Netherlands, Finland and the UK until the US could buy Greenland. On 21 January at Davos the president ruled out force and dropped the tariff threat. On 22 September 2026 the US, Denmark and Greenland signed a defence agreement (new US defence areas at Narsarsuaq and Mestersvig, expanded operations at Pituffik). Force was ruled out before the deal, not after it; the tariffs were never imposed.",
+  "citation": "Reuters (2026), Al Jazeera (2026a), AP (2026)",
+  "source_url": "https://gulfbusiness.com/en/2026/politics/trump-to-impose-tariffs-on-eight-european-nations/ ; https://www.aljazeera.com/news/2026/1/21/trump-rules-out-using-force-to-take-over-greenland-calls-for-negotiations ; https://www.adn.com/nation-world/2026/09/22/trump-signs-us-denmark-greenland-agreement-to-bolster-arctic-security/",
+  "note": "Checked 18 October 2026 for version 7 (Section 4.5)."
+ },
+ {
+  "claim": "US tariffs on allies and on Russia, 2026",
+  "verdict": "corrected",
+  "correct_statement": "Since 24 July 2026, Section 301 forced-labor tariffs apply to 60 economies, replacing the 10% Section 122 surcharge. The UK, Canada and Mexico pay a flat 10%; the EU and Taiwan are capped at 10% including normal duties; Japan, South Korea and Switzerland at 12.5%; China, Russia and the other remaining economies pay a flat 12.5%. Canada also faces 50% Section 338 duties on designated goods (about 5% of US imports from Canada) since 22 August 2026. Russia is not tariff-free and pays no less than the allies.",
+  "citation": "Holland & Knight (2026), CNN (2026)",
+  "source_url": "https://www.hklaw.com/en/insights/publications/2026/07/and-the-tariff-beat-goes-on ; https://taxnews.ey.com/news/2026-1607-ustr-finalizes-section-301-forced-labor-tariffs-on-60-economies-additional-tariffs-of-10-percent-or-125-percent-take-effect-24-july-2026 ; https://keyt.com/news/money-and-business/cnn-business-consumer/2026/08/21/us-canada-trade-war-reignites-as-talks-fail-at-last-minute/",
+  "note": "Checked 18 October 2026 for version 7 (Section 4.5). The Russia rate appears in the Holland & Knight table (rounded to 13%); the USTR annex was not opened."
+ },
+ {
+  "claim": "US troop withdrawals from Europe, 2026",
+  "verdict": "confirmed",
+  "correct_statement": "In spring 2026 the Pentagon announced the withdrawal of about 5,000 troops from Germany over 6 to 12 months. A review launched in June is weighing cuts of 25,000 or more of the roughly 80,000 US troops in Europe (up to 40,000 per NBC's broadcast), with recommendations due on 6 November 2026. The FY2026 NDAA sets a waivable floor of 76,000 for Europe.",
+  "citation": "Al Jazeera (2026b), NBC News (2026a)",
+  "source_url": "https://www.aljazeera.com/news/2026/5/2/nato-assessing-details-of-us-troop-withdrawal-from-germany ; https://www.nbcnews.com/politics/national-security/pentagon-weighs-pulling-nearly-third-us-forces-europe-rcna597722 ; https://www.stripes.com/branches/army/2026-09-18/trump-poland-base-europe-troop-cuts-22887147.html",
+  "note": "Checked 18 October 2026 for version 7 (Section 4.5)."
+ },
+ {
+  "claim": "US forces in South Korea, 2026",
+  "verdict": "corrected",
+  "correct_statement": "No reduction of US troops in South Korea has been announced. On 16 August 2026 the Ulchi Freedom Shield exercise was cut short (ended 21 instead of 28 August), and on 24 August the US pulled out of the September Ssangyong drill, citing forces committed to the Iran war. The FY2026 NDAA bars spending to go below 28,500 troops unless the administration certifies a cut to Congress, so the floor can be waived.",
+  "citation": "NBC News (2026b), Arms Control Association (2026)",
+  "source_url": "https://www.nbcnews.com/world/asia/us-cancels-south-korea-marine-drills-tied-forces-iran-war-rcna594256 ; https://www.armscontrol.org/act/2026-09/news/trump-scales-back-us-south-korean-military-exercises ; https://www.foxnews.com/politics/congress-moves-block-pentagon-from-cutting-us-troops-europe-south-korea",
+  "note": "Checked 18 October 2026 for version 7 (Section 4.5)."
+ },
+ {
+  "claim": "US imports of Russian diesel, October 2026",
+  "verdict": "confirmed",
+  "correct_statement": "On 9 October 2026, after a call with the Russian president, the US announced Russian diesel supplies, and OFAC issued General License 135 authorizing transactions in Russian-origin diesel, including imports into the US, until 7 April 2027. EU and UK bans remain in force.",
+  "citation": "Al Jazeera (2026c), Clyde & Co (2026)",
+  "source_url": "https://www.aljazeera.com/news/2026/10/10/why-is-us-turning-to-russia-for-diesel-despite-sanctions ; https://www.clydeco.com/en/insights/2026/10/ofac-authorizes-us-imports-of-russian-diesel ; https://www.hsfkramer.com/de/notes/sanctions/2026-posts/ofac-issues-general-license-135-authorizing-transactions-involving-russian-origin-diesel-fuel",
+  "note": "Checked 18 October 2026 for version 7 (Section 4.5). The OFAC text itself was not opened."
  }
 ]
